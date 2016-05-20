@@ -1,0 +1,110 @@
+<% content_for :menu do %>
+<li class="active"><a href="\timetable">Timetable</a></li>
+<li><a href="\examschedule">Exam schedule</a></li>
+<li><a href="\help">Help</a></li>
+<li><a href="\contact">Contact</a></li>
+<% end %>           
+
+
+<h1>Timetable</h1>
+
+<!-- find index time -->
+<% index_time=0 %>
+<% @time.each do |find| %>
+<% break if find[0,2]==@begin_time[0,2] %>
+<% index_time+=1 %>
+<% end %>
+
+<!-- set new begin_time -->
+<% tmp_time=@time[index_time] %>
+<!-- find end index time -->
+<% end_index_time = ( ( ((@end_time[0,2].to_i*60)+(@end_time[2,4].to_i*2))  - ((@begin_time[0,2].to_i*60)+@begin_time[2,4].to_i) ) /60 ).ceil + index_time %>
+
+<!-- <p><%= @begin_time %></p>
+<p><%= @end_time %></p>
+
+<p><%= index_time %></p>
+<p><%= end_index_time %></p> -->
+<!-- style="table-layout: fixed;" -->
+<div class="table-responsive">
+<table class="table table-bordered" style="table-layout: fixed;">
+	<thead>
+		<tr>
+
+			<th colspan="2" class="text-center"><%= session[:sid] %></th>
+			<% while index_time<=end_index_time %>
+			<th colspan="2" class="text-center"><%= @time[index_time] %> - <%= @time[index_time+1] %> </th>
+			<% index_time+=1 %>
+			<% end %>
+
+		</tr>
+	</thead>
+
+	<tbody>
+		<% for i in 0..4 #0=Monday....4=Friday %>
+		<% @begin_time=tmp_time %>
+		<% once=true %>
+		<% found_day=false %>
+		<tr>
+
+
+			<% @timetables.each do |t| %>
+
+			<% data = t.split("\0") %>
+
+			<!-- print day -->
+			<% if (data[2]==@day1[i] || data[2]==@day2[i]) && once %>
+			<td colspan="2" class="text-center" style="vertical-align: middle;"><%= @day[i] %></td>
+			<% once=false %>
+			<% end %>
+
+			<% if data[2]==@day1[i] || data[2]==@day2[i] %>
+
+			<!-- <p><%= data[3] %></p> -->
+
+
+			<% colspan_blank = ( ((data[0][0,2].to_i*60)+data[0][2,4].to_i) - ((@begin_time[0,2].to_i*60)+@begin_time[2,4].to_i) )/30 %>
+			<% @begin_time=data[1] %>
+
+			<!-- <p>blank = <%= colspan_blank %></p> -->
+			<% if colspan_blank!=0 %>
+			<td colspan="<%= colspan_blank %>" ></td>
+			<% end %>
+
+			<% colspan_use = ( ((data[1][0,2].to_i*60)+data[1][2,4].to_i) - ((data[0][0,2].to_i*60)+data[0][2,4].to_i) )/30 %>
+			<td colspan="<%= colspan_use %>" class="text-center" style="vertical-align: middle;"> <%= data[4] %><br><%= data[3] %><br><%= data[5] %>-<%= data[6] %></td>
+			<!-- <p>use = <%= colspan_use %></p> -->
+
+			<% found_day=true %>
+			<% end #end if %> 
+
+			<% end #@timetables.each %>
+
+
+			<!-- add blank to end table -->
+			<% colspan_blank = ( ((@time[index_time][0,2].to_i*60)+@time[index_time][2,4].to_i) - ((@begin_time[0,2].to_i*60)+@begin_time[2,4].to_i) )/30 %>
+
+			<% if colspan_blank!=0 && found_day %>
+			<td colspan="<%= colspan_blank %>" ></td>
+			<% end %>
+
+
+
+		</tr>
+		<% end %>
+
+	</tbody>
+
+</table>
+</div>
+
+
+<hr>
+<!-- 	<% @timetables.each do |t| %>
+	<% data = t.split("\0") %>
+	<% data.each do |d| %>
+	<p><%= d %></p>
+	<% end %>
+	<p>**************</p>
+	<% end %> -->
+
