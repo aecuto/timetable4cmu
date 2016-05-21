@@ -17,14 +17,25 @@
 //= require nprogress
 //= require nprogress-turbolinks
 
+
 /* Paste this css to your style sheet file or under head tag */
 /* This only works with JavaScript, 
 if it's not present, don't show loader */
 
-	NProgress.configure({
-		showSpinner: false,
-		ease: 'ease',
-		speed: 500
+
+
+ 
+//paste this code under the head tag or in a separate js file.
+	// Wait for window load
+	$(window).load(function() {
+		// Animate loader off screen
+		$(".se-pre-con").fadeOut("slow");;
 	});
 
 
+	NProgress.configure({
+	  showSpinner: false,
+	  ease: 'ease',
+	  speed: 500,
+	  minimum: 0.8
+	});

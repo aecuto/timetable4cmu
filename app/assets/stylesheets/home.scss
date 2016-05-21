@@ -2,9 +2,9 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-
-$nprogress-color: #EDE7F6; // if you want to change the color
+$nprogress-color: #FFFFFF;
 $nprogress-height: 5px;
+$nprogress-zindex: 10100;
 
 @import 'nprogress';
 @import 'nprogress-bootstrap';

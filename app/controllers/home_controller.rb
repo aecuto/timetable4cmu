@@ -204,9 +204,9 @@ class HomeController < ApplicationController
 		 @day = Array["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]
 		 @day1 = Array["MTh","TuF","We", "MTh","TuF","SaSu",""]
 		 @day2 = Array["Mo","Tu","We", "Th","Fr","Sa","Su"]
-		 @color = Array["#9C27B0","#673AB7","#009688","#795548","#E91E63","#00796B","#607D8B","#1976D2","#43A047","#880E4F"]
-		 @color_tab = "#9575CD"
-		 @color_blank = "#D1C4E9"
+		 @color = Array["#FF6138","#DA9844","#2B4C8C","#644D52","#00A388","#F25F5C","#247BA0","#A6937C","#332532","#0D1326"]
+		 @color_tab = "#212121"
+		 @color_blank = "#424242"
 
 		end
 
