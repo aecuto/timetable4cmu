@@ -36,34 +36,41 @@ class HomeController < ApplicationController
 		end
 
 
-		# uri = URI.parse("https://www3.reg.cmu.ac.th/regist/public/search.php?act=search")
+		
 
 		# # Shortcut
 		# form={"s_course1" => "204333", "s_lec1" => "001", "s_lab1" => "000", "op" => "bycourse"}
 		# response = Net::HTTP.post_form(uri, form)
 
 		# infor = Nokogiri::HTML(response.body)
-		# @data = infor.css('td').text
+		# @room = infor.css('td').text
 
 		semester=session[:semester]
 		year=session[:year]
 		sid=session[:sid]
 
+		#index for find room
+		if year.to_i<58
+			index=7
+		else
+			index=9
+		end
 
 
+		uri = URI.parse("https://www3.reg.cmu.ac.th/regist" + semester.to_s+year.to_s + "/public/search.php?act=search")
 		url = "https://www3.reg.cmu.ac.th/regist" + semester.to_s+year.to_s + "/public/result.php?id=" + sid.to_s
 
-		 infor = Nokogiri::HTML(open(url))
-		 data = infor.css('.msan8')
-		 @timetables = Array.new
+		infor = Nokogiri::HTML(open(url))
+		data = infor.css('.msan8')
+		@timetables = Array.new
 
-		 data.each do |d|
-		 	if !(d.css('td')[2].text == "TITLE" || d.css('td')[2].text == "LEC")
+		data.each do |d|
+			if !(d.css('td')[2].text == "TITLE" || d.css('td')[2].text == "LEC")
 
-		 		str = nil
-		 		str2 = nil
+				str = nil
+				str2 = nil
 
-		 		if d.css('td')[8].css('font').text != ''
+				if d.css('td')[8].css('font').text != ''
 		    		#puts "Time: " + d.css('td > text()')[8].text + " and " + d.css('td')[8].css('font').text
 		    		str = d.css('td > text()')[8].text[0,4] + "\0" + d.css('td > text()')[8].text[7,11] + "\0"
 		    		str2 = d.css('td')[8].css('font').text[0,4] + "\0" + d.css('td')[8].css('font').text[7,11] + "\0"
@@ -82,25 +89,56 @@ class HomeController < ApplicationController
 		    	end
 
 
-		    	# puts "SUBJNAME: " + d.css('td')[2].text
+		    	#puts "SUBJNAME: " + d.css('td')[2].text
 		    	str += d.css('td')[2].text + "\0"
 		    	# puts "SUBJID: " + d.css('td')[1].text
 		    	str += d.css('td')[1].text + "\0"
 		    	# puts "LEC: " + d.css('td')[3].text
 		    	str += d.css('td')[3].text + "\0"
 		    	# puts "LAB: " + d.css('td')[4].text
-		    	str += d.css('td')[4].text
+		    	str += d.css('td')[4].text + "\0"
 		    	# puts "_______________"
 
-		    	@timetables << str
-
+		    	# add other data to str2
 		    	if str2 != nil
-		    		str2 += d.css('td')[2].text + "\0" + d.css('td')[1].text + "\0" + d.css('td')[3].text + "\0" + d.css('td')[4].text
-		    		@timetables << str2
+		    		str2 += d.css('td')[2].text + "\0" + d.css('td')[1].text + "\0" + d.css('td')[3].text + "\0" + d.css('td')[4].text + "\0"
 		    	end
+		    	
 
-		   	end
-		 end
+		    	#find room
+		    	form={"s_course1" => d.css('td')[1].text, "s_lec1" => d.css('td')[3].text, "s_lab1" => d.css('td')[4].text, "op" => "bycourse"}
+		    	response = Net::HTTP.post_form(uri, form)
+
+		    	rooms = Nokogiri::HTML(response.body)
+		    	room = rooms.css('td')
+
+
+		    	if room[index]
+		    		if room[index].css('red').text != ''
+						#puts room[7].css('> text()').text
+						str += room[index].css('> text()').text
+						#puts room[7].css('red').text
+						str2 += room[index].css('red').text
+					else
+						str += room[index].text
+					end
+				else
+				 #puts "nothing"
+				 str += "Unknow"
+				end
+				
+
+
+
+
+				@timetables << str
+
+				if str2 != nil
+					@timetables << str2
+				end
+
+			end
+		end
 
 		 # order times
 		 i=0
@@ -132,29 +170,61 @@ class HomeController < ApplicationController
 
 		 end
 
+		 # set course for color
+		 @courses = Array.new
+		 @timetables.each do |t|
+		 	i=0
+		 	add = true
+		 	course = t.split("\0")
+
+		 	if @courses.length == 0
+		 		@courses << course[4]
+		 	else
+		 		while i<@courses.length do
+		 			if @courses[i] == course[4]
+		 				add = false
+		 				break
+		 			end
+		 			i+=1
+		 		end
+		 		if add
+		 			@courses << course[4]
+		 		end
+		 	end
+		 end
+
+		 # @courses.each do |c|
+		 # 	puts c
+		 # 	puts @courses.index(c)
+		 # end
+
+
 		 # value for html
 		 @time = Array["0600","0700","0800","0900","1000","1100","1200","1300","1400","1500","1600","1700","1800","1900","2000","2100","2200","2300","2400"]
 		 @day = Array["Monday","Tuesday","Wednesday","Thursday","Friday"]
 		 @day1 = Array["MTh","TuF","We", "MTh","TuF"]
 		 @day2 = Array["Mo","Tu","We", "Th","Fr"]
-	  	
-	end
+		 @color = Array["#9C27B0","#673AB7","#009688","#795548","#E91E63","#00796B","#607D8B","#1976D2","#43A047","#880E4F"]
+		 @color_tab = "#9575CD"
+		 @color_blank = "#D1C4E9"
 
-	def examschedule
-		if session[:semester] == nil
-			redirect_to "/login"
+		end
+
+		def examschedule
+			if session[:semester] == nil
+				redirect_to "/login"
+			end
+		end
+
+		def help
+			if session[:semester] == nil
+				redirect_to "/login"
+			end
+		end
+
+		def contact
+			if session[:semester] == nil
+				redirect_to "/login"
+			end
 		end
 	end
-
-	def help
-		if session[:semester] == nil
-			redirect_to "/login"
-		end
-	end
-
-	def contact
-		if session[:semester] == nil
-			redirect_to "/login"
-		end
-	end
-end

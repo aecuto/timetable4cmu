@@ -28,13 +28,13 @@
 
 <!-- style="table-layout: fixed;" -->
 <div class="table-responsive">
-	<table class="table table-bordered" style="table-layout: fixed; min-width: 1280px;">
+	<table class="table" style="table-layout: fixed; min-width: 1280px;">
 		<thead>
 			<tr>
 
-				<th colspan="2" class="text-center"><%= session[:sid] %></th>
+				<th bgcolor="<%= @color_tab %>" colspan="2" class="text-center"><%= session[:sid] %></th>
 				<% while index_time<end_index_time %>
-				<th colspan="2" class="text-center"><%= @time[index_time] %> - <%= @time[index_time+1] %> </th>
+				<th bgcolor="<%= @color_tab %>" colspan="2" class="text-center"><%= @time[index_time] %> - <%= @time[index_time+1] %> </th>
 				<% index_time+=1 %>
 				<% end %>
 
@@ -55,7 +55,7 @@
 
 				<!-- print day -->
 				<% if (data[2]==@day1[i] || data[2]==@day2[i]) && once %>
-				<td colspan="2" class="text-center" style="vertical-align: middle;"><%= @day[i] %></td>
+				<td bgcolor="<%= @color_tab %>" colspan="2" class="text-center" style="vertical-align: middle;"><%= @day[i] %></td>
 				<% once=false %>
 				<% end %>
 
@@ -69,11 +69,16 @@
 
 				<!-- <p>blank = <%= colspan_blank %></p> -->
 				<% if colspan_blank!=0 %>
-				<td colspan="<%= colspan_blank %>" ></td>
+				<td bgcolor="<%= @color_blank %>" colspan="<%= colspan_blank %>" ></td>
 				<% end %>
 
+				<!-- set color index -->
+
+
+
+
 				<% colspan_use = ( ((data[1][0,2].to_i*60)+data[1][2,4].to_i) - ((data[0][0,2].to_i*60)+data[0][2,4].to_i) )/30 %>
-				<td colspan="<%= colspan_use %>" class="text-center" style="vertical-align: middle; word-wrap: break-word;"> <%= data[4] %><br><%= data[3] %><br><%= data[5] %>-<%= data[6] %></td>
+				<td bgcolor="<%= @color[@courses.index(data[4])]%>" colspan="<%= colspan_use %>" class="text-center" style="vertical-align: middle;"> <%= data[4] %><br><%= data[3] %><br><%= data[5] %>-<%= data[6] %><br> <strong><%= data[7] %></strong></td>
 				<!-- <p>use = <%= colspan_use %></p> -->
 
 				<% found_day=true %>
@@ -86,7 +91,7 @@
 				<% colspan_blank = ( ((@time[index_time][0,2].to_i*60)+@time[index_time][2,4].to_i) - ((@begin_time[0,2].to_i*60)+@begin_time[2,4].to_i) )/30 %>
 
 				<% if colspan_blank!=0 && found_day %>
-				<td colspan="<%= colspan_blank %>" ></td>
+				<td bgcolor="<%= @color_blank %>" colspan="<%= colspan_blank %>" ></td>
 				<% end %>
 
 
