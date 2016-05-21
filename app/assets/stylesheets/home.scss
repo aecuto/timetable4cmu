@@ -1,3 +1,10 @@
 // Place all the styles related to the home controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+$nprogress-color: #EDE7F6; // if you want to change the color
+$nprogress-height: 5px;
+
+@import 'nprogress';
+@import 'nprogress-bootstrap';

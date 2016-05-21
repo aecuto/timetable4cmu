@@ -14,3 +14,17 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
+//= require nprogress
+//= require nprogress-turbolinks
+
+/* Paste this css to your style sheet file or under head tag */
+/* This only works with JavaScript, 
+if it's not present, don't show loader */
+
+	NProgress.configure({
+		showSpinner: false,
+		ease: 'ease',
+		speed: 500
+	});
+
+
