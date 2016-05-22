@@ -4,6 +4,7 @@ require "net/http"
 require "uri"
 
 class HomeController < ApplicationController
+	protect_from_forgery except: :exam
 
 	def login
 		if params[:commit] == "Submit" &&  params[:sid].to_s.length == 9 && params[:semester].to_s.length == 1  && params[:year].to_s.length == 2
@@ -124,7 +125,7 @@ class HomeController < ApplicationController
 					end
 				else
 				 #puts "nothing"
-				 str += "Unknow"
+				 str += "-"
 				end
 				
 
@@ -207,24 +208,100 @@ class HomeController < ApplicationController
 		 @color = Array["#FF6138","#DA9844","#2B4C8C","#644D52","#00A388","#F25F5C","#247BA0","#A6937C","#332532","#0D1326"]
 		 @color_tab = "#212121"
 		 @color_blank = "#424242"
-
-		end
-
-		def examschedule
-			if session[:semester] == nil
-				redirect_to "/login"
-			end
-		end
-
-		def help
-			if session[:semester] == nil
-				redirect_to "/login"
-			end
-		end
-
-		def contact
-			if session[:semester] == nil
-				redirect_to "/login"
-			end
-		end
 	end
+
+	def exam
+		if session[:semester] == nil
+			redirect_to "/login"
+		end
+
+		semester=session[:semester]
+		year=session[:year]
+		sid=session[:sid]
+		
+
+		url = "https://www3.reg.cmu.ac.th/regist" + semester.to_s+year.to_s + "/public/result.php?id=" + sid.to_s
+		uri = URI.parse("https://www3.reg.cmu.ac.th/regist" + semester.to_s+year.to_s + "/public/search.php?act=search")
+		url_final = "https://www3.reg.cmu.ac.th/regist/public/exam.php?type=FINAL&term="+semester.to_s+year.to_s
+		
+
+		infor = Nokogiri::HTML(open(url))
+		data = infor.css('.msan8')
+
+		#regular data
+		regular = Nokogiri::HTML(open(url_final))
+		regulars = regular.css('tr')
+
+		# regulars.each do |r|
+		# 	puts "|"+r.css('td div')[0].text+"|"
+		# end
+		data.each do |d|
+			if !(d.css('td')[2].text == "TITLE" || d.css('td')[2].text == "LEC") && year.to_i>=58
+
+		    	#find exam date/time
+		    	form={"s_course1" => d.css('td')[1].text, "s_lec1" => d.css('td')[3].text, "s_lab1" => d.css('td')[4].text, "op" => "bycourse"}
+		    	response = Net::HTTP.post_form(uri, form)
+
+		    	exam_dt = Nokogiri::HTML(response.body)
+		    	exam_dts = exam_dt.css('td')
+
+		    	# exam_dts.each do |e|
+		    	# 	puts e.text
+		    	# end
+
+		    	if exam_dts[2]
+		    		puts exam_dts[2].text.delete(' ')
+		    	end
+
+		    	if exam_dts[11].text == ''
+		    		puts "MID"
+		    		puts "-"
+		    		puts "-"
+		    		puts "Final"
+		    		puts "-"
+		    		puts "-"
+		    	else
+		    		puts "MID"
+		    		if exam_dts[11].css('gray').text != ''
+		    			puts exam_dts[11].css('gray').text
+		    			puts exam_dts[12].css('gray').text
+		    		else
+		    			puts "-"
+		    			puts "-"
+		    		end
+
+		    		puts "Final"
+		    		if exam_dts[11].css('p').text != ''
+		    			if exam_dts[11].css('p').text ==  "REGULAR"
+		    				regulars.each do |r|
+		    					# puts "**"+exam_dts[7].text + "|"+ r.css('td div')[0].text+ "|"
+		    					# puts "**"+exam_dts[8].text[0,4] + "|"+ r.css('td div')[1].text+ "|"
+		    					if exam_dts[7].text==r.css('td div')[0].text.delete(' ') && exam_dts[8].text[0,4]==r.css('td div')[1].text   # [7]=day [8]=time
+									#puts r.css('td div')[0].text #study date
+									#puts r.css('td div')[1].text #study time
+									#puts "------"
+									puts r.css('td div')[4].text + " " + r.css('td div')[3].text # date
+			    					puts r.css('td div')[5].text #time
+			    					break
+		    					end
+							end
+		    			else
+		    				puts exam_dts[11].css('p').text
+		    				puts exam_dts[12].css('p').text
+		    			end
+		    		else
+		    			puts "-"
+		    			puts "-"
+		    		end
+		    	end
+		    		
+		    	puts "---------"
+
+			end
+		end
+
+	end
+
+end
+
+

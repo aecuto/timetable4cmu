@@ -3,9 +3,7 @@ Rails.application.routes.draw do
   root 'home#index'
 
   get 'timetable' => 'home#timetable'
-  get 'examschedule' => 'home#examschedule'
-  get 'help' => 'home#help'
-  get 'contact' => 'home#contact'
+  get 'exam' => 'home#exam'
   get 'login' => 'home#login'
   get 'logout' => 'home#logout'
 
