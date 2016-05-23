@@ -1,5 +1,114 @@
 <% content_for :menu do %>
-<li><a href="\timetable">Timetable</a></li>
-<li class="active"><a href="\exam">Exam</a></li>
-<% end %>           
-<h1>Exam schedule</h1>
+<li><a href="timetable">Timetable</a></li>
+<li class="active"><a href="#">Exam</a></li>
+<% end %> 
+
+<% name=["Midterm Exam","Final Exam"]%>
+<% icon=["leaf","fire"]%>
+<% k=0 %>
+<% @exam_arr.each do |e| %>
+<h1><%= name[k] %> <span class="glyphicon glyphicon-<%= icon[k] %>"></span></h1>
+<% k+=1 %>
+
+<div class="table-responsive">
+	<table class="table" style="table-layout: fixed; min-width: 720px;">
+		<thead>
+			<th bgcolor="<%= @color_tab %>" class="text-center" style="vertical-align: middle;">DAY</th>
+			<th bgcolor="<%= @color_tab %>" class="text-center" style="vertical-align: middle;">08:00-11:00</th>
+			<th bgcolor="<%= @color_tab %>" class="text-center" style="vertical-align: middle;">12:00-15:00</th>
+			<th bgcolor="<%= @color_tab %>" class="text-center" style="vertical-align: middle;">15:30-18:30</th>
+		</thead>
+		<tbody>
+
+			<% old_day = nil %>
+			<% old_day_arr = Array.new %>
+			<% count=0 %>
+			<% time_check = Array["08","12","15"]%>
+
+
+			<!-- find max day -->
+
+			<% e.each do |m|%>
+
+			<% data = m.split("\0") %>
+
+				<% if data[0][0,2] != "32" %>
+
+					<% if data[0][0,2] != old_day %>
+					<!-- <td><%= data[0][0,6] %></td> -->
+					<% old_day = data[0][0,2] %>
+					<% old_day_arr[count] = data[0][0,2] %>
+					<% count+=1 %>
+					<% end %>
+
+				<% end %>
+
+			<% end %>
+
+
+			<!-- display -->
+			<% j=0 %>
+			<% while j<count %>
+			<% i=0 %>
+			<% found = true %>
+			<tr>
+
+				<% e.each do |m|%>
+
+				<% data = m.split("\0") %>
+
+				<% if data[0][0,2] != "32" %>
+
+					<% if found && data[0][0,2] == old_day_arr[j] %>
+					<% found=false %>
+					<td bgcolor="<%= @color_tab %>" class="text-center" style="vertical-align: middle;"><%= data[0][0,6] %></td>
+					<% end %>
+
+					<% if old_day_arr[j] ==data[0][0,2] %>
+						<% while i<time_check.length %>
+							<% if data[1][0,2] == time_check[i] %>
+							<td bgcolor="<%= @color_blank %>" class="text-center" style="vertical-align: middle;"><%= data[2] %></td>
+							<% i+=1 %>
+							<% break %>
+							<% else %>
+							<td bgcolor="<%= @color_blank %>" ></td>
+							<% i+=1 %>
+							<% end %>
+						<% end %>
+					<% end %>
+
+				<% end %> 
+
+				<% end %>
+
+				<% if i==1 %>
+				<td bgcolor="<%= @color_blank %>"></td>
+				<td bgcolor="<%= @color_blank %>"></td>
+				<% end %>
+
+				<% if i==2 %>
+				<td bgcolor="<%= @color_blank %>"></td>
+				<% end %>
+
+			</tr>
+			<% j+=1 %>
+			<% end %>
+
+		</tbody>
+
+	</table>
+</div>
+
+<hr>
+
+<% end %>
+
+
+<!-- 	<% @mid.each do |m| %>
+	<% data=m.split("\0") %>
+	<% data.each do |d| %>
+	<p><%= d %></p>
+	<% end %>
+	<p>---------</p>
+	<% end %> -->
+

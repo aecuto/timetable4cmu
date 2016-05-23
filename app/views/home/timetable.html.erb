@@ -1,10 +1,10 @@
 <% content_for :menu do %>
-<li class="active"><a href="\timetable">Timetable</a></li>
-<li><a href="\exam">Exam</a></li>
+<li class="active"><a href="#">Timetable</a></li>
+<li><a href="exam">Exam</a></li>
 <% end %>           
 
 
-<h1>Timetable</h1>
+<h1> <span class="glyphicon glyphicon-time"></span> Timetable</h1>
 
 
 <!-- find index time -->
@@ -75,7 +75,14 @@
 
 				<!-- set color index -->
 				<% colspan_use = ( ((data[1][0,2].to_i*60)+data[1][2,4].to_i) - ((data[0][0,2].to_i*60)+data[0][2,4].to_i) )/30 %>
-				<td bgcolor="<%= @color[@courses.index(data[4])]%>" colspan="<%= colspan_use %>" class="text-center" style="vertical-align: middle;"> <%= data[4] %><br><%= data[3] %><br><%= data[5] %>-<%= data[6] %><br> <strong><%= data[7] %></strong></td>
+				<td bgcolor="<%= @color[@courses.index(data[4])]%>" colspan="<%= colspan_use %>" class="text-center" style="vertical-align: middle;">
+				 <%= data[3] %><br>
+				 <%= data[5] %>-<%= data[6] %> <br>
+				 <span class="glyphicon glyphicon-education"></span>
+				 <%= data[4] %>
+				 <span class="glyphicon glyphicon-map-marker"></span>
+				 <strong><%= data[7] %></strong>
+				 </td>
 				<!-- <p>use = <%= colspan_use %></p> -->
 				<% old_time=data[0] #check same day%>
 
