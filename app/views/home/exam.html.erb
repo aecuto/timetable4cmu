@@ -3,7 +3,7 @@
 <li class="active"><a href="#">Exam</a></li>
 <% end %> 
 
-<% name=["Midterm Exam","Final Exam"]%>
+<% name=["Mid Exam","Final Exam"]%>
 <% icon=["leaf","fire"]%>
 <% k=0 %>
 <% @exam_arr.each do |e| %>
@@ -11,7 +11,7 @@
 <% k+=1 %>
 
 <div class="table-responsive">
-	<table class="table" style="table-layout: fixed; min-width: 720px;">
+	<table class="table" style="table-layout: fixed; min-width: 960px;">
 		<thead>
 			<th bgcolor="<%= @color_tab %>" class="text-center" style="vertical-align: middle;">DAY</th>
 			<th bgcolor="<%= @color_tab %>" class="text-center" style="vertical-align: middle;">08:00-11:00</th>

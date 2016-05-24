@@ -28,9 +28,10 @@ class HomeController < ApplicationController
 		if session[:semester] == nil
 			redirect_to "/login"
 		end
+
 	end
 
-
+	#571210118
 	def timetable
 		if session[:semester] == nil
 			redirect_to "/login"
@@ -78,7 +79,7 @@ class HomeController < ApplicationController
 		    		str2 += d.css('td')[7].css('font').text + "\0"
 		    	else
 		    		#puts "Day: " + d.css('td > text()')[7].text
-		    		str += d.css('td > text()')[7].text + "\0"
+		    		str += d.css('td > text()')[7].text.remove('-') + "\0"
 		    	end
 
 
@@ -192,7 +193,7 @@ class HomeController < ApplicationController
 		 # value for html
 		 @time = Array["0600","0700","0800","0900","1000","1100","1200","1300","1400","1500","1600","1700","1800","1900","2000","2100","2200","2300","2400"]
 		 @day = Array["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]
-		 @day1 = Array["MTh","TuF","We", "MTh","TuF","SaSu",""]
+		 @day1 = Array["M","T","W", "Th","F","Sa","Su"]
 		 @day2 = Array["Mo","Tu","We", "Th","Fr","Sa","Su"]
 		 @color = Array["#FF6138","#DA9844","#2B4C8C","#644D52","#00A388","#F25F5C","#247BA0","#A6937C","#332532","#0D1326"]
 		 @color_tab = "#212121"

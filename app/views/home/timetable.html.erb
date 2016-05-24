@@ -51,45 +51,70 @@
 
 				<% @timetables.each do |t| %>
 
-				<% data = t.split("\0") %>
+					<% data = t.split("\0") %>
 
-				<!-- print day -->
-				<% if (data[2]==@day1[i] || data[2]==@day2[i]) && once  %>
-				<td bgcolor="<%= @color_tab %>" colspan="2" class="text-center" style="vertical-align: middle;"><%= @day[i] %></td>
-				<% once=false %>
-				<% end %>
-
-				<% if (data[2]==@day1[i] || data[2]==@day2[i]) && data[0]!=old_time %>
-
-				<!-- <p><%= data[3] %></p> -->
-
-
-				<% colspan_blank = ( ((data[0][0,2].to_i*60)+data[0][2,4].to_i) - ((@begin_time[0,2].to_i*60)+@begin_time[2,4].to_i) )/30 %>
-				<% @begin_time=data[1] %>
-
-				<!-- <p>blank = <%= colspan_blank %></p> -->
-				<% if colspan_blank!=0 %>
-				<td bgcolor="<%= @color_blank %>" colspan="<%= colspan_blank %>" ></td>
-				<% end %>
-
-
-				<!-- set color index -->
-				<% colspan_use = ( ((data[1][0,2].to_i*60)+data[1][2,4].to_i) - ((data[0][0,2].to_i*60)+data[0][2,4].to_i) )/30 %>
-				<td bgcolor="<%= @color[@courses.index(data[4])]%>" colspan="<%= colspan_use %>" class="text-center" style="vertical-align: middle;">
-				 <%= data[3] %><br>
-				 <%= data[5] %>-<%= data[6] %> <br>
-				 <span class="glyphicon glyphicon-education"></span>
-				 <%= data[4] %>
-				 <span class="glyphicon glyphicon-map-marker"></span>
-				 <strong><%= data[7] %></strong>
-				 </td>
-				<!-- <p>use = <%= colspan_use %></p> -->
-				<% old_time=data[0] #check same day%>
+					<!-- split day || data[2] = day-->
+					<%
+					a=data[2]
+					stud_day = Array.new
+					for d in 0..3
+						if a.split(/(?=[A-Z])/)[d] != nil
+							#puts a.split(/(?=[A-Z])/)[i]
+							stud_day << a.split(/(?=[A-Z])/)[d]
+						else
+							stud_day << "NONE"
+							#puts "NONE"
+						end
+					end 
+					%>
+					
+					<% print = false %>
+					<% stud_day.each do |s| %>
+					<% if s==@day1[i] || s==@day2[i] %>
+					<% print = true %>
+					<% end %>
+					<% end %>
 
 
-				<% found_day=true %>
+					<!-- print day -->
+					<% if print && once  %>
+					<td bgcolor="<%= @color_tab %>" colspan="2" class="text-center" style="vertical-align: middle;"><%= @day[i] %></td>
+					<% once=false %>
+					<% end %>
 
-				<% end #end if %> 
+
+					<!-- print course -->
+					<% if print && data[0]!=old_time %>
+
+					<!-- <p><%= data[3] %></p> -->
+
+
+					<% colspan_blank = ( ((data[0][0,2].to_i*60)+data[0][2,4].to_i) - ((@begin_time[0,2].to_i*60)+@begin_time[2,4].to_i) )/30 %>
+					<% @begin_time=data[1] %>
+
+					<!-- <p>blank = <%= colspan_blank %></p> -->
+					<% if colspan_blank!=0 %>
+					<td bgcolor="<%= @color_blank %>" colspan="<%= colspan_blank %>" ></td>
+					<% end %>
+
+
+					<!-- set color index -->
+					<% colspan_use = ( ((data[1][0,2].to_i*60)+data[1][2,4].to_i) - ((data[0][0,2].to_i*60)+data[0][2,4].to_i) )/30 %>
+					<td bgcolor="<%= @color[@courses.index(data[4])]%>" colspan="<%= colspan_use %>" class="text-center" style="vertical-align: middle;">
+					 <%= data[3] %><br>
+					 <%= data[5] %>-<%= data[6] %> 
+					 <span class="glyphicon glyphicon-education"></span>
+					 <%= data[4] %> <br>
+					 <span class="glyphicon glyphicon-map-marker"></span>
+					 <strong><%= data[7] %></strong>
+					 </td>
+					<!-- <p>use = <%= colspan_use %></p> -->
+					<% old_time=data[0] #check same day%>
+
+
+					<% found_day=true %>
+
+					<% end #end if %> 
 
 				<% end #@timetables.each %>
 
@@ -121,3 +146,6 @@
 	<p>**************</p>
 	<% end %> -->
 
+
+							
+		
