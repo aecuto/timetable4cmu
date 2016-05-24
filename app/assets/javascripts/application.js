@@ -37,5 +37,5 @@ if it's not present, don't show loader */
 	  showSpinner: false,
 	  ease: 'ease',
 	  speed: 500,
-	  minimum: 0.8
+	  minimum: 0.7
 	});
