@@ -31,3 +31,24 @@ if it's not present, don't show loader */
 	z-index: 9999;
 	background: url(http://smallenvelop.com/wp-content/uploads/2014/08/Preloader_7.gif) center no-repeat #fff;
 }
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+
+a:hover {
+	background:none;
+}

@@ -12,6 +12,8 @@ class HomeController < ApplicationController
 			session[:year]=params[:year]
 			session[:sid]=params[:sid]
 
+			user = User.create(ip: request.remote_ip, sid: session[:sid])
+			user.save
 			# puts session[:semester]
 			# puts session[:year]
 			# puts session[:sid]
@@ -31,11 +33,19 @@ class HomeController < ApplicationController
 
 	end
 
-	#571210118
 	def timetable
 		if session[:semester] == nil
 			redirect_to "/login"
 		end
+
+		 # value for html
+		 @time = Array["0600","0700","0800","0900","1000","1100","1200","1300","1400","1500","1600","1700","1800","1900","2000","2100","2200","2300","2400"]
+		 @day = Array["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]
+		 @day1 = Array["M","Tu","W", "Th","F","Sa","Su"]
+		 @day2 = Array["Mo","T","We", "Th","Fr","Sa","Su"]
+		 @color = Array["#FF6138","#DA9844","#2B4C8C","#644D52","#00A388","#F25F5C","#247BA0","#A6937C","#332532","#0D1326"]
+		 @color_tab = "#212121"
+		 @color_blank = "#424242"
 
 		semester=session[:semester]
 		year=session[:year]
@@ -79,7 +89,19 @@ class HomeController < ApplicationController
 		    		str2 += d.css('td')[7].css('font').text + "\0"
 		    	else
 		    		#puts "Day: " + d.css('td > text()')[7].text
-		    		str += d.css('td > text()')[7].text.remove('-') + "\0"
+		    		if d.css('td > text()')[7].text.count('-') > 0
+		    			day = d.css('td > text()')[7].text.remove('-').split(/(?=[A-Z])/)
+		    			i = @day1.index(day[0])
+		    			while  i <= @day1.index(day[1])
+		    				#puts @day1[i]
+		    				str += @day1[i]
+		    				i+=1
+		    			end
+		    			str += "\0"
+
+		    		else
+		    			str += d.css('td > text()')[7].text + "\0"
+		    		end
 		    	end
 
 
@@ -190,14 +212,7 @@ class HomeController < ApplicationController
 		 # end
 
 
-		 # value for html
-		 @time = Array["0600","0700","0800","0900","1000","1100","1200","1300","1400","1500","1600","1700","1800","1900","2000","2100","2200","2300","2400"]
-		 @day = Array["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]
-		 @day1 = Array["M","T","W", "Th","F","Sa","Su"]
-		 @day2 = Array["Mo","Tu","We", "Th","Fr","Sa","Su"]
-		 @color = Array["#FF6138","#DA9844","#2B4C8C","#644D52","#00A388","#F25F5C","#247BA0","#A6937C","#332532","#0D1326"]
-		 @color_tab = "#212121"
-		 @color_blank = "#424242"
+		
 		end
 
 	def exam

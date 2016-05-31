@@ -57,7 +57,7 @@
 					<%
 					a=data[2]
 					stud_day = Array.new
-					for d in 0..3
+					for d in 0..6
 						if a.split(/(?=[A-Z])/)[d] != nil
 							#puts a.split(/(?=[A-Z])/)[i]
 							stud_day << a.split(/(?=[A-Z])/)[d]
@@ -67,11 +67,12 @@
 						end
 					end 
 					%>
-					
+
 					<% print = false %>
 					<% stud_day.each do |s| %>
 					<% if s==@day1[i] || s==@day2[i] %>
 					<% print = true %>
+					<% break %>
 					<% end %>
 					<% end %>
 
