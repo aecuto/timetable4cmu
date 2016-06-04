@@ -7,20 +7,32 @@
 
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6";
-  fjs.parentNode.insertBefore(js, fjs);
+	var js, fjs = d.getElementsByTagName(s)[0];
+	if (d.getElementById(id)) return;
+	js = d.createElement(s); js.id = id;
+	js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6";
+	fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
+
+<style>
+	.fb_iframe_widget{overflow: hidden;}
+	.fb_ltr{margin-bottom: -20px;}
+</style>
 
 
 <h1>Comments <span class="glyphicon glyphicon-comment"></span></h1>
 
 <hr>
 <div class="row">
-  <div class="col-md-12 text-center">
-  	<div class="fb-comments" data-href="https://helpers4cmu.herokuapp.com/" data-numposts="5" data-colorscheme="dark" data-order-by="reverse_time"></div>
-  </div>
+	<div class="col-md-12 text-center">
+		<div class="fb-comments" data-href="https://helpers4cmu.herokuapp.com/" data-numposts="5" data-colorscheme="dark" data-order-by="reverse_time"></div>
+	</div>
+
+	<div class="col-md-12 text-center">
+		<div class="fb-follow" data-href="https://www.facebook.com/KampeeTonOi.Aecute" data-layout="button_count" data-show-faces="true"></div>
+		<div class="fb-like" data-href="https://helpers4cmu.herokuapp.com" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+	</div>
 </div>
+
+
 

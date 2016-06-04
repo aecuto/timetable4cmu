@@ -25,6 +25,8 @@
 
   <link href='https://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>
 
+  <meta property="og:image" content="<%= image_path("timetable.png") %>" />
+
 
 
 </head>
@@ -63,15 +65,12 @@
 
 <footer class="footer">
 <div class="container">
-
-<div class="row">
-  <div class="col-md-6 text-left">
-  <p class="text-muted">Create by : <a class="text-warning" href="https://www.facebook.com/KampeeTonOi.Aecute" target="_blank">Kampee Ton-Oi</a></p>
-  </div>
-  <div class="col-md-6 text-right">
-  <p class="text-muted">Visitor : <%= User.count('id') %></p>
-  </div>
-</div>
+  <table class="table" >
+  <tbody>
+    <td class="text-muted text-left" style=" border-style:none;">Create by : <a class="text-warning" href="https://www.facebook.com/KampeeTonOi.Aecute" target="_blank">Kampee Ton-Oi</a></td>
+    <td class="text-muted text-right" style=" border-style:none;"> Visitor : <%= User.count('id') %> </td>
+  </tbody>
+  </table>
 </div>
 </footer>
 
