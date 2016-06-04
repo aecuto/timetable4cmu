@@ -67,8 +67,13 @@
 <div class="container">
   <table class="table" >
   <tbody>
-    <td class="text-muted text-left" style=" border-style:none;">Create by : <a class="text-warning" href="https://www.facebook.com/KampeeTonOi.Aecute" target="_blank">Kampee Ton-Oi</a></td>
-    <td class="text-muted text-right" style=" border-style:none;"> Visitor : <%= User.count('id') %> </td>
+    <td class="text-muted text-left" style=" border-style:none;">
+    <span class="glyphicon glyphicon-thumbs-up"></span> 
+    <a class="text-warning" href="https://www.facebook.com/KampeeTonOi.Aecute" target="_blank"> Kampee Ton-Oi</a></td>
+    <td class="text-muted text-right" style=" border-style:none;">
+    <span class="glyphicon glyphicon-user"></span> 
+    <a href="#"> <%= User.count('id') %> </a>
+    </td>
   </tbody>
   </table>
 </div>
