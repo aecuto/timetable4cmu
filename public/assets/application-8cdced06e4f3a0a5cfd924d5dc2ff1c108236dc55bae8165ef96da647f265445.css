@@ -1,0 +1,225 @@
+/* Make clicks pass-through */
+/* line 6, /home/expertly/.rvm/gems/ruby-2.2.1/gems/nprogress-rails-0.1.6.7/app/assets/stylesheets/nprogress.scss */
+#nprogress {
+  pointer-events: none;
+}
+
+/* line 10, /home/expertly/.rvm/gems/ruby-2.2.1/gems/nprogress-rails-0.1.6.7/app/assets/stylesheets/nprogress.scss */
+#nprogress .bar {
+  background: #FFFFFF;
+  position: fixed;
+  z-index: 10100;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+}
+
+/* Fancy blur effect */
+/* line 23, /home/expertly/.rvm/gems/ruby-2.2.1/gems/nprogress-rails-0.1.6.7/app/assets/stylesheets/nprogress.scss */
+#nprogress .peg {
+  display: block;
+  position: absolute;
+  right: 0px;
+  width: 100px;
+  height: 100%;
+  box-shadow: 0 0 10px #FFFFFF, 0 0 5px #FFFFFF;
+  opacity: 1.0;
+  -webkit-transform: rotate(3deg) translate(0px, -4px);
+  -ms-transform: rotate(3deg) translate(0px, -4px);
+  transform: rotate(3deg) translate(0px, -4px);
+}
+
+/* Remove these to get rid of the spinner */
+/* line 38, /home/expertly/.rvm/gems/ruby-2.2.1/gems/nprogress-rails-0.1.6.7/app/assets/stylesheets/nprogress.scss */
+#nprogress .spinner {
+  display: block;
+  position: fixed;
+  z-index: 10100;
+  top: 15px;
+  right: 15px;
+}
+
+/* line 46, /home/expertly/.rvm/gems/ruby-2.2.1/gems/nprogress-rails-0.1.6.7/app/assets/stylesheets/nprogress.scss */
+#nprogress .spinner-icon {
+  width: 18px;
+  height: 18px;
+  box-sizing: border-box;
+  border: solid 2px transparent;
+  border-top-color: #FFFFFF;
+  border-left-color: #FFFFFF;
+  border-radius: 50%;
+  -webkit-animation: nprogress-spinner 400ms linear infinite;
+  animation: nprogress-spinner 400ms linear infinite;
+}
+
+/* line 60, /home/expertly/.rvm/gems/ruby-2.2.1/gems/nprogress-rails-0.1.6.7/app/assets/stylesheets/nprogress.scss */
+.nprogress-custom-parent {
+  overflow: hidden;
+  position: relative;
+}
+
+/* line 65, /home/expertly/.rvm/gems/ruby-2.2.1/gems/nprogress-rails-0.1.6.7/app/assets/stylesheets/nprogress.scss */
+.nprogress-custom-parent #nprogress .spinner,
+.nprogress-custom-parent #nprogress .bar {
+  position: absolute;
+}
+
+@-webkit-keyframes nprogress-spinner {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+@keyframes nprogress-spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+/* line 1, /home/expertly/.rvm/gems/ruby-2.2.1/gems/nprogress-rails-0.1.6.7/app/assets/stylesheets/nprogress-bootstrap.css */
+#nprogress .bar,
+#nprogress .spinner {
+  z-index: 999999;
+}
+/* line 1, /home/expertly/Documents/Ruby/helpers4cmu/app/assets/stylesheets/scaffolds.scss */
+body {
+  background-color: #fff;
+  color: #333;
+  font-family: verdana, arial, helvetica, sans-serif;
+  font-size: 13px;
+  line-height: 18px;
+}
+
+/* line 9, /home/expertly/Documents/Ruby/helpers4cmu/app/assets/stylesheets/scaffolds.scss */
+p, ol, ul, td {
+  font-family: verdana, arial, helvetica, sans-serif;
+  font-size: 13px;
+  line-height: 18px;
+}
+
+/* line 15, /home/expertly/Documents/Ruby/helpers4cmu/app/assets/stylesheets/scaffolds.scss */
+pre {
+  background-color: #eee;
+  padding: 10px;
+  font-size: 11px;
+}
+
+/* line 21, /home/expertly/Documents/Ruby/helpers4cmu/app/assets/stylesheets/scaffolds.scss */
+a {
+  color: #000;
+}
+/* line 24, /home/expertly/Documents/Ruby/helpers4cmu/app/assets/stylesheets/scaffolds.scss */
+a:visited {
+  color: #666;
+}
+/* line 28, /home/expertly/Documents/Ruby/helpers4cmu/app/assets/stylesheets/scaffolds.scss */
+a:hover {
+  color: #fff;
+  background-color: #000;
+}
+
+/* line 35, /home/expertly/Documents/Ruby/helpers4cmu/app/assets/stylesheets/scaffolds.scss */
+div.field, div.actions {
+  margin-bottom: 10px;
+}
+
+/* line 40, /home/expertly/Documents/Ruby/helpers4cmu/app/assets/stylesheets/scaffolds.scss */
+#notice {
+  color: green;
+}
+
+/* line 44, /home/expertly/Documents/Ruby/helpers4cmu/app/assets/stylesheets/scaffolds.scss */
+.field_with_errors {
+  padding: 2px;
+  background-color: red;
+  display: table;
+}
+
+/* line 50, /home/expertly/Documents/Ruby/helpers4cmu/app/assets/stylesheets/scaffolds.scss */
+#error_explanation {
+  width: 450px;
+  border: 2px solid red;
+  padding: 7px;
+  padding-bottom: 0;
+  margin-bottom: 20px;
+  background-color: #f0f0f0;
+}
+/* line 58, /home/expertly/Documents/Ruby/helpers4cmu/app/assets/stylesheets/scaffolds.scss */
+#error_explanation h2 {
+  text-align: left;
+  font-weight: bold;
+  padding: 5px 5px 5px 15px;
+  font-size: 12px;
+  margin: -7px;
+  margin-bottom: 0px;
+  background-color: #c00;
+  color: #fff;
+}
+/* line 69, /home/expertly/Documents/Ruby/helpers4cmu/app/assets/stylesheets/scaffolds.scss */
+#error_explanation ul li {
+  font-size: 12px;
+  list-style: square;
+}
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+
+
+ */
+
+ 
+ *= require nprogress
+ *= require nprogress-bootstrap
+
+/* Paste this css to your style sheet file or under head tag */
+/* This only works with JavaScript, 
+if it's not present, don't show loader */
+.no-js #loader { display: none;  }
+.js #loader { display: block; position: absolute; left: 100px; top: 0; }
+.se-pre-con {
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+	z-index: 9999;
+	background: url(http://smallenvelop.com/wp-content/uploads/2014/08/Preloader_7.gif) center no-repeat #fff;
+}
+
+a:hover {
+	background:none;
+}
+
+
+* {
+  margin: 0;
+}
+html, body {
+  height: 100%;
+}
+.page-wrap {
+  min-height: 100%;
+  /* equal to footer height */
+  margin-bottom: -20px; 
+}
+.page-wrap:after {
+  content: "";
+  display: block;
+}
+.site-footer, .page-wrap:after {
+  height: 20px; 
+}
