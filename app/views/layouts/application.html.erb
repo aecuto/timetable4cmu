@@ -11,6 +11,7 @@
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="height=device-height, initial-scale=1">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
   <script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
 
@@ -64,7 +65,11 @@
 
 <br><br>
 
-<div class="container"><%= yield %></div>
+<div id="wrap">
+  <div id="main" class="container clear-top">
+    <%= yield %>
+  </div>
+</div>
 
 <footer class="footer">
 <div class="container">
