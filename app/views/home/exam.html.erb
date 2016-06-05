@@ -3,72 +3,6 @@
 <li class="active"><a href="#">Exam</a></li>
 <% end %> 
 
-<%
-		month = Array["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC","NNN"]
-
-		# @mid.each do |m|
-		# 	data = m.split("\0")
-		# 	data.each do |d|
-		# 		puts d
-		# 	end
-		# 	puts "----"
-		# end
-
-		@exam_arr = Array[@mid,@final]
-
-		# order
-		#e = @mid
-		@exam_arr.each do |e|
-			#order month
-			i=0
-			j=0
-			while i < e.length
-				while j < e.length
-					#puts month.index(e[i][3,4].delete(' ')).to_i
-					#puts month.index(e[j][3,4].delete(' ')).to_i
-					if month.index(e[i][3,4].delete(' ')).to_i < month.index(e[j][3,4].delete(' ')).to_i
-						
-			 			e[i], e[j] = e[j], e[i]
-			 		end
-			 		j+=1
-			 	end
-			 	i+=1
-			 	j=0
-			end
-
-			#order day
-			i=0
-			j=0
-			while i < e.length
-				while j < e.length
-					if (e[i][3,4].delete(' ') == e[j][3,4].delete(' ')) && e[i][0,2] < e[j][0,2]
-						#puts month.index(e[i][3,4].delete(' ')).to_i
-						#puts month.index(e[j][3,4].delete(' ')).to_i
-			 			e[i], e[j] = e[j], e[i]
-			 		end
-			 		j+=1
-			 	end
-			 	i+=1
-			 	j=0
-			end
-
-			#order time
-			i=0
-			j=0
-			while i < e.length
-				while j < e.length
-					if (e[i][11,3] < e[j][11,3]) && (e[i][3,4].delete(' ') == e[j][3,4].delete(' ')) && (e[i][0,2] == e[j][0,2])
-						#puts month.index(e[i][3,4].delete(' ')).to_i
-						#puts month.index(e[j][3,4].delete(' ')).to_i
-			 			e[i], e[j] = e[j], e[i]
-			 		end
-			 		j+=1
-			 	end
-			 	i+=1
-			 	j=0
-			end
-		end #end order month/day/time for exam mid/final
-%>
 
 <% name=["Mid Exam","Final Exam"]%>
 <% icon=["leaf","fire"]%>
@@ -169,13 +103,4 @@
 <hr>
 
 <% end %>
-
-
-<!-- 	<% @mid.each do |m| %>
-	<% data=m.split("\0") %>
-	<% data.each do |d| %>
-	<p><%= d %></p>
-	<% end %>
-	<p>---------</p>
-	<% end %> -->
 
