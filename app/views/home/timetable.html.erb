@@ -1,3 +1,11 @@
+<style>
+	td{
+		vertical-align: middle; 
+		font-family: 'Oxygen', sans-serif;
+		font-size: 100%;
+	}
+</style>
+
 <% content_for :menu do %>
 <li class="active"><a href="#">Timetable</a></li>
 <li><a href="exam">Exam</a></li>
@@ -25,9 +33,10 @@
 <p><%= index_time %></p>
 <p><%= end_index_time %></p> -->
 
+
 <!-- style="table-layout: fixed;" -->
-<div class="table-responsive">
-	<table class="table" style="table-layout: fixed; min-width: 1280px;">
+<div class="table-responsive" >
+	<table class="table" id="table2image" style="table-layout: fixed; min-width: 1280px;" >
 		<thead>
 			<tr>
 
@@ -51,14 +60,14 @@
 
 				<% @timetables.each do |t| %>
 
-					<% data = t.split("\0") %>
+				<% data = t.split("\0") %>
 
-					<!-- split day || data[2] = day-->
-					<%
-					a=data[2]
-					stud_day = Array.new
-					for d in 0..6
-						if a.split(/(?=[A-Z])/)[d] != nil
+				<!-- split day || data[2] = day-->
+				<%
+				a=data[2]
+				stud_day = Array.new
+				for d in 0..6
+					if a.split(/(?=[A-Z])/)[d] != nil
 							#puts a.split(/(?=[A-Z])/)[i]
 							stud_day << a.split(/(?=[A-Z])/)[d]
 						else
@@ -76,15 +85,15 @@
 					<% end %>
 					<% end %>
 
-
+					
 					<!-- print day -->
 					<% if print && once  %>
-					<td bgcolor="<%= @color_tab %>" colspan="2" class="text-center" style="vertical-align: middle;"><%= @day[i] %></td>
+					<td bgcolor="<%= @color_tab %>" colspan="2" class="text-center" ><%= @day[i] %></td>
 					<% once=false %>
 					<% end %>
 
 
-					<!-- print course -->
+					<!-- before print course -->
 					<% if print && data[0]!=old_time %>
 
 					<!-- <p><%= data[3] %></p> -->
@@ -95,20 +104,22 @@
 
 					<!-- <p>blank = <%= colspan_blank %></p> -->
 					<% if colspan_blank!=0 %>
-					<td bgcolor="<%= @color_blank %>" colspan="<%= colspan_blank %>" ></td>
+					<td bgcolor="<%= @color_blank %>" colspan="<%= colspan_blank %>"></td>
 					<% end %>
 
 
 					<!-- set color index -->
 					<% colspan_use = ( ((data[1][0,2].to_i*60)+data[1][2,4].to_i) - ((data[0][0,2].to_i*60)+data[0][2,4].to_i) )/30 %>
-					<td bgcolor="<%= @color[@courses.index(data[4])]%>" colspan="<%= colspan_use %>" class="text-center" style="vertical-align: middle;">
-					 <%= data[3] %><br>
-					 <%= data[5] %>-<%= data[6] %> 
-					 <span class="glyphicon glyphicon-education"></span>
-					 <%= data[4] %> <br>
-					 <span class="glyphicon glyphicon-map-marker"></span>
-					 <strong><%= data[7] %></strong>
-					 </td>
+
+					<!-- print course -->
+					<td bgcolor="<%= @color[@courses.index(data[4])]%>" colspan="<%= colspan_use %>" class="text-center" >
+						<%= data[3] %><br>
+						<%= data[5] %>-<%= data[6] %> 
+						<span class="glyphicon glyphicon-education"></span>
+						<%= data[4] %> <br>
+						<span class="glyphicon glyphicon-map-marker"></span>
+						<strong><%= data[7] %></strong>
+					</td>
 					<!-- <p>use = <%= colspan_use %></p> -->
 					<% old_time=data[0] #check same day%>
 
@@ -117,28 +128,74 @@
 
 					<% end #end if %> 
 
-				<% end #@timetables.each %>
+					<% end #@timetables.each %>
 
 
-				<!-- add blank to end table -->
-				<% colspan_blank = ( ((@time[index_time][0,2].to_i*60)+@time[index_time][2,4].to_i) - ((@begin_time[0,2].to_i*60)+@begin_time[2,4].to_i) )/30 %>
+					<!-- add blank to end table -->
+					<% colspan_blank = ( ((@time[index_time][0,2].to_i*60)+@time[index_time][2,4].to_i) - ((@begin_time[0,2].to_i*60)+@begin_time[2,4].to_i) )/30 %>
 
-				<% if colspan_blank!=0 && found_day %>
-				<td bgcolor="<%= @color_blank %>" colspan="<%= colspan_blank %>" ></td>
+					<% if colspan_blank!=0 && found_day %>
+					<td bgcolor="<%= @color_blank %>" colspan="<%= colspan_blank %>"></td>
+					<% end %>
+
+
+
+				</tr>
 				<% end %>
 
+			</tbody>
+
+		</table>
+	</div>
 
 
-			</tr>
-			<% end %>
-
-		</tbody>
-
-	</table>
-</div>
+	<hr>
 
 
-<hr>
+	<input id="dowloadTimetable" type="button" value="Download" class="form-control"/>
+	<div id="shareBtn" class="btn btn-success">Share</div>
 
-							
-		
+
+	<br/>
+
+	<div id="previewImage" style="visibility: hidden;"></div>
+
+<script>
+$(document).ready(function(){
+
+
+var element = $("#table2image"); // global variable
+
+document.getElementById('shareBtn').onclick = function() {
+  FB.ui({
+    method: 'share',
+    display: 'popup',
+    href: 'https://helpers4cmu.herokuapp.com/',
+  }, function(response){});
+}
+
+// $("#shareBtn").on('click', function () {
+// 	// html2canvas(element, {
+// 	// 	onrendered: function (canvas) {
+// 	// 		$("#previewImage").append(canvas);
+// 	// 	}
+// 	// });
+
+// });
+
+$("#dowloadTimetable").on('click', function () {
+	html2canvas(element, 
+	{
+			onrendered: function (canvas) {
+			var a = document.createElement('a');
+	        // toDataURL defaults to png, so we need to request a jpeg, then convert for file download.
+	        a.href = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+	        a.download = 'somefilename.png';
+	        a.click();
+	    }
+	});
+});
+
+});
+
+</script>
