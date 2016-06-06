@@ -151,42 +151,31 @@
 
 	<hr>
 
+	<div class="row">
+		<div class="col-md-12 text-center">
+			<div id="dowloadTimetable" class="btn btn-success">Download</div>
+			<div id="shareBtn" class="btn btn-success">Share</div>
+		</div>
+	</div>
 
-	<input id="dowloadTimetable" type="button" value="Download" class="form-control"/>
-	<div id="shareBtn" class="btn btn-success">Share</div>
+</div>
 
 
-	<br/>
 
-	<div id="previewImage" style="visibility: hidden;"></div>
+<br/>
+
+<div id="previewImage"></div>
 
 <script>
-$(document).ready(function(){
+	$(document).ready(function(){
 
 
 var element = $("#table2image"); // global variable
 
-document.getElementById('shareBtn').onclick = function() {
-  FB.ui({
-    method: 'share',
-    display: 'popup',
-    href: 'https://helpers4cmu.herokuapp.com/',
-  }, function(response){});
-}
-
-// $("#shareBtn").on('click', function () {
-// 	// html2canvas(element, {
-// 	// 	onrendered: function (canvas) {
-// 	// 		$("#previewImage").append(canvas);
-// 	// 	}
-// 	// });
-
-// });
-
 $("#dowloadTimetable").on('click', function () {
 	html2canvas(element, 
 	{
-			onrendered: function (canvas) {
+		onrendered: function (canvas) {
 			var a = document.createElement('a');
 	        // toDataURL defaults to png, so we need to request a jpeg, then convert for file download.
 	        a.href = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
