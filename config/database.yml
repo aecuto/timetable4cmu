@@ -4,56 +4,36 @@
 #   Ensure the SQLite 3 gem is defined in your Gemfile
 #   gem 'sqlite3'
 
-development:
+# default: &default
+#   adapter: postgresql
+#   encoding: unicode
+#   # For details on connection pooling, see rails configuration guide
+#   # http://guides.rubyonrails.org/configuring.html#database-pooling
+#   pool: 5
+#   username: blhniqgohxgzfi
+#   password: _kP8fYLBjJzQLRBNflQuCbh33n
+#   host: ec2-54-83-27-147.compute-1.amazonaws.com
+#   port: 5432
+#   database: d615277ttnh1bc
+
+default: &default
   adapter: postgresql
-  database: helpers4cmu
+  encoding: unicode
+  # For details on connection pooling, see rails configuration guide
+  # http://guides.rubyonrails.org/configuring.html#database-pooling
   pool: 5
   username: helpers4cmu
   password: rails
   host: localhost
   port: 
+  database: helpers4cmu
+
+development:
+  <<: *default
 
 test:
-  adapter: postgresql
-  database: helpers4cmu
-  pool: 5
-  username: helpers4cmu
-  password: rails
-  host: localhost
-  port: 
+  <<: *default
 
 production:
-  adapter: postgresql
-  database: helpers4cmu
-  pool: 5
-  username: helpers4cmu
-  password: rails
-  host: localhost
-  port: 
+  <<: *default
 
-# development:
-#   adapter: postgresql
-#   database: d615277ttnh1bc
-#   pool: 5
-#   username: blhniqgohxgzfi
-#   password: _kP8fYLBjJzQLRBNflQuCbh33n
-#   host: ec2-54-83-27-147.compute-1.amazonaws.com
-#   port: 5432
-
-# test:
-#   adapter: postgresql
-#   database: d615277ttnh1bc
-#   pool: 5
-#   username: blhniqgohxgzfi
-#   password: _kP8fYLBjJzQLRBNflQuCbh33n
-#   host: ec2-54-83-27-147.compute-1.amazonaws.com
-#   port: 5432
-
-# production:
-#   adapter: postgresql
-#   database: d615277ttnh1bc
-#   pool: 5
-#   username: blhniqgohxgzfi
-#   password: _kP8fYLBjJzQLRBNflQuCbh33n
-#   host: ec2-54-83-27-147.compute-1.amazonaws.com
-#   port: 5432
