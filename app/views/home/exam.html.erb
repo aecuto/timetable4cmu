@@ -1,6 +1,14 @@
+<style>
+	td{
+		vertical-align: middle; 
+		font-family: 'Oxygen', sans-serif;
+		font-size: 100%;
+	}
+</style>
+
 <% content_for :menu do %>
-<li><a href="timetable">Timetable</a></li>
-<li class="active"><a href="#">Exam</a></li>
+<li><a href="timetable"><span class="glyphicon glyphicon-time"></span> TIMETABLE</a></li>
+<li class="active"><a href="#"><span class="glyphicon glyphicon-list-alt"></span> EXAM</a></li>
 <% end %> 
 
 
@@ -8,13 +16,14 @@
 <% icon=["leaf","fire"]%>
 <% k=0 %>
 <% @exam_arr.each do |e| %>
-<h1><%= name[k] %> <span class="glyphicon glyphicon-<%= icon[k] %>"></span></h1>
-<% k+=1 %>
+<h1>
+<%= name[k] %> <span class="glyphicon glyphicon-<%= icon[k] %>"></span>
+</h1>
 
 <div class="table-responsive">
-	<table class="table" style="table-layout: fixed; min-width: 960px;">
+	<table class="table" id="<%= icon[k] %>Table" style="table-layout: fixed; min-width: 960px;">
 		<thead>
-			<th bgcolor="<%= @color_tab %>" class="text-center" style="vertical-align: middle;">DAY</th>
+			<th bgcolor="<%= @color_tab %>" class="text-center" style="vertical-align: middle;">DAY (<%= session[:semester] %>/<%= session[:year] %>)</th>
 			<th bgcolor="<%= @color_tab %>" class="text-center" style="vertical-align: middle;">08:00-11:00</th>
 			<th bgcolor="<%= @color_tab %>" class="text-center" style="vertical-align: middle;">12:00-15:00</th>
 			<th bgcolor="<%= @color_tab %>" class="text-center" style="vertical-align: middle;">15:30-18:30</th>
@@ -100,7 +109,51 @@
 	</table>
 </div>
 
-<hr>
+	<div class="row">
+		<div class="col-md-12 text-center">
+			<div id="<%= icon[k] %>" class="btn btn-default">
+			<span class="glyphicon glyphicon-download-alt"></span> Download
+			</div>
+		</div>
+	</div>
 
+<hr>
+<% k+=1 %>
 <% end %>
+
+<script>
+$(document).ready(function(){
+
+
+var element = $("#leafTable"); // global variable
+var element2 = $("#fireTable"); // global variable
+
+$("#leaf").on('click', function () {
+	html2canvas(element, 
+	{
+		onrendered: function (canvas) {
+			var a = document.createElement('a');
+	        // toDataURL defaults to png, so we need to request a jpeg, then convert for file download.
+	        a.href = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+	        a.download = 'mid-helpers4cmu.png';
+	        a.click();
+	    }
+	});
+});
+
+$("#fire").on('click', function () {
+	html2canvas(element2, 
+	{
+		onrendered: function (canvas) {
+			var a = document.createElement('a');
+	        // toDataURL defaults to png, so we need to request a jpeg, then convert for file download.
+	        a.href = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+	        a.download = 'final-helpers4cmu.png';
+	        a.click();
+	    }
+	});
+});
+
+});
+</script>
 

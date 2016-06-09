@@ -7,12 +7,12 @@
 </style>
 
 <% content_for :menu do %>
-<li class="active"><a href="#">Timetable</a></li>
-<li><a href="exam">Exam</a></li>
+<li class="active"><a href="#"><span class="glyphicon glyphicon-time"></span> TIMETABLE</a></li>
+<li><a href="exam"><span class="glyphicon glyphicon-list-alt"></span> EXAM</a></li>
 <% end %>        
 
 
-<h1> <span class="glyphicon glyphicon-time"></span> Timetable</h1>
+<h1> <span class="glyphicon glyphicon-time"></span> Timetable</h1> 
 
 
 <!-- find index time -->
@@ -40,7 +40,7 @@
 		<thead>
 			<tr>
 
-				<th bgcolor="<%= @color_tab %>" colspan="2" class="text-center"><%= session[:sid] %></th>
+				<th bgcolor="<%= @color_tab %>" colspan="2" class="text-center"><%= session[:sid] %> (<%= session[:semester] %>/<%= session[:year] %>)</th>
 				<% while index_time<end_index_time %>
 				<th bgcolor="<%= @color_tab %>" colspan="2" class="text-center"><%= @time[index_time] %> - <%= @time[index_time+1] %> </th>
 				<% index_time+=1 %>
@@ -148,21 +148,24 @@
 		</table>
 	</div>
 
+	<br>
+
+	<div class="row">
+		<div class="col-md-12 text-center">
+			<div id="dowloadTimetable" class="btn btn-default">
+			<span class="glyphicon glyphicon-download-alt"></span> Download
+			</div>
+		</div>
+	</div>
 
 	<hr>
 
 </div>
 
-<div class="row">
-	<div class="col-md-12 text-center">
-		<div id="dowloadTimetable" class="btn btn-success">Download</div>
-		<div id="shareBtn" class="btn btn-success disabled">Share</div>
-	</div>
-</div>
+
 
 <br/>
 
-<div id="previewImage"></div>
 
 <script>
 	$(document).ready(function(){
