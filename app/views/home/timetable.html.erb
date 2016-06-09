@@ -1,6 +1,5 @@
 <style>
 	td{
-		vertical-align: middle; 
 		font-family: 'Oxygen', sans-serif;
 		font-size: 100%;
 	}
@@ -112,7 +111,7 @@
 					<% colspan_use = ( ((data[1][0,2].to_i*60)+data[1][2,4].to_i) - ((data[0][0,2].to_i*60)+data[0][2,4].to_i) )/30 %>
 
 					<!-- print course -->
-					<td bgcolor="<%= @color[@courses.index(data[4])]%>" colspan="<%= colspan_use %>" class="text-center" >
+					<td style="vertical-align:middle;" bgcolor="<%= @color[@courses.index(data[4])]%>" colspan="<%= colspan_use %>" class="text-center" >
 						<%= data[3] %><br>
 						<%= data[5] %>-<%= data[6] %> 
 						<span class="glyphicon glyphicon-education"></span>

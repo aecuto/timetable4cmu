@@ -71,13 +71,13 @@
 
 					<% if found && data[0][0,2] == old_day_arr[j] %>
 					<% found=false %>
-					<td bgcolor="<%= @color_tab %>" class="text-center" style="vertical-align: middle;"><%= data[0][0,6] %></td>
+					<td bgcolor="<%= @color_tab %>" class="text-center"><%= data[0][0,6] %></td>
 					<% end %>
 
 					<% if old_day_arr[j] ==data[0][0,2] %>
 						<% while i<time_check.length %>
 							<% if data[1][0,2] == time_check[i] %>
-							<td bgcolor="<%= @color_blank %>" class="text-center" style="vertical-align: middle;"><%= data[2] %></td>
+							<td bgcolor="<%= @color_blank %>" class="text-center"><%= data[2] %></td>
 							<% i+=1 %>
 							<% break %>
 							<% else %>
