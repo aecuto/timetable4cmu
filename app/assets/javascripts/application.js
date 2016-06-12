@@ -14,28 +14,13 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
+//= require bootstrap-sprockets
 //= require nprogress
 //= require nprogress-turbolinks
 
-
-/* Paste this css to your style sheet file or under head tag */
-/* This only works with JavaScript, 
-if it's not present, don't show loader */
-
-
-
- 
-//paste this code under the head tag or in a separate js file.
-	// Wait for window load
-	$(window).load(function() {
-		// Animate loader off screen
-		$(".se-pre-con").fadeOut("slow");;
-	});
-
-
-	NProgress.configure({
-	  showSpinner: false,
-	  ease: 'ease',
-	  speed: 500,
-	  minimum: 0.7
-	});
+NProgress.configure({
+  showSpinner: false,
+  ease: 'ease',
+  speed: 500,
+  minimum: 0.7
+});
