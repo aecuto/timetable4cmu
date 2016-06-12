@@ -67,13 +67,13 @@
 				stud_day = Array.new
 				for d in 0..6
 					if a.split(/(?=[A-Z])/)[d] != nil
-							#puts a.split(/(?=[A-Z])/)[i]
-							stud_day << a.split(/(?=[A-Z])/)[d]
-						else
-							stud_day << "NONE"
-							#puts "NONE"
-						end
-					end 
+						#puts a.split(/(?=[A-Z])/)[i]
+						stud_day << a.split(/(?=[A-Z])/)[d]
+					else
+						stud_day << "NONE"
+						#puts "NONE"
+					end
+				end 
 					%>
 
 					<% print = false %>
