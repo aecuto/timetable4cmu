@@ -53,9 +53,9 @@ class HomeController < ApplicationController
 
     #index for find room
     if year.to_i<58
-      index=7
+      index=2
     else
-      index=9
+      index=0
     end
 
 
@@ -68,30 +68,48 @@ class HomeController < ApplicationController
     @timetables = Array.new
 
 
-
+    #find sectio
     data.each do |d|
       if !(d.css('td')[2].text == "TITLE" || d.css('td')[2].text == "LEC")
 
         str = nil
         str2 = nil
 
-        if d.css('td')[8].css('font').text != ''
+        #course and room
+        form={"s_course1" => d.css('td')[1].text, "s_lec1" => d.css('td')[3].text, "s_lab1" => d.css('td')[4].text, "op" => "bycourse"}
+        response = Net::HTTP.post_form(uri, form)
+
+        data2 = Nokogiri::HTML(response.body)
+        course_data = data2.css('td')
+
+        # course_data.each do |c|
+        #   puts c.text
+        # end
+        #puts "++++++++"
+
+
+
+        if course_data.css('td')[8 - index].css('red').text != ''
+          puts d.css('td')[2].text
           #puts "Time: " + d.css('td > text()')[8].text + " and " + d.css('td')[8].css('font').text
-          str = d.css('td > text()')[8].text[0,4] + "\0" + d.css('td > text()')[8].text[7,11] + "\0"
-          str2 = d.css('td')[8].css('font').text[0,4] + "\0" + d.css('td')[8].css('font').text[7,11] + "\0"
+          str = course_data.css('td')[8 - index].css(' > text()').text[0,4] + "\0" + course_data.css('td')[8 - index].css(' > text()').text[7,11] + "\0"
+          str2 = course_data.css('td')[8 - index].css('red').text[0,4] + "\0" + course_data.css('td')[8 - index].css('red').text[7,11] + "\0"
+          # puts course_data.css('td')[8 - index].css(' > text()').text
+          # puts course_data.css('td > text()')[8 - index].text
+          # puts "+++++++++"
         else
           #puts "Time: " + d.css('td > text()')[8].text
-          str = d.css('td > text()')[8].text[0,4] + "\0" + d.css('td > text()')[8].text[7,11] + "\0"
+          str = course_data.css('td')[8 - index].text[0,4] + "\0" + course_data.css('td')[8 - index].text[7,11] + "\0"
         end
 
-        if d.css('td')[7].css('font').text != ''
+        if course_data.css('td')[7 - index].css('red').text != '' && str2 != nil
           #puts "Day: " + d.css('td > text()')[7].text + " and " + d.css('td')[7].css('font').text
-          str += d.css('td > text()')[7].text + "\0"
-          str2 += d.css('td')[7].css('font').text + "\0"
+          str += course_data.css('td')[7 - index].text + "\0"
+          str2 += course_data.css('td')[7 - index].css('red').text + "\0"
         else
           #puts "Day: " + d.css('td > text()')[7].text
-          if d.css('td > text()')[7].text.count('-') > 0
-            day = d.css('td > text()')[7].text.remove('-').split(/(?=[A-Z])/)
+          if course_data.css('td')[7 - index].css(' > text()').text.count('-') > 0
+            day = course_data.css('td')[7 - index].css(' > text()').text.remove('-').split(/(?=[A-Z])/)
             i = @day1.index(day[0])
             while  i <= @day1.index(day[1])
               #puts @day1[i]
@@ -101,7 +119,7 @@ class HomeController < ApplicationController
             str += "\0"
 
           else
-            str += d.css('td > text()')[7].text + "\0"
+            str += course_data.css('td')[7 - index].text + "\0"
           end
         end
 
@@ -121,29 +139,22 @@ class HomeController < ApplicationController
           str2 += d.css('td')[2].text + "\0" + d.css('td')[1].text + "\0" + d.css('td')[3].text + "\0" + d.css('td')[4].text + "\0"
         end
 
-
-        #find room
-        form={"s_course1" => d.css('td')[1].text, "s_lec1" => d.css('td')[3].text, "s_lab1" => d.css('td')[4].text, "op" => "bycourse"}
-        response = Net::HTTP.post_form(uri, form)
-
-        rooms = Nokogiri::HTML(response.body)
-        room = rooms.css('td')
-
-
-        if room[index]
-          if room[index].css('red').text != ''
-            #puts room[7].css('> text()').text
-            str += room[index].css('> text()').text
-            #puts room[7].css('red').text
-            str2 += room[index].css('red').text
+        if course_data[9 - index]
+          if course_data[9 - index].css('red').text != '' && str2 != nil
+            #puts room[index].css('> text()').text
+            str += course_data[9 - index].css('> text()').text
+            #puts str
+            #puts room[index].css('red').text
+            str2 += course_data[9 - index].css('red').text
           else
-            str += room[index].text
+            str += course_data[9 - index].text
           end
         else
           #puts "nothing"
           str += "-"
         end
 
+        #puts "-----"
 
         @timetables << str
 
@@ -152,7 +163,7 @@ class HomeController < ApplicationController
         end
 
       end
-    end
+    end #END DATA.EACH
 
     # order times
     i=0
