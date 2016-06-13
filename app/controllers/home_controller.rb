@@ -68,9 +68,21 @@ class HomeController < ApplicationController
     @timetables = Array.new
 
 
+    # i=0
+    # data.each do |d|
+    #   if !(d.css('td')[2].text.delete(' ') == "TITLE" || d.css('td')[2].text.delete(' ') == "LEC")
+    #   puts "SUBJNAME: " + d.css('td')[2].text
+    #   puts "SUBJID: " + d.css('td')[1].text
+    #   puts "LEC: " + d.css('td')[3].text
+    #   puts "LAB: " + d.css('td')[4].text
+    #   puts "-----"
+    #    i+=1
+    # end
+    # end
+
     #find sectio
     data.each do |d|
-      if !(d.css('td')[2].text == "TITLE" || d.css('td')[2].text == "LEC")
+      if !(d.css('td')[2].text.delete(' ') == "TITLE" || d.css('td')[2].text.delete(' ') == "LEC")
 
         str = nil
         str2 = nil
@@ -82,15 +94,20 @@ class HomeController < ApplicationController
         data2 = Nokogiri::HTML(response.body)
         course_data = data2.css('td')
 
-        # course_data.each do |c|
-        #   puts c.text
-        # end
-        #puts "++++++++"
+        #  course_data.each do |c|
+        #    puts c.text
+        #  end
+        # puts "++++++++"
 
+        # puts course_data.css('td')[8 - index]
+        # puts "++++++++"
 
+        if course_data.css('td')[8 - index] == nil
+          break
+        end
 
         if course_data.css('td')[8 - index].css('red').text != ''
-          puts d.css('td')[2].text
+          #puts d.css('td')[2].text
           #puts "Time: " + d.css('td > text()')[8].text + " and " + d.css('td')[8].css('font').text
           str = course_data.css('td')[8 - index].css(' > text()').text[0,4] + "\0" + course_data.css('td')[8 - index].css(' > text()').text[7,11] + "\0"
           str2 = course_data.css('td')[8 - index].css('red').text[0,4] + "\0" + course_data.css('td')[8 - index].css('red').text[7,11] + "\0"
@@ -128,9 +145,9 @@ class HomeController < ApplicationController
         str += d.css('td')[2].text + "\0"
         # puts "SUBJID: " + d.css('td')[1].text
         str += d.css('td')[1].text + "\0"
-        # puts "LEC: " + d.css('td')[3].text
+         #puts "LEC: " + d.css('td')[3].text
         str += d.css('td')[3].text + "\0"
-        # puts "LAB: " + d.css('td')[4].text
+         #puts "LAB: " + d.css('td')[4].text
         str += d.css('td')[4].text + "\0"
         # puts "_______________"
 
