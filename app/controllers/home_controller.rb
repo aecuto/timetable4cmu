@@ -289,6 +289,10 @@ class HomeController < ApplicationController
           exam_dt = Nokogiri::HTML(response.body)
           exam_dts = exam_dt.css('td')
 
+          if exam_dts[11] == nil
+            break
+          end
+
           # exam_dts.each do |e|
           # 	puts e.text
           # end
