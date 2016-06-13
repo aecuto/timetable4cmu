@@ -121,7 +121,7 @@ class HomeController < ApplicationController
 
         if course_data.css('td')[7 - index].css('red').text != '' && str2 != nil
           #puts "Day: " + d.css('td > text()')[7].text + " and " + d.css('td')[7].css('font').text
-          str += course_data.css('td')[7 - index].text + "\0"
+          str += course_data.css('td')[7 - index].css(' > text()').text + "\0"
           str2 += course_data.css('td')[7 - index].css('red').text + "\0"
         else
           #puts "Day: " + d.css('td > text()')[7].text
@@ -159,9 +159,11 @@ class HomeController < ApplicationController
         if course_data[9 - index]
           if course_data[9 - index].css('red').text != '' && str2 != nil
             #puts room[index].css('> text()').text
+            #puts course_data[9 - index].css('> text()').text
             str += course_data[9 - index].css('> text()').text
             #puts str
             #puts room[index].css('red').text
+            #puts course_data[9 - index].css('red').text
             str2 += course_data[9 - index].css('red').text
           else
             str += course_data[9 - index].text
@@ -177,6 +179,7 @@ class HomeController < ApplicationController
 
         if str2 != nil
           @timetables << str2
+        #puts str2
         end
 
       end
