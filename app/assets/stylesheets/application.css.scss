@@ -49,7 +49,7 @@ html, body {
   height: 20px; 
 }
 
-@media screen and (max-width: 480px), screen and (max-height: 320px){
+@media screen and (max-width: 480px), screen and (max-height: 1024px){
     html{
     	min-width: 1280px;
     }
