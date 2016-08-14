@@ -10,9 +10,8 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
- *= require_tree .
- *= require_self
  */
+
 
 @import "bootstrap-sprockets";
 @import "bootstrap";
@@ -48,4 +47,10 @@ html, body {
 }
 .site-footer, .page-wrap:after {
   height: 20px; 
+}
+
+@media screen and (max-width: 480px){
+    html{
+    	min-width: 1280px;
+    }
 }
