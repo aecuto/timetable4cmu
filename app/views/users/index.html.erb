@@ -1,13 +1,14 @@
 
-<h1>Group User</h1>
+<h1>Grouping Users</h1>
 <% current_year = Date.today.year+543 %>
 <% end_year = 2555 %>
+<% count_all = 0 %>
 
 
 <table class="table table-hover">
   <thead>
     <tr>
-      <th>ชั้นปี</th>
+      <th>รหัส</th>
       <th>จำนวนการ Login</th>
     </tr>
   </thead>
@@ -15,14 +16,28 @@
   <tbody>
     <% while current_year >= end_year do%>
       <% count = User.where("sid LIKE ?", "#{current_year.to_s[2,4]}%").count %>
-       <tr>
-            <td><%= current_year.to_s[2,4] %></td>
-            <td><%= count%></td>
+        <tr>
+          <td><%= current_year.to_s[2,4] %></td>
+          <td><%= count%></td>
         </tr>
 
+      <% count_all+=count %>
       <% current_year-=1 %>
       
     <% end %>
+
+    <% other = User.count('id')-count_all %>
+
+    <tr>
+      <td>อื่นๆ</td>
+      <td><%= other %></td>
+    </tr>
+
+    <tr>
+      <td>รวม</td>
+      <td><%= count_all+other %></td>
+    </tr>
+
   </tbody>
 </table>
 

@@ -46,7 +46,7 @@
        <% if session[:sid] != nil %>
        <ul class="nav navbar-nav navbar-right">
         <li><a href="#">
-        <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> Welcome, <%= session[:sid] %></a></li>
+        <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Welcome, <%= session[:sid] %></a></li>
         <li><a href="/logout"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Logout</a></li>
       </ul>
       <% end %>
@@ -70,11 +70,10 @@
   <table class="table" >
   <tbody>
     <td class="text-muted text-left" style=" border-style:none;">
-    <span class="glyphicon glyphicon-thumbs-up"></span> 
-    <a class="text-warning" href="https://www.facebook.com/KampeeTonOi.Aecute" target="_blank"> Kampee Ton-Oi</a></td>
+    <a class="text-warning" href="https://www.facebook.com/KampeeTonOi.Aecute" target="_blank">
+    <span class="glyphicon glyphicon-tint"></span> aecute</a></td>
     <td class="text-muted text-right" style=" border-style:none;">
-    <span class="glyphicon glyphicon-user"></span> 
-    <a href="#"> <%= User.count('id') %> </a>
+    <a href="#"><span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> <%= User.count('id') %> </a>
     </td>
   </tbody>
   </table>

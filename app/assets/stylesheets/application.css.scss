@@ -25,8 +25,20 @@ $nprogress-zindex: 10100;
 @import 'nprogress-bootstrap';
 
 
+/* unvisited link */
+a:link {
+    color: gray;
+}
+
+/* visited link */
+a:visited {
+    color: gray;
+}
+
+/* mouse over link */
 a:hover {
-	background:none;
+    color: gray;
+    background:none;
 }
 
 
