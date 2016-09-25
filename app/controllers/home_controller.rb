@@ -474,4 +474,66 @@ class HomeController < ApplicationController
 
   end
 
+  def calculateGPA
+    if session[:semester] == nil
+      redirect_to "/login"
+    end
+
+    semester=session[:semester]
+    year=session[:year]
+    sid=session[:sid]
+
+    #index for find room
+    if year.to_i<58
+      index=2
+    else
+      index=0
+    end
+
+
+    uri = URI.parse("https://www3.reg.cmu.ac.th/regist" + semester.to_s+year.to_s + "/public/search.php?act=search")
+    url = "https://www3.reg.cmu.ac.th/regist" + semester.to_s+year.to_s + "/public/result.php?id=" + sid.to_s
+
+
+    infor = Nokogiri::HTML(open(url))
+    data = infor.css('.msan8')
+    @calGPA = Array.new
+
+    # i=0
+    # data.each do |d|
+    #   if !(d.css('td')[2].text.delete(' ') == "TITLE" || d.css('td')[2].text.delete(' ') == "LEC")
+    #   puts "SUBJNAME: " + d.css('td')[2].text
+    #   puts "SUBJID: " + d.css('td')[1].text
+    #   puts "LEC: " + d.css('td')[3].text
+    #   puts "LAB: " + d.css('td')[4].text
+    #   puts "-----"
+    #    i+=1
+    # end
+    # end
+
+    #find sectio
+    data.each do |d|
+      if !(d.css('td')[2].text.delete(' ') == "TITLE" || d.css('td')[2].text.delete(' ') == "LEC")
+        #puts "SUBJNAME: " + d.css('td')[2].text
+        #puts "LEC: " + d.css('td')[5].text
+
+        credit= d.css('td')[5].text.to_i + d.css('td')[6].text[2,2].to_i
+
+        #puts "Credit: " + credit.to_s
+
+        str = d.css('td')[2].text + "\0" + credit.to_s
+
+        @calGPA << str
+
+      end
+    end #END DATA.EACH
+
+    # @calGPA.each do |c|
+    #    puts c
+    # end
+
+
+
+  end
+
   end

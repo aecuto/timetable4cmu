@@ -5,6 +5,7 @@ Rails.application.routes.draw do
 
   get 'timetable' => 'home#timetable'
   get 'exam' => 'home#exam'
+  get 'calculateGPA' => 'home#calculateGPA'
   get 'login' => 'home#login'
   get 'logout' => 'home#logout'
 

@@ -1,0 +1,132 @@
+<% content_for :menu do %>
+<li><a href="timetable"><span class="glyphicon glyphicon-time"></span> TIMETABLE</a></li>
+<li><a href="exam"><span class="glyphicon glyphicon-list-alt"></span> EXAM</a></li>
+<li class="active"><a href="calculateGPA"><span class=" glyphicon glyphicon-text-background"></span> Calculate GPA</a></li>
+<% end %>   
+
+
+
+
+<h1><span class=" glyphicon glyphicon-text-background"></span> Calculate GPA</h1>
+<hr>
+
+
+<div class="row">
+
+	<div class="col-sm-3 text-right" >
+		<h3>Overall GPA</h3>
+	</div>
+
+	<div class="col-sm-3">
+		<label for="">Overall</label>
+		<input class="form-control"  id="overallgpa" placeholder="Enter GPA" disabled>
+	</div>
+
+	<div class="col-sm-3 text-right" >
+		<h3>This semester</h3>
+	</div>
+
+	<div class="col-sm-3">
+		<label >Result</label>
+		<input class="form-control focusedInput" id="yourgpa" placeholder="Your GPA" disabled>
+	</div>
+
+
+</div>
+
+<br>
+
+
+
+<% i=0 %>
+<% @calGPA.each do |c| %>
+
+
+<% data = c.split("\0") %>
+
+	<div class="row">
+
+		<div class="col-sm-9" >
+			<input class="form-control"  placeholder="<%= data[0] %>">
+			<input type="hidden" id="credit<%=i%>" value="<%= data[1] %>">
+		</div>
+	
+
+		<div class="col-sm-3">
+			<select id="grade<%= i %>" class="form-control" onchange="myFunction()">
+			  <option value="0">W</option>
+			  <option value="4">A</option>
+			  <option value="3.5">B+</option>
+			  <option value="3">B</option>
+			  <option value="2.5">C+</option>
+			  <option value="2">C</option>
+			  <option value="1.5">D+</option>
+			  <option value="1">D</option>
+			</select>
+		</div>
+
+		<% i += 1 %>
+
+	</div>
+	<br>
+
+<% end %>
+
+
+<input type="hidden" id="n" value="<%= i %>">
+
+
+<script>
+
+	var current_gpa = prompt("ป้อนเกรดเฉลี่ยปัจุบัน", "4");
+	document.getElementById("overallgpa").value = current_gpa;
+
+	function myFunction() {
+
+		
+
+		var n = parseFloat(document.getElementById("n").value); 
+		
+
+
+		var weight=0;
+		var allcredit=0;
+
+
+		for (i = 0; i < n; i++) {
+
+			var credit = parseFloat(document.getElementById("credit" + i).value);
+			var grade = parseFloat(document.getElementById("grade" + i).value);
+
+
+    		if (grade != 0 ){
+    			weight+= grade*credit;
+    			allcredit+=credit;
+    		}
+
+    		//str="i="+i "\n" + "credit="+credit + "\n";
+
+    		// console.log(i);
+    		// console.log(grade);
+    		// console.log(credit);
+    		// console.log(weight);
+    		// console.log("+++++++++++++");
+
+		}
+
+		var gpa = weight/allcredit;
+
+		document.getElementById("yourgpa").value =  ((parseFloat(current_gpa)+gpa)/2).toFixed(2);
+
+	}
+	
+
+</script>
+
+
+
+
+<hr>
+
+<div class="text-center"><p>**โปรแกรมคำนวณเกรดยังอยู่ในช่วงทดลองนะครับ อาจจะไม่ตรง 100%</p></div>
+
