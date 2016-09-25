@@ -16,6 +16,18 @@ default: &default
   port: 
   database: helpers4cmu
 
+# default: &default
+#   adapter: postgresql
+#   encoding: unicode
+#   # For details on connection pooling, see rails configuration guide
+#   # http://guides.rubyonrails.org/configuring.html#database-pooling
+#   pool: 5
+#   username: blhniqgohxgzfi
+#   password: _kP8fYLBjJzQLRBNflQuCbh33n
+#   host: ec2-54-83-27-147.compute-1.amazonaws.com
+#   port: 5432
+#   database: d615277ttnh1bc
+
 development:
   <<: *default
 
