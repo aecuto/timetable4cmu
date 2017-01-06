@@ -428,7 +428,8 @@ class HomeController < ApplicationController
         i+=1
         j=0
       end
-    end #end order month/day/time for exam mid/final   
+    end #end order month/day/time for exam mid/final
+      
   end
 
 

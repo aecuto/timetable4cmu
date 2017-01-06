@@ -1,31 +1,4 @@
-<% content_for :menu do %>
-<li><a href="timetable"><span class="glyphicon glyphicon-time"></span> TIMETABLE</a></li>
-<li><a href="exam"><span class="glyphicon glyphicon-list-alt"></span> EXAM</a></li>
-<li><a href="calculateGPA"><span class="glyphicon glyphicon-text-background"></span> Calculate GPA</a></li>
-<% end %>   
 
-
-<style>
-/*.fb_iframe_widget{
-	overflow: hidden;
-}
-.fb_ltr{
-	margin-bottom: -20cm;
-}
-._ohe.lfloat{
-	background-color: yellow;
-}
-._42ef._8u{
-	background-color: yellow;
-}
-div.fb_ltr._5lm5._2pi3._3-8y{
-	background-color: yellow;
-}
-div.fb_ltr.clearfix{
-	background-color: yellow;
-
-}*/
-</style>
 
 <h1> <span class="glyphicon glyphicon-time"></span> Timetable</h1> 
 
@@ -46,10 +19,11 @@ div.fb_ltr.clearfix{
 <p><%= @end_time %></p>
 
 <p><%= index_time %></p>
-<p><%= end_index_time %></p> -->
+<p><%= end_index_time %></p>  -->
 
 
 <!-- style="table-layout: fixed;" -->
+<% if index_time < end_index_time %>
 <table class="table" id="table2image" style="table-layout: fixed;" >
 	<thead>
 		<tr>
@@ -159,17 +133,27 @@ div.fb_ltr.clearfix{
 
 		</tbody>
 
-	</table>
+</table>
 
-	<br>
+<br>
 
-	<div class="row">
-		<div class="col-md-12 text-center">
-			<div id="dowloadTimetable" class="btn btn-default">
-				<span class="glyphicon glyphicon-download-alt"></span> Download
-			</div>
+<div class="row">
+	<div class="col-md-12 text-center">
+		<div id="dowloadTimetable" class="btn btn-default">
+			<span class="glyphicon glyphicon-download-alt"></span> Download
 		</div>
 	</div>
+</div>
+
+<% else %>
+<div class="alert alert-danger" role="alert">
+	  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+	  <span class="sr-only">Error:</span>
+	  ไม่พบการลงทะเบียนเรียน หรือ รายวิชาอาจไม่ได้ระบุเวลาเรียน
+</div>
+<% end %>
+
+	
 
 	<hr>
 
@@ -216,6 +200,22 @@ $("#dowloadTimetable").on('click', function () {
 		<%= name[k] %> <span class="glyphicon glyphicon-<%= icon[k] %>"></span>
 	</h1>
 
+	<!-- check exam day is emptry or not? -->
+	<% count = 0 %>
+
+	<% e.each do |m|%>
+
+	<% data = m.split("\0") %>
+	<!-- <p><%= data[1].to_i %></p> -->
+	<% if data[1].to_i != 0 %>
+	<% count+=1 %>
+	<% end %>
+
+	<% end %>
+
+	<!-- end check -->
+
+	<% if count != 0 %>
 
 	<div class="table-responsive">
 			<table class="table" id="<%= icon[k] %>Table" style="table-layout: fixed;">
@@ -236,6 +236,8 @@ $("#dowloadTimetable").on('click', function () {
 					<!-- find max day -->
 
 					<% e.each do |m|%>
+
+					<!-- <p><%= m %></p> -->
 
 					<% data = m.split("\0") %>
 
@@ -306,7 +308,6 @@ $("#dowloadTimetable").on('click', function () {
 			</table>
 	</div>
 
-
 	<div class="row">
 		<div class="col-md-12 text-center">
 			<div id="<%= icon[k] %>" class="btn btn-default">
@@ -314,6 +315,17 @@ $("#dowloadTimetable").on('click', function () {
 			</div>
 		</div>
 	</div>
+
+	<% else %>
+
+	<div class="alert alert-danger" role="alert">
+	  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+	  <span class="sr-only">Error:</span>
+	  ไม่พบการลงทะเบียนเรียน หรือ รายวิชาอาจไม่ได้ระบุเวลาสอบ
+	</div>
+
+	
+	<% end %>
 
 	<hr>
 	
