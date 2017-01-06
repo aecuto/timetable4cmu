@@ -13,6 +13,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
+
+
   <link href='https://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>
 
   <!-- share settings -->
@@ -36,14 +39,14 @@
             <a class="navbar-brand" href="/" data-no-turbolink='true'>
             <span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span> Helpers for CMU (BETA)</a>
           </li>
-          <%= yield :menu %>
+
         </ul>
 
        <% if session[:sid] != nil %>
        <ul class="nav navbar-nav navbar-right">
         <li><a href="#">
         <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Welcome, <%= session[:sid] %></a></li>
-        <li><a href="/logout"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Logout</a></li>
+        <li><a href="/logout" id="logout" data-no-turbolink='true'><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Logout</a></li>
       </ul>
       <% end %>
 
@@ -78,6 +81,19 @@
 
 
 <script>
+
+  $('#login_form').submit(function() {
+    $(".se-pre-con").fadeIn("slow");
+  });
+
+
+  $(window).load(function() {
+    // Animate loader off screen
+    $(".se-pre-con").fadeOut();
+  });
+
+
+
   window.fbAsyncInit = function() {
     FB.init({
       appId      : '508252642696166',
@@ -93,8 +109,10 @@
      js.src = "//connect.facebook.net/en_US/sdk.js";
      fjs.parentNode.insertBefore(js, fjs);
    }(document, 'script', 'facebook-jssdk'));
+
 </script>
 
 
 </body>
+<div class="se-pre-con"></div>
 </html>

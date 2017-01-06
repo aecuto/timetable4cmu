@@ -31,13 +31,6 @@ class HomeController < ApplicationController
       redirect_to "/login"
     end
 
-  end
-
-  def timetable
-    if session[:semester] == nil
-      redirect_to "/login"
-    end
-
     semester=session[:semester]
     year=session[:year]
     sid=session[:sid]
@@ -67,6 +60,20 @@ class HomeController < ApplicationController
     data = infor.css('.msan8')
     @timetables = Array.new
 
+    #EXAM
+    url_final = "https://www3.reg.cmu.ac.th/regist/public/exam.php?type=FINAL&term="+semester.to_s+year.to_s
+
+    #regular data
+    regular = Nokogiri::HTML(open(url_final))
+    regulars = regular.css('tr')
+    
+
+    # regulars.each do |r|
+    #   puts "|"+r.css('td div')[0].text+"|"
+    # end
+    @mid = Array.new
+    @final = Array.new
+    #end EXAM
 
     # i=0
     # data.each do |d|
@@ -105,6 +112,12 @@ class HomeController < ApplicationController
         if course_data.css('td')[8 - index] == nil
           break
         end
+
+        if course_data.css('td')[7].text == 'TBA'
+         next
+        end
+
+        #puts course_data.css('td')[7]
 
         if course_data.css('td')[8 - index].css('red').text != ''
           #puts d.css('td')[2].text
@@ -146,9 +159,9 @@ class HomeController < ApplicationController
         # puts "SUBJID: " + d.css('td')[1].text
         str += d.css('td')[1].text + "\0"
          #puts "LEC: " + d.css('td')[3].text
-        str += d.css('td')[3].text + "\0"
+         str += d.css('td')[3].text + "\0"
          #puts "LAB: " + d.css('td')[4].text
-        str += d.css('td')[4].text + "\0"
+         str += d.css('td')[4].text + "\0"
         # puts "_______________"
 
         # add other data to str2
@@ -182,8 +195,126 @@ class HomeController < ApplicationController
         #puts str2
         end
 
+      #EXAM
+      exam_dt = Nokogiri::HTML(response.body)
+      exam_dts = exam_dt.css('td')
+
+      if exam_dts[11] == nil
+        break
       end
+
+      # exam_dts.each do |e|
+      #   puts e.text
+      # end
+      str_mid = nil
+      str_final = nil
+      subj_name = nil
+
+      if exam_dts[2]
+        #puts exam_dts[2].text #subj name
+        subj_name=exam_dts[2].text
+      end
+
+      if exam_dts[11].text == ''
+        # puts "MID"
+        # puts "-"
+        # puts "-"
+        str_mid = "32 NNN 0000" + "\0" + "00:00-00:00" + "\0" + subj_name
+        #puts "Final"
+        # puts "-"
+        # puts "-"
+        str_final = "32 NNN 0000" + "\0" + "00:00-00:00" + "\0" + subj_name
+      else
+        #puts "MID"
+        if exam_dts[11].css('gray').text != ''
+          # puts exam_dts[11].css('gray').text
+          # puts exam_dts[12].css('gray').text
+          str_mid = exam_dts[11].css('gray').text + "\0" + exam_dts[12].css('gray').text + "\0" + subj_name 
+        else
+          # puts "-"
+          # puts "-"
+          str_mid = "32 NNN 0000" + "\0" + "00:00-00:00" + "\0" + subj_name
+        end
+
+        #puts "Final"
+        if exam_dts[11].css('p').text != ''
+          if exam_dts[11].css('p').text ==  "REGULAR"
+            regulars.each do |r|
+              exam_days = Array.new
+              for d in 0..6
+                if r.css('td div')[0].text.split(/(?=[A-Z])/)[d] != nil
+                      #puts a.split(/(?=[A-Z])/)[i]
+                      #puts "*"+r.css('td div')[0].text.split(/(?=[A-Z])/)[d]
+                      exam_days << r.css('td div')[0].text.split(/(?=[A-Z])/)[d]
+
+                      if r.css('td div')[0].text.split(/(?=[A-Z])/)[d] == "M"
+                        exam_days << "Mo"
+                      end
+
+                      if r.css('td div')[0].text.split(/(?=[A-Z])/)[d].delete(' ') == "F"
+                        exam_days << "Fr"
+                      end
+                    else
+                      exam_days << "NONE"
+                      #puts "NONE"
+                    end
+              end  #end for
+
+              study_day = exam_dts[7].text.split(/(?=[A-Z])/)
+              #puts study_day
+
+              #check exam_dts(study_day) = exam_days ??????
+              found = false
+              exam_days.each do |ed|
+                study_day.each do |sd|
+                  if ed.delete(' ') == sd.delete(' ')
+                    #puts ed +" = "+sd
+                    found = true
+                  end
+                end
+              end
+              #puts "-------"
+
+              # puts "**"+exam_dts[7].text + "|"+ r.css('td div')[0].text+ "|"
+              # puts "**"+exam_dts[8].text[0,4] + "|"+ r.css('td div')[1].text+ "|"
+              if found && exam_dts[8].text[0,4]==r.css('td div')[1].text   # [7]=day [8]=time
+                #puts exam_dts[7].text + " = " + r.css('td div')[0].text.delete(' ')
+                #puts r.css('td div')[1].text #study time
+                #puts "------"
+                #puts r.css('td div')[4].text + " " + r.css('td div')[3].text # date
+                #puts r.css('td div')[5].text #time
+                str_final = r.css('td div')[4].text + " " + r.css('td div')[3].text + " 0000" + "\0" + r.css('td div')[5].text + "\0" + subj_name
+                break
+              end
+            end #end ragular loop
+
+            if str_final == nil
+              str_final = "32 NNN 0000" + "\0" + "00:00-00:00" + "\0" + subj_name
+            end
+          else
+              # puts exam_dts[11].css('p').text
+              # puts exam_dts[12].css('p').text
+              str_final =  exam_dts[11].css('p').text + "\0" + exam_dts[12].css('p').text + "\0" + subj_name
+          end
+        else
+          # puts "-"
+          # puts "-"
+          str_final = "32 NNN 0000" + "\0" + "00:00-00:00" + "\0" + subj_name
+        end
+
+      end 
+
+      #puts "---------"
+      @mid << str_mid
+      @final << str_final
+
+     end #BIG IF
+
     end #END DATA.EACH
+
+    # @timetables.each do |t|
+    #   puts t
+    # end
 
     # order times
     i=0
@@ -226,253 +357,81 @@ class HomeController < ApplicationController
         @courses << course[4]
       else
         while i<@courses.length do
-            if @courses[i] == course[4]
-              add = false
-              break
-            end
-            i+=1
-          end
-          if add
-            @courses << course[4]
-          end
-        end
-      end
-
-      # @courses.each do |c|
-      # 	puts c
-      # 	puts @courses.index(c)
-      # end
-
-
-
-
-    end
-
-  def exam
-      if session[:semester] == nil
-        redirect_to "/login"
-      end
-
-      semester=session[:semester]
-      year=session[:year]
-      sid=session[:sid]
-
-      @color_tab = "#212121"
-      @color_blank = "#424242"
-
-
-      url = "https://www3.reg.cmu.ac.th/regist" + semester.to_s+year.to_s + "/public/result.php?id=" + sid.to_s
-      uri = URI.parse("https://www3.reg.cmu.ac.th/regist" + semester.to_s+year.to_s + "/public/search.php?act=search")
-      url_final = "https://www3.reg.cmu.ac.th/regist/public/exam.php?type=FINAL&term="+semester.to_s+year.to_s
-
-      infor = Nokogiri::HTML(open(url))
-      data = infor.css('.msan8')
-
-      #regular data
-      regular = Nokogiri::HTML(open(url_final))
-      regulars = regular.css('tr')
-
-      # regulars.each do |r|
-      # 	puts "|"+r.css('td div')[0].text+"|"
-      # end
-      @mid = Array.new
-      @final = Array.new
-
-
-      data.each do |d|
-        if !(d.css('td')[2].text == "TITLE" || d.css('td')[2].text == "LEC") && year.to_i>=58
-
-          #find exam date/time
-          form={"s_course1" => d.css('td')[1].text, "s_lec1" => d.css('td')[3].text, "s_lab1" => d.css('td')[4].text, "op" => "bycourse"}
-          response = Net::HTTP.post_form(uri, form)
-
-          exam_dt = Nokogiri::HTML(response.body)
-          exam_dts = exam_dt.css('td')
-
-          if exam_dts[11] == nil
+          if @courses[i] == course[4]
+            add = false
             break
           end
-
-          # exam_dts.each do |e|
-          # 	puts e.text
-          # end
-          str_mid = nil
-          str_final = nil
-          subj_name = nil
-
-          if exam_dts[2]
-            #puts exam_dts[2].text #subj name
-            subj_name=exam_dts[2].text
-          end
-
-          if exam_dts[11].text == ''
-            # puts "MID"
-            # puts "-"
-            # puts "-"
-            str_mid = "32 NNN 0000" + "\0" + "00:00-00:00" + "\0" + subj_name
-            #puts "Final"
-            # puts "-"
-            # puts "-"
-            str_final = "32 NNN 0000" + "\0" + "00:00-00:00" + "\0" + subj_name
-          else
-            #puts "MID"
-            if exam_dts[11].css('gray').text != ''
-              # puts exam_dts[11].css('gray').text
-              # puts exam_dts[12].css('gray').text
-              str_mid = exam_dts[11].css('gray').text + "\0" + exam_dts[12].css('gray').text + "\0" + subj_name
-            else
-              # puts "-"
-              # puts "-"
-              str_mid = "32 NNN 0000" + "\0" + "00:00-00:00" + "\0" + subj_name
-            end
-
-            #puts "Final"
-            if exam_dts[11].css('p').text != ''
-              if exam_dts[11].css('p').text ==  "REGULAR"
-                regulars.each do |r|
-                    exam_days = Array.new
-                    for d in 0..6
-                        if r.css('td div')[0].text.split(/(?=[A-Z])/)[d] != nil
-                          #puts a.split(/(?=[A-Z])/)[i]
-                          #puts "*"+r.css('td div')[0].text.split(/(?=[A-Z])/)[d]
-                          exam_days << r.css('td div')[0].text.split(/(?=[A-Z])/)[d]
-
-                          if r.css('td div')[0].text.split(/(?=[A-Z])/)[d] == "M"
-                            exam_days << "Mo"
-                          end
-
-                          if r.css('td div')[0].text.split(/(?=[A-Z])/)[d].delete(' ') == "F"
-                            exam_days << "Fr"
-                          end
-                        else
-                          exam_days << "NONE"
-                          #puts "NONE"
-                        end
-                    end 
-
-                    study_day = exam_dts[7].text.split(/(?=[A-Z])/)
-                    #puts study_day
-
-                    #check exam_dts(study_day) = exam_days ??????
-                    found = false
-                    exam_days.each do |ed|
-                      study_day.each do |sd|
-                        if ed.delete(' ') == sd.delete(' ')
-                          #puts ed +" = "+sd
-                          found = true
-                        end
-                      end
-                    end
-                    #puts "-------"
-
-                  # puts "**"+exam_dts[7].text + "|"+ r.css('td div')[0].text+ "|"
-                  # puts "**"+exam_dts[8].text[0,4] + "|"+ r.css('td div')[1].text+ "|"
-                  if found && exam_dts[8].text[0,4]==r.css('td div')[1].text   # [7]=day [8]=time
-                    #puts exam_dts[7].text + " = " + r.css('td div')[0].text.delete(' ')
-                    #puts r.css('td div')[1].text #study time
-                    #puts "------"
-                    #puts r.css('td div')[4].text + " " + r.css('td div')[3].text # date
-                    #puts r.css('td div')[5].text #time
-                    str_final = r.css('td div')[4].text + " " + r.css('td div')[3].text + " 0000" + "\0" + r.css('td div')[5].text + "\0" + subj_name
-                    break
-                  end
-                end #end ragular loop
-                if str_final == nil
-                  str_final = "32 NNN 0000" + "\0" + "00:00-00:00" + "\0" + subj_name
-                end
-              else
-                # puts exam_dts[11].css('p').text
-                # puts exam_dts[12].css('p').text
-                str_final =  exam_dts[11].css('p').text + "\0" + exam_dts[12].css('p').text + "\0" + subj_name
-              end
-            else
-              # puts "-"
-              # puts "-"
-              str_final = "32 NNN 0000" + "\0" + "00:00-00:00" + "\0" + subj_name
-            end
-
-
-          end
-
-          #puts "---------"
-          @mid << str_mid
-          @final << str_final
-
+          i+=1
+        end
+        if add
+          @courses << course[4]
         end
       end
+    end
 
-      #str = "28 FEB 2016" + "\0" + "08:00-11:00" + "\0" + "A"
-      # str2 = "29 FEB 2016" + "\0" + "08:00-11:00" + "\0" + "A"
-      # str = "29 FEB 2016" + "\0" + "12:00-15:00" + "\0" + "B"
+      # @courses.each do |c|
+      #   puts c
+      #   puts @courses.index(c)
+      # end  
 
-      # @mid << str << str2
       month = Array["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC","NNN"]
-
-      # @mid.each do |m|
-      # 	data = m.split("\0")
-      # 	data.each do |d|
-      # 		puts d
-      # 	end
-      # 	puts "----"
-      # end
-
       @exam_arr = Array[@mid,@final]
 
-      # order
-      #e = @mid
-      @exam_arr.each do |e|
-        #order month
-        i=0
+    # order
+    #e = @mid
+    @exam_arr.each do |e|
+      #order month
+      i=0
+      j=0
+      while i < e.length
+        while j < e.length
+          #puts month.index(e[i][3,4].delete(' ')).to_i
+          #puts month.index(e[j][3,4].delete(' ')).to_i
+          if month.index(e[i][3,4].delete(' ')).to_i < month.index(e[j][3,4].delete(' ')).to_i
+
+            e[i], e[j] = e[j], e[i]
+          end
+          j+=1
+        end
+        i+=1
         j=0
-        while i < e.length
-          while j < e.length
+      end
+
+      #order day
+      i=0
+      j=0
+      while i < e.length
+        while j < e.length
+          if (e[i][3,4].delete(' ') == e[j][3,4].delete(' ')) && e[i][0,2] < e[j][0,2]
             #puts month.index(e[i][3,4].delete(' ')).to_i
             #puts month.index(e[j][3,4].delete(' ')).to_i
-            if month.index(e[i][3,4].delete(' ')).to_i < month.index(e[j][3,4].delete(' ')).to_i
-
-              e[i], e[j] = e[j], e[i]
-            end
-            j+=1
+            e[i], e[j] = e[j], e[i]
           end
-          i+=1
-          j=0
+          j+=1
         end
-
-        #order day
-        i=0
+        i+=1
         j=0
-        while i < e.length
-          while j < e.length
-            if (e[i][3,4].delete(' ') == e[j][3,4].delete(' ')) && e[i][0,2] < e[j][0,2]
-              #puts month.index(e[i][3,4].delete(' ')).to_i
-              #puts month.index(e[j][3,4].delete(' ')).to_i
-              e[i], e[j] = e[j], e[i]
-            end
-            j+=1
-          end
-          i+=1
-          j=0
-        end
+      end
 
-        #order time
-        i=0
+      #order time
+      i=0
+      j=0
+      while i < e.length
+        while j < e.length
+          if (e[i][11,3] < e[j][11,3]) && (e[i][3,4].delete(' ') == e[j][3,4].delete(' ')) && (e[i][0,2] == e[j][0,2])
+            #puts month.index(e[i][3,4].delete(' ')).to_i
+            #puts month.index(e[j][3,4].delete(' ')).to_i
+            e[i], e[j] = e[j], e[i]
+          end
+          j+=1
+        end
+        i+=1
         j=0
-        while i < e.length
-          while j < e.length
-            if (e[i][11,3] < e[j][11,3]) && (e[i][3,4].delete(' ') == e[j][3,4].delete(' ')) && (e[i][0,2] == e[j][0,2])
-              #puts month.index(e[i][3,4].delete(' ')).to_i
-              #puts month.index(e[j][3,4].delete(' ')).to_i
-              e[i], e[j] = e[j], e[i]
-            end
-            j+=1
-          end
-          i+=1
-          j=0
-        end
-      end #end order month/day/time for exam mid/final
-
-
+      end
+    end #end order month/day/time for exam mid/final   
   end
+
+
 
   def calculateGPA
     if session[:semester] == nil
@@ -531,9 +490,7 @@ class HomeController < ApplicationController
     # @calGPA.each do |c|
     #    puts c
     # end
-
-
-
   end
 
-  end
+
+end

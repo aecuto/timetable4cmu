@@ -3,9 +3,9 @@ Rails.application.routes.draw do
   resources :users
   root 'home#index'
 
-  get 'timetable' => 'home#timetable'
-  get 'exam' => 'home#exam'
-  get 'calculateGPA' => 'home#calculateGPA'
+  # get 'timetable' => 'home#timetable'
+  # get 'exam' => 'home#exam'
+  # get 'calculateGPA' => 'home#calculateGPA'
   get 'login' => 'home#login'
   get 'logout' => 'home#logout'
 
