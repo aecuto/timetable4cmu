@@ -179,6 +179,30 @@ div.fb_ltr.clearfix{
 
 <br/>
 
+<script>
+
+$(document).ready(function(){
+
+
+var element = $("#table2image"); // global variable
+
+$("#dowloadTimetable").on('click', function () {
+	html2canvas(element, 
+	{
+		onrendered: function (canvas) {
+			var a = document.createElement('a');
+	        // toDataURL defaults to png, so we need to request a jpeg, then convert for file download.
+	        a.href = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+	        a.download = 'timetable-helpers4cmu.png';
+	        a.click();
+	    }
+	});
+});
+
+});
+
+</script>
+
 
 <!-- ___________________________________EXAM_________________________________________________ -->
 
@@ -296,6 +320,43 @@ div.fb_ltr.clearfix{
 </div>
 <% k+=1 %>
 <% end %>
+
+<script>
+$(document).ready(function(){
+
+
+var element = $("#leafTable"); // global variable
+var element2 = $("#fireTable"); // global variable
+
+$("#leaf").on('click', function () {
+	html2canvas(element, 
+	{
+		onrendered: function (canvas) {
+			var a = document.createElement('a');
+	        // toDataURL defaults to png, so we need to request a jpeg, then convert for file download.
+	        a.href = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+	        a.download = 'mid-helpers4cmu.png';
+	        a.click();
+	    }
+	});
+});
+
+$("#fire").on('click', function () {
+	html2canvas(element2, 
+	{
+		onrendered: function (canvas) {
+			var a = document.createElement('a');
+	        // toDataURL defaults to png, so we need to request a jpeg, then convert for file download.
+	        a.href = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+	        a.download = 'final-helpers4cmu.png';
+	        a.click();
+	    }
+	});
+});
+
+});
+</script>
+
 
 
 <!-- _____________________________________COMMENT_______________________________________________ -->
