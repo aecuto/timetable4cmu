@@ -31,6 +31,7 @@ class HomeController < ApplicationController
       redirect_to "/login"
     end
 
+    if session[:semester] != nil
     semester=session[:semester]
     year=session[:year]
     sid=session[:sid]
@@ -429,7 +430,7 @@ class HomeController < ApplicationController
         j=0
       end
     end #end order month/day/time for exam mid/final
-      
+   end #end if session != nil
   end
 
 
