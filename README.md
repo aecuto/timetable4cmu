@@ -16,8 +16,7 @@ https://github.com/aecute/timetable4cmu
 
 ก็จะได้ url: https://www3.reg.cmu.ac.th/registYYY/public/result.php?id=XXXXXXXXX
 
-YYY = 159
-XXX = รหัสนักศึกษา
+YYY = 159 | XXXXXXXXX = รหัสนักศึกษา
 
 ใช้ gem Nokogiri ในการดึงข้อมูลจากเว็บ public ของ มช
 
