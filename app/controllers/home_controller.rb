@@ -83,14 +83,15 @@ class HomeController < ApplicationController
     #   puts "SUBJID: " + d.css('td')[1].text
     #   puts "LEC: " + d.css('td')[3].text
     #   puts "LAB: " + d.css('td')[4].text
+    #   puts "Grade: " + d.css('td')[10].text
     #   puts "-----"
-    #    i+=1
-    # end
+    #   i+=1
+    #   end
     # end
 
     #find sectio
     data.each do |d|
-      if !(d.css('td')[2].text.delete(' ') == "TITLE" || d.css('td')[2].text.delete(' ') == "LEC")
+      if !(d.css('td')[2].text.delete(' ') == "TITLE" || d.css('td')[2].text.delete(' ') == "LEC" || d.css('td')[10].text == "W")
 
         str = nil
         str2 = nil
@@ -117,6 +118,7 @@ class HomeController < ApplicationController
         if course_data.css('td')[7].text == 'TBA'
          next
         end
+
 
         #puts course_data.css('td')[7]
 
@@ -196,7 +198,7 @@ class HomeController < ApplicationController
         #puts str2
         end
 
-      #EXAM
+      #################################### EXAM ##########################################
       exam_dt = Nokogiri::HTML(response.body)
       exam_dts = exam_dt.css('td')
 
