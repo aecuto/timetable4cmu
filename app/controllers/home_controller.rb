@@ -12,8 +12,6 @@ class HomeController < ApplicationController
       session[:year]=params[:year]
       session[:sid]=params[:sid]
 
-      user = User.create(ip: request.remote_ip, sid: session[:sid])
-      user.save
       # puts session[:semester]
       # puts session[:year]
       # puts session[:sid]

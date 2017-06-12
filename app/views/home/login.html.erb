@@ -33,7 +33,7 @@
 
 	<div class="col-sm-2">
 	<%= label_tag 'Submit' %>
-	<%= submit_tag 'Submit', class: "form-control btn btn-default"%>
+	<%= submit_tag 'Submit', id: :submit , class: "form-control btn btn-default"%>
 	</div>
 
 
@@ -44,12 +44,30 @@
 
 </div>
 
+
+<% end %>
+
+
+
 <hr>
 
 <div class="row">
 <div class="col-sm-12 text-center">** เนื่องจากประมวลผลทาง server อาจจะช้านิดหนึ่งนะครับ</div>
 </div>
 
-<% end %>
+<div class="row" id="loading">
+	<div class="col-sm-12 text-center">
+	<br><br>
+		<i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>
+		<span class="sr-only">Loading...</span>
+	</div>
+</div>
 
-
+<script>
+$(document).ready(function(){
+	$("#loading").hide();
+    $("#submit").click(function(){
+        $("#loading").show();
+    });
+});
+</script>

@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 gem 'nprogress-rails'
 gem 'bootstrap-sass', '~> 3.3.6'
 gem 'json', github: 'flori/json', branch: 'v1.8'
+gem 'font-awesome-sass'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '5.0.2'
