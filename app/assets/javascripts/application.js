@@ -25,6 +25,16 @@ NProgress.configure({
 });
 
 
+  $('#login_form').submit(function() {
+    $(".se-pre-con").fadeIn("slow");
+  });
+
+
+  $(window).load(function() {
+    // Animate loader off screen
+    $(".se-pre-con").fadeOut();
+  });
+
 
 
 
