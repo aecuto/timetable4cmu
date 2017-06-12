@@ -59,9 +59,9 @@
 
 
 <div class="page-wrap">
-<div class="container">
-<main><%= yield %></main>
-</div>    
+  <div class="container">
+    <main><%= yield %></main>
+  </div>    
 </div>
 
 <footer class="site-footer">
@@ -77,6 +77,31 @@
   </table>
 </div>
 </footer>
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title" style="color: black;">มีเว็บใหม่มาแนะนำ!!</h4>
+      </div>
+      <div class="modal-body" style="color: black;">
+        <p>เว็บใหม่ที่จะแนะนำนี้เป็นเว็บไว้สำหรับพวกพี่ๆ ที่อยากจะแนะนำตัวฟรีที่น่าเรียน แล้วช่วยกันโหวตว่า วิชาไหนน่าเรียนที่สุด หลังจากโหวตเสร็จแล้ว เมื่อรุ่นน้อง เข้ามาดูก็จะได้ติดสินใจได้ง่ายขึ้น</p>
+        <span>
+          ลองเอาไปใช้กันดู >> 
+          <a href="https://freecmu.herokuapp.com/">Free CMU Voting Application</a>
+        </span>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
 
 
 <script>

@@ -24,5 +24,13 @@ NProgress.configure({
   speed: 500,
 });
 
+$(document).ready(function(){
+	$("#myModal").modal({show: true});
+	$("#loading").hide();
+    $("#submit").click(function(){
+        $("#loading").show();
+    });
+});
+
 
 
