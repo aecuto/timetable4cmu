@@ -25,7 +25,7 @@ NProgress.configure({
 });
 
 $(document).ready(function(){
-	$("#myModal").modal({show: true});
+//	$("#myModal").modal({show: true});
 	$("#loading").hide();
     $("#submit").click(function(){
         $("#loading").show();
