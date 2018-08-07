@@ -15,14 +15,6 @@
 //= require turbolinks
 //= require_tree .
 //= require bootstrap-sprockets
-//= require nprogress
-//= require nprogress-turbolinks
-
-NProgress.configure({
-  showSpinner: false,
-  ease: 'ease',
-  speed: 500,
-});
 
 $(document).ready(function(){
 //	$("#myModal").modal({show: true});

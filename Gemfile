@@ -1,6 +1,5 @@
 source 'https://rubygems.org'
 
-gem 'nprogress-rails'
 gem 'bootstrap-sass', '~> 3.3.6'
 gem 'json', github: 'flori/json', branch: 'v1.8'
 gem 'font-awesome-sass'
@@ -10,10 +9,6 @@ gem 'rails', '5.0.2'
 # Use sqlite3 as the database for Active Record
 group :production do
 	gem 'pg'
-end
-
-group :development, :test do
-  gem 'sqlite3'
 end
 
 # Use SCSS for stylesheets
