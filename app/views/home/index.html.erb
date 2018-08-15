@@ -1,6 +1,6 @@
 
 
-<h1> <span class="glyphicon glyphicon-time"></span> Timetable</h1> 
+<h1> <i class="fas fa-calendar-alt"></i> Timetable</h1> 
 
 
 <!-- find index time -->
@@ -24,7 +24,7 @@
 
 <!-- style="table-layout: fixed;" -->
 <% if index_time < end_index_time %>
-<table class="table" id="table2image" style="table-layout: fixed;" >
+<table class="table" id="table2image" style="table-layout: fixed; font-size: 0.9em">
 	<thead>
 		<tr>
 
@@ -103,9 +103,9 @@
 				<td style="vertical-align:middle;" bgcolor="<%= @color[@courses.index(data[4])]%>" colspan="<%= colspan_use %>" class="text-center" >
 					<%= data[3] %><br>
 					<%= data[5] %>-<%= data[6] %> 
-					<span class="glyphicon glyphicon-education"></span>
+					<i class="fas fa-graduation-cap"></i>
 					<%= data[4] %> <br>
-					<span class="glyphicon glyphicon-map-marker"></span>
+					<i class="fas fa-map-marker-alt"></i>
 					<strong><%= data[7] %></strong>
 				</td>
 				<!-- <p>use = <%= colspan_use %></p> -->
