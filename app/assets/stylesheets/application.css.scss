@@ -10,17 +10,10 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
+ *= require rails_bootstrap_forms
  */
 
-
-
-
-@import "bootstrap-sprockets";
 @import "bootstrap";
-
-@import "font-awesome-sprockets";
-@import "font-awesome";
-
 
 .navbar-collapse.collapse {
   display: block!important;
@@ -94,4 +87,8 @@ html, body {
     outline: thin dotted \9;
     -moz-box-shadow: 0 0 8px rgba(82,168,236,.6);
     box-shadow: 0 0 8px rgba(82,168,236,.6) !important;
+}
+
+#admin_email,#admin_password{
+  color: black !important;
 }

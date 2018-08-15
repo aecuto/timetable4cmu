@@ -17,7 +17,7 @@
 
 
   <link href='https://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>
-
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
   <!-- share settings -->
   <meta property="og:title" content="Timetable for CMU" />
   <meta property="og:image" content="https://cdn.pixabay.com/photo/2015/04/20/13/17/book-731199_960_720.jpg" />
@@ -35,7 +35,8 @@
 
 <body style="color: white; font-family: 'Oxygen', sans-serif; background-color: #303030;">
 
-  <nav class="navbar navbar-inverse navbar-fixed-top">
+  <nav class="navbar navbar-dark bg-dark navbar-fixed-top">
+
     <div class="container-fluid">
       
       <div id="navbar" class="navbar-collapse collapse">
@@ -43,18 +44,23 @@
         <ul class="nav navbar-nav navbar-left">
           <li>
             <a class="navbar-brand" href="/" data-turbolinks="false">
-            <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Timetable for CMU</a>
+            <i class="far fa-calendar-alt"></i>  Timetable for CMU</a>
           </li>
 
         </ul>
 
-       <% if session[:sid] != nil %>
-       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#">
-        <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Welcome, <%= session[:sid] %></a></li>
-        <li><a href="/logout" id="logout" data-turbolinks="false" ><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Logout</a></li>
-      </ul>
-      <% end %>
+       <% if session[:sid] == nil %>
+        <div class="col text-right" style="padding: 8px;">
+
+          <a href="#" style="margin-right: 10px;">
+           <i class="fas fa-user-tie"></i> Welcome, 570510628<%= session[:sid] %>
+          </a>
+
+          <a href="/logout" id="logout" data-turbolinks="false" >
+            <i class="fas fa-sign-out-alt"></i> Logout
+          </a>
+        </div>
+        <% end %>
 
     </div>
   </div>
@@ -76,7 +82,7 @@
     <tbody>
       <td class="text-muted text-left" style=" border-style:none;">
         <a class="text-warning" href="https://www.facebook.com/KampeeTonOi.Aecute" target="_blank">
-        <span class="glyphicon glyphicon-console"></span> Aquzohr</a>
+        <i class="fas fa-laptop-code"></i> Aquzohr</a>
       </td>
     </tbody>
     </table>

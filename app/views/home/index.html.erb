@@ -30,7 +30,7 @@
 
 			<th bgcolor="<%= @color_tab %>" colspan="2" class="text-center"><%= session[:sid] %> (<%= session[:semester] %>/<%= session[:year] %>)</th>
 			<% while index_time<end_index_time %>
-			<th bgcolor="<%= @color_tab %>" colspan="2" class="text-center"><%= @time[index_time] %> - <%= @time[index_time+1] %> </th>
+			<th bgcolor="<%= @color_tab %>" colspan="2" class="text-center" style="font-size: 13px"><%= @time[index_time] %> - <%= @time[index_time+1] %> </th>
 			<% index_time+=1 %>
 			<% end %>
 
@@ -139,8 +139,8 @@
 
 <div class="row">
 	<div class="col-md-12 text-center">
-		<div id="dowloadTimetable" class="btn btn-default">
-			<span class="glyphicon glyphicon-download-alt"></span> Download
+		<div id="dowloadTimetable" class="btn btn-outline-light">
+			<i class="fas fa-download"></i> Download
 		</div>
 	</div>
 </div>
@@ -177,7 +177,7 @@ $("#dowloadTimetable").on('click', function () {
 			var a = document.createElement('a');
 	        // toDataURL defaults to png, so we need to request a jpeg, then convert for file download.
 	        a.href = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
-	        a.download = 'timetable-helpers4cmu.png';
+	        a.download = 'timetable(timetable4cmu).png';
 	        a.click();
 	    }
 	});
@@ -197,7 +197,7 @@ $("#dowloadTimetable").on('click', function () {
 <div class="container">
 
 	<h1>
-		<%= name[k] %> <span class="glyphicon glyphicon-<%= icon[k] %>"></span>
+		<%= name[k] %> <i class="fas fa-<%= icon[k] %>"></i>
 	</h1>
 
 	<!-- check exam day is emptry or not? -->
@@ -310,8 +310,8 @@ $("#dowloadTimetable").on('click', function () {
 
 	<div class="row">
 		<div class="col-md-12 text-center">
-			<div id="<%= icon[k] %>" class="btn btn-default">
-				<span class="glyphicon glyphicon-download-alt"></span> Download
+			<div id="<%= icon[k] %>" class="btn btn-outline-light">
+				<i class="fas fa-download"></i> Download
 			</div>
 		</div>
 	</div>
@@ -346,7 +346,7 @@ $("#leaf").on('click', function () {
 			var a = document.createElement('a');
 	        // toDataURL defaults to png, so we need to request a jpeg, then convert for file download.
 	        a.href = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
-	        a.download = 'mid-helpers4cmu.png';
+	        a.download = 'mid(timetable4cmu).png';
 	        a.click();
 	    }
 	});
@@ -359,7 +359,7 @@ $("#fire").on('click', function () {
 			var a = document.createElement('a');
 	        // toDataURL defaults to png, so we need to request a jpeg, then convert for file download.
 	        a.href = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
-	        a.download = 'final-helpers4cmu.png';
+	        a.download = 'final(timetable4cmu).png';
 	        a.click();
 	    }
 	});
@@ -378,7 +378,7 @@ $("#fire").on('click', function () {
 		<div class="fb-share-button" data-href="https://timetable4cmu.herokuapp.com/" data-layout="button_count" data-size="large" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Ftimetable4cmu.herokuapp.com%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore"></a></div>
 	</div>
 
-	<h1>Comments <span class="glyphicon glyphicon-comment"></span></h1>
+	<h1>Comments <i class="far fa-comments"></i></h1>
 
 	<hr>
 	<div class="row">
