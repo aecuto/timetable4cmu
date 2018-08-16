@@ -92,3 +92,7 @@ html, body {
 #admin_email,#admin_password{
   color: black !important;
 }
+
+.fixed-table-container tbody td .th-inner, .fixed-table-container thead th .th-inner{
+  display: none !important;
+}

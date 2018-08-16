@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<h1><i class="far fa-newspaper"></i> Bloggers</h1>
+<hr>
+<table data-pagination="true" data-toggle="table" data-classes="table table-no-bordered">
+  <thead style="display: none;">
+    <tr>
+      <th>title</th>
+      <th>date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @bloggers.each do |blogger| %>
+      <tr>
+        <td>
+          <h3><%= link_to blogger.title, blogger %></h3>
+        </td>
+        <td class="text-right">
+          <h5><%= blogger.created_at.strftime("%d/%m/%Y")  %></h5>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
+

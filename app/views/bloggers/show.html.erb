@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<h1 class="display-3"><%= @blogger.title %></h1>
+
+<hr>
+
+
+<%= raw(@blogger.des) %>
+
+
+<hr>
+
+<h5>Reference</h5>
+<%= @blogger.reference %>
+
+
+<div class="col text-right">
+<%= link_to 'Back', bloggers_path, class: 'btn btn-outline-light', 'data-turbolinks'=>"false"  %>
+</div>
