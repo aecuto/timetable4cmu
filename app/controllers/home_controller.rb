@@ -6,6 +6,11 @@ require "uri"
 class HomeController < ApplicationController
 
   def login
+
+    entrollment = EnrollmentService.new
+
+    entrollment.list
+
     if params[:commit] == "Submit" &&  params[:sid].to_s.length == 9 && params[:semester].to_s.length == 1  && params[:year].to_s.length == 2
 
       session[:semester]=params[:semester]
