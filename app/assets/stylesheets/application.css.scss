@@ -11,6 +11,7 @@
  * file per style scope.
  *
  *= require rails_bootstrap_forms
+ *= require jquery.skedTape
  */
 
 @import "bootstrap";
@@ -74,8 +75,6 @@ html, body {
     }
 }
 
-
-
 /* Define the hover highlight color for the table row */
 .table-hover tbody tr:hover td, .table-hover tr:hover {
   background-color: gray;
@@ -96,3 +95,14 @@ html, body {
 .fixed-table-container tbody td .th-inner, .fixed-table-container thead th .th-inner{
   display: none !important;
 }
+
+.sked-tape__location, .sked-tape__caption, .sked-tape__hours li{
+  background-color: #212121;
+  text-align: center;
+}
+
+.sked-tape__grid li{
+  background-color: #424242;
+  background-image: none;
+}
+

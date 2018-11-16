@@ -1,5 +1,5 @@
 class EnrollmentService
-  def list(semester, year, sid)
+  def courses(semester, year, sid)
 
     url = "https://www3.reg.cmu.ac.th/regist" + semester.to_s+year.to_s + "/public/result.php?id=" + sid.to_s
 
@@ -48,14 +48,14 @@ class EnrollmentService
         exam = get_course(semester, year, exam)
         next if exam[11].css('gray').text.split(' ')[0].to_i == 0
         @exams << {
-          day: exam[11].css('gray').text.to_date,
+          day: exam[11].css('gray').text.to_date.strftime('%m/%d').to_date,
           time: exam[12].css('gray').text
         }
 
       end
     end
 
-    return @exams.sort_by!{ |e| e[:day] }
+    return @exams.sort_by!{ |e| [e[:day], e[:time]] }
 
   end
 
@@ -74,7 +74,7 @@ class EnrollmentService
         exam = get_course(semester, year, exam)
         if exam[11].css('p').text.split(' ')[0].to_i != 0
           @exams << {
-            day: exam[11].css('p').text.to_date,
+            day: exam[11].css('p').text.to_date.strftime('%m/%d').to_date,
             time: exam[12].css('p').text
           }
         else
@@ -85,8 +85,8 @@ class EnrollmentService
       end
     end
 
-    puts @exams
-    #return @exams.sort_by!{ |e| e[:day] }
+    # puts @exams
+    return @exams.sort_by!{ |e| [e[:day], e[:time]] }
 
   end
 
@@ -123,7 +123,7 @@ class EnrollmentService
 
         if reg_time==course_time && reg_day==course_day
           return {
-            day: "#{reg[4].text} #{reg[3].text}".to_date,
+            day: "#{reg[4].text} #{reg[3].text}".to_date.strftime('%m/%d').to_date,
             time: reg[5].text
           }
         end

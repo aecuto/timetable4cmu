@@ -1,0 +1,186 @@
+<h1> <i class="fas fa-calendar-alt"></i> Timetable</h1> 
+
+
+<!-- find index time -->
+<% index_time=0 %>
+<% @time.each do |find| %>
+<% break if find[0,2]==@begin_time[0,2] %>
+<% index_time+=1 %>
+<% end %>
+
+<!-- set new begin_time -->
+<% tmp_time=@time[index_time] %>
+<!-- find end index time -->
+<% end_index_time = ( ( ((@end_time[0,2].to_i*60)+(@end_time[2,4].to_i*2))  - ((@begin_time[0,2].to_i*60)+@begin_time[2,4].to_i) ) /60.00 ).ceil + index_time %>
+
+<!-- <p><%= @begin_time %></p>
+<p><%= @end_time %></p>
+
+<p><%= index_time %></p>
+<p><%= end_index_time %></p>  -->
+
+<!-- style="table-layout: fixed;" -->
+<% if index_time < end_index_time %>
+<table class="table" id="table2image" style="table-layout: fixed; font-size: 0.9em">
+	<thead>
+		<tr>
+
+			<th bgcolor="<%= @color_tab %>" colspan="2" class="text-center"><%= session[:sid] %> (<%= session[:semester] %>/<%= session[:year] %>)</th>
+			<% while index_time<end_index_time %>
+			<th bgcolor="<%= @color_tab %>" colspan="2" class="text-center" style="font-size: 13px"><%= @time[index_time] %> - <%= @time[index_time+1] %> </th>
+			<% index_time+=1 %>
+			<% end %>
+
+		</tr>
+	</thead>
+
+	<tbody>
+		<% for i in 0..6 #0=Monday....4=Friday...6=Sunday %>
+		<% @begin_time=tmp_time %>
+		<% once=true %>
+		<% found_day=false %>
+		<% old_time="0" %>
+		<tr>
+
+
+			<% @timetables.each do |t| %>
+
+			<% data = t.split("\0") %>
+
+			<!-- split day || data[2] = day-->
+			<%
+			a=data[2]
+			stud_day = Array.new
+			for d in 0..6
+				if a.split(/(?=[A-Z])/)[d] != nil
+						#puts a.split(/(?=[A-Z])/)[i]
+						stud_day << a.split(/(?=[A-Z])/)[d]
+					else
+						stud_day << "NONE"
+						#puts "NONE"
+					end
+				end 
+				%>
+
+				<% print = false %>
+				<% stud_day.each do |s| %>
+				<% if s==@day1[i] || s==@day2[i] %>
+				<% print = true %>
+				<% break %>
+				<% end %>
+				<% end %>
+
+
+				<!-- print day -->
+				<% if print && once  %>
+				<td bgcolor="<%= @color_tab %>" colspan="2" class="text-center" ><%= @day[i] %></td>
+				<% once=false %>
+				<% end %>
+
+
+				<!-- before print course -->
+				<% if print && data[0]!=old_time %>
+
+				<!-- <p><%= data[3] %></p> -->
+
+
+				<% colspan_blank = ( ((data[0][0,2].to_i*60)+data[0][2,4].to_i) - ((@begin_time[0,2].to_i*60)+@begin_time[2,4].to_i) )/30 %>
+				<% @begin_time=data[1] %>
+
+				<!-- <p>blank = <%= colspan_blank %></p> -->
+				<% if colspan_blank!=0 %>
+				<td bgcolor="<%= @color_blank %>" colspan="<%= colspan_blank %>"></td>
+				<% end %>
+
+
+				<!-- set color index -->
+				<% colspan_use = ( ((data[1][0,2].to_i*60)+data[1][2,4].to_i) - ((data[0][0,2].to_i*60)+data[0][2,4].to_i) )/30 %>
+
+				<!-- print course -->
+				<td style="vertical-align:middle;" bgcolor="<%= @color[@courses.index(data[4])]%>" colspan="<%= colspan_use %>" class="text-center" >
+					<%= data[3] %><br>
+					<%= data[5] %>-<%= data[6] %> 
+					<i class="fas fa-graduation-cap"></i>
+					<%= data[4] %> <br>
+					<i class="fas fa-map-marker-alt"></i>
+					<strong><%= data[7] %></strong>
+				</td>
+				<!-- <p>use = <%= colspan_use %></p> -->
+				<% old_time=data[0] #check same day%>
+
+
+				<% found_day=true %>
+
+				<% end #end if %> 
+
+				<% end #@timetables.each %>
+
+
+				<!-- add blank to end table -->
+				<% colspan_blank = ( ((@time[index_time][0,2].to_i*60)+@time[index_time][2,4].to_i) - ((@begin_time[0,2].to_i*60)+@begin_time[2,4].to_i) )/30 %>
+
+				<% if colspan_blank!=0 && found_day %>
+				<td bgcolor="<%= @color_blank %>" colspan="<%= colspan_blank %>"></td>
+				<% end %>
+
+
+
+			</tr>
+			<% end %>
+
+		</tbody>
+
+</table>
+
+<br>
+
+<div class="row">
+	<div class="col-md-12 text-center">
+		<div id="dowloadTimetable" class="btn btn-outline-light">
+			<i class="fas fa-download"></i> Download
+		</div>
+	</div>
+</div>
+
+<% else %>
+<div class="alert alert-danger" role="alert">
+	  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+	  <span class="sr-only">Error:</span>
+	  ไม่พบการลงทะเบียนเรียน หรือ รายวิชาอาจไม่ได้ระบุเวลาเรียน
+</div>
+<% end %>
+
+	
+
+	<hr>
+
+</div>
+
+
+
+<br/>
+
+<script>
+
+$(document).ready(function(){
+
+
+var element = $("#table2image"); // global variable
+
+$("#dowloadTimetable").on('click', function () {
+	html2canvas(element, 
+	{
+		onrendered: function (canvas) {
+			var a = document.createElement('a');
+	        // toDataURL defaults to png, so we need to request a jpeg, then convert for file download.
+	        a.href = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+	        a.download = 'timetable(timetable4cmu).png';
+	        a.click();
+	    }
+	});
+});
+
+});
+
+</script>
+

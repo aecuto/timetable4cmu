@@ -15,6 +15,8 @@
 //= require turbolinks
 //= require_tree .
 //= require bootstrap-sprockets
+//= require moment
+//= require jquery.skedTape
 
 $(document).ready(function(){
 //	$("#myModal").modal({show: true});

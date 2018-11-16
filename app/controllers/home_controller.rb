@@ -9,7 +9,17 @@ class HomeController < ApplicationController
 
     entrollment = EnrollmentService.new
 
+    puts "# Courses"
+    puts entrollment.courses(2, 61, 610510628)
+    puts "# Courses"
+
+    puts "# MID"
+    puts entrollment.midterm_exam(2, 61, 610510628)
+    puts "# MID"
+
+    puts "# FINAL"
     puts entrollment.final_exam(2, 61, 610510628)
+    puts "# FINAL"
 
     if params[:commit] == "Submit" &&  params[:sid].to_s.length == 9 && params[:semester].to_s.length == 1  && params[:year].to_s.length == 2
 
