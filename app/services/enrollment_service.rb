@@ -1,4 +1,9 @@
 class EnrollmentService
+  require 'open-uri'
+  require 'nokogiri'
+  require "net/http"
+  require "uri"
+  
   def courses(semester, year, sid)
 
     url = "https://www3.reg.cmu.ac.th/regist" + semester.to_s+year.to_s + "/public/result.php?id=" + sid.to_s
@@ -16,20 +21,25 @@ class EnrollmentService
 
         course = get_course(semester, year, course)
         next if course[7].text=="TBA"
-        @courses << {
-          no: d[1].text,
-          name: course[2].text,
-          lec: course[3].text,
-          lab: course[4].text,
-          day: check_red_text(course[7]),
-          time: check_red_text(course[8]),
-          room: check_red_text(course[9]),
-          type: type
-        }
+        days = course[7].text.delete('-').split(/(?=[A-Z])/)
+
+        days.each do |day|
+          @courses << {
+            no: d[1].text,
+            name: course[2].text,
+            lec: course[3].text,
+            lab: course[4].text,
+            day: day,
+            time: check_red_time(day, course),
+            room: check_red_room(day, course),
+            type: type
+          }
+        end
+        
       end
     end
 
-    return @courses
+    return @courses.sort_by!{ |c| [ c[:time][:start] ] }
 
   end
 
@@ -49,13 +59,13 @@ class EnrollmentService
         next if exam[11].css('gray').text.split(' ')[0].to_i == 0
         @exams << {
           day: exam[11].css('gray').text.to_date.strftime('%m/%d').to_date,
-          time: exam[12].css('gray').text
+          time: time_object(exam[12].css('gray').text)
         }
 
       end
     end
 
-    return @exams.sort_by!{ |e| [e[:day], e[:time]] }
+    return @exams.sort_by!{ |e| [ e[:day], e[:time][:start] ] }
 
   end
 
@@ -75,7 +85,7 @@ class EnrollmentService
         if exam[11].css('p').text.split(' ')[0].to_i != 0
           @exams << {
             day: exam[11].css('p').text.to_date.strftime('%m/%d').to_date,
-            time: exam[12].css('p').text
+            time: time_object(exam[12].css('p').text)
           }
         else
           reg_exam = regular_exam(semester, year, exam[7], exam[8])
@@ -85,8 +95,7 @@ class EnrollmentService
       end
     end
 
-    # puts @exams
-    return @exams.sort_by!{ |e| [e[:day], e[:time]] }
+    return @exams.sort_by!{ |e| [ e[:day], e[:time][:start] ] }
 
   end
 
@@ -124,7 +133,7 @@ class EnrollmentService
         if reg_time==course_time && reg_day==course_day
           return {
             day: "#{reg[4].text} #{reg[3].text}".to_date.strftime('%m/%d').to_date,
-            time: reg[5].text
+            time: time_object(reg[5].text)
           }
         end
       end
@@ -133,14 +142,33 @@ class EnrollmentService
 
     end
 
-    def check_red_text(array)
-      if array.css('red').present?
-        return [
-          array.css('> text()').text,
-          array.css('red').text
-        ]
-      end
-      return array.text
+    def time_object(time)
+      time = time.delete(':').delete(' ').split('-')
+      return {
+        start: time[0],
+        end: time[1]
+      }
     end
-  
+
+    def check_red_time(day, course)
+      if course[7].css('red').present?
+        if course[7].css('red').text == day
+          return time_object(course[8].css('red').text)
+        else
+          return time_object(course[8].css('> text()').text)
+        end
+      end
+      return time_object(course[8].text)
+    end
+
+    def check_red_room(day, course)
+      if course[7].css('red').present?
+        if course[7].css('red').text == day
+          return course[9].css('red').text.delete('-')
+        else
+          return course[9].css('> text()').text.delete('-')
+        end
+      end
+      return course[9].text
+    end
 end

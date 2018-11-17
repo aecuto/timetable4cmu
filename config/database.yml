@@ -23,6 +23,7 @@ default: &default
   username: pguser
   password: pguser
   host: localhost
+  template: template0
   
 
 development:

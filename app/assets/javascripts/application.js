@@ -15,8 +15,8 @@
 //= require turbolinks
 //= require_tree .
 //= require bootstrap-sprockets
-//= require moment
-//= require jquery.skedTape
+//= require inputmask.min
+//= require jquery.inputmask.min
 
 $(document).ready(function(){
 //	$("#myModal").modal({show: true});
