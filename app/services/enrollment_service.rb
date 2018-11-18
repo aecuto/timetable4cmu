@@ -122,6 +122,49 @@ class EnrollmentService
 
   end
 
+  def range_time(courses)
+    start_time = "2400"
+    end_time = "0000"
+
+    courses.each do |course|
+
+      if course[:time][:start] < start_time
+        start_time = course[:time][:start]
+      end
+
+      if course[:time][:end] > end_time
+        end_time = course[:time][:end]
+      end
+
+    end
+
+    return {
+      start_time: start_time,
+      end_time: end_time
+    }
+
+  end
+
+  def course_day(courses)
+
+    course_days = Hash.new
+
+    courses.each do |course|
+      
+      if course_days.blank?
+        course_days[course[:day]] = course[:day]
+      end
+
+      if course_days[course[:day]].blank?
+        course_days[course[:day]] = course[:day]
+      end
+
+    end
+
+    return course_days
+
+  end
+
   private
     def is_number?(string)
       true if Float(string) rescue false

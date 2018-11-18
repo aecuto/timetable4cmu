@@ -35,8 +35,8 @@ class HomeController < ApplicationController
       sid=session[:sid]
 
       # value for html
-      @time = Array["0600","0700","0800","0900","1000","1100","1200","1300","1400","1500","1600","1700","1800","1900","2000","2100","2200","2300","2400"]
-      @day = Array["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]
+      @times = Array["0600","0700","0800","0900","1000","1100","1200","1300","1400","1500","1600","1700","1800","1900","2000","2100","2200","2300","2400"]
+      @weeks = Array["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]
       @day1 = Array["M","Tu","W", "Th","F","Sa","Su"]
       @day2 = Array["Mo","T","We", "Th","Fr","Sa","Su"]
       @color = Array["#FF6138","#DA9844","#2B4C8C","#644D52","#00A388","#F25F5C","#247BA0","#A6937C","#332532","#0D1326"]
