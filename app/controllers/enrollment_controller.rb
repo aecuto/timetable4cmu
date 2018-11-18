@@ -17,6 +17,8 @@ class EnrollmentController < ApplicationController
     @mindterm_exam = entrollment.midterm_exam(semester, year, sid)
     @final_exam = entrollment.final_exam(semester, year, sid)
 
+    @classes = entrollment.course_class(@courses)
+
   end
 
 

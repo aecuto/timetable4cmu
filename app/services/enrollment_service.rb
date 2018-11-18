@@ -99,6 +99,29 @@ class EnrollmentService
 
   end
 
+  def course_class(courses)
+
+    course_classes = Hash.new
+    class_index = 1
+
+    courses.each do |course|
+      
+      if course_classes.blank?
+        course_classes[course[:no]] = "course#{class_index}"
+        class_index += 1
+      end
+
+      if course_classes[course[:no]].blank?
+        course_classes[course[:no]] = "course#{class_index}"
+        class_index += 1
+      end
+
+    end
+
+    return course_classes
+
+  end
+
   private
     def is_number?(string)
       true if Float(string) rescue false

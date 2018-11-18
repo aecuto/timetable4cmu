@@ -10,6 +10,8 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
+ *= require_tree .
+ *= require_self
  *= require rails_bootstrap_forms
  */
 
@@ -68,23 +70,9 @@ html, body {
   height: 20px; 
 }
 
-@media screen and (max-width: 480px), screen and (max-height: 1024px){
-    html{
-      min-width: 1280px;
-    }
-}
-
 /* Define the hover highlight color for the table row */
 .table-hover tbody tr:hover td, .table-hover tr:hover {
   background-color: gray;
-}
-
-.focusedInput {
-    border-color: rgba(82,168,236,.8);
-    outline: 0;
-    outline: thin dotted \9;
-    -moz-box-shadow: 0 0 8px rgba(82,168,236,.6);
-    box-shadow: 0 0 8px rgba(82,168,236,.6) !important;
 }
 
 #admin_email,#admin_password{
@@ -94,14 +82,3 @@ html, body {
 .fixed-table-container tbody td .th-inner, .fixed-table-container thead th .th-inner{
   display: none !important;
 }
-
-.sked-tape__location, .sked-tape__caption, .sked-tape__hours li{
-  background-color: #212121;
-  text-align: center;
-}
-
-.sked-tape__grid li{
-  background-color: #424242;
-  background-image: none;
-}
-

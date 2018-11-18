@@ -1,6 +1,6 @@
 <h1>SHOW</h1>
 
-<%= @courses.to_json %>
+<%= render 'timetable', courses: @courses %>
 
 <hr>
 
@@ -9,4 +9,6 @@
 <hr>
 
 <%= @final_exam.to_json %>
+
+<hr>
 
