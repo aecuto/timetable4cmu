@@ -17,6 +17,7 @@
 //= require bootstrap-sprockets
 //= require inputmask.min
 //= require jquery.inputmask.min
+//= require timetable
 
 $(document).ready(function(){
 //	$("#myModal").modal({show: true});

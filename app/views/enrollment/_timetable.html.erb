@@ -1,22 +1,28 @@
-<div class="table-responsive">
-  <table class="table" id="table2image">
-    <thead>
-      <tr>
-
-        <th colspan="2" class="text-center no-warp black">610510628 (2/61)</th>
+<% height = 0 %>
+<div class="cd-schedule">
+  <div class="timeline">
+      <ul>
 
         <% @times.each_with_index do |time, index| %>
 
           <% if time >= @range[:start_time] && time <= @range[:end_time]  %>
-            <th colspan="2" class="text-center no-warp black" ><%= time %> - <%= @times[index+1] %></th>
+            <li><span><%= time[0,2] %>:<%= time[2,4] %></span></li>
+            
+            <% if time[0,2] != @range[:end_time][0,2] %>
+              <li class="<%= @range[:end_time] %> ? <%= time %>"><span><%= time[0,2] %>:30</span></li>              
+            <% end %>
+            
+            <% height += 100 %>
+
           <% end %>
 
         <% end %>
 
-      </tr>
-    </thead>
+      </ul>
+  </div>
 
-    <tbody>
+  <div class="events">
+    <ul>
 
       <% @days.each do |day| %>
 
@@ -26,23 +32,23 @@
         <% end %>
         <% next if check_day==0 %>
 
-        <tr>
-         <td colspan="2" class="text-center"><%= day %></td>  
+        <li class="events-group">
+          <div class="top-info black"><span><%= day  %></span></div>
+          <ul class="gray" style="height: <%= height-50 %>px">
+            <% @courses.each_with_index do |course, index| %>
 
-          <% @courses.each do |course| %>
+              <% if day.include?(course[:day]) %>
 
-            <% if day.include?(course[:day]) %>
-              <td class="<%= @classes[course[:no]] %>"> <%= course[:name] %>  </td>
+                <li class="single-event <%= @classes[course[:no]] %>" data-start="<%= course[:time][:start][0,2]%>:<%= course[:time][:start][2,4] %>" data-end="<%= course[:time][:end][0,2]%>:<%= course[:time][:end][2,4] %>" data-content="timetable4cmu" data-event="event-<%= index %>">
+                  <em class="event-name"><%= course[:name] %></em>
+                </li>
+
+              <% end %>
+              
             <% end %>
-            
-          <% end %>
-
-        </tr>
-
+          </ul>
+        </li>
       <% end %>
-
-    </tbody>
-  </table>
+    </ul>
+  </div>
 </div>
-
-<%= @course_days %>

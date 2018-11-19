@@ -3,47 +3,43 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 .course1{
-  background-color: #FF6138
+  background-color: #FF6138 !important
 }
 
 .course2{
-  background-color: #DA9844
+  background-color: #DA9844 !important
 }
 
 .course3{
-  background-color: #2B4C8C
+  background-color: #2B4C8C !important
 }
 
 .course4{
-  background-color: #644D52
+  background-color: #644D52 !important
 }
 
 .course5{
-  background-color: #00A388
+  background-color: #00A388 !important
 }
 
 .course6{
-  background-color: #247BA0
+  background-color: #247BA0 !important
 }
 
 .course7{
-  background-color: #A6937C
+  background-color: #A6937C !important
 }
 
 .course8{
-  background-color: #332532
+  background-color: #332532 !important
 }
 
 .course9{
-  background-color: #F25F5C
+  background-color: #F25F5C !important
 }
 
 .course10{
-  background-color: #0D1326
-}
-
-.no-warp{
-  white-space: nowrap
+  background-color: #0D1326 !important
 }
 
 .black{
@@ -51,5 +47,6 @@
 }
 
 .gray{
-  background-color: #424242
+  background: linear-gradient(to bottom, #424242, #424242 97%, #5D5959 3%, #5D5959);
+    background-size: 100% 25px;
 }
