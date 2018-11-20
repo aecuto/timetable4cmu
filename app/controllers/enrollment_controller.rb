@@ -5,12 +5,12 @@ class EnrollmentController < ApplicationController
 
   def show
 
-    redirect_to root_url, :notice => "Successfully checked in"  if validate(params[:sid], params[:term])
+    redirect_to root_url, :notice => "Fail Login, make sure your infomation!"  if validate(params[:sid], params[:term])
 
     term = params[:term].split('/')
     semester = term[0]
     year = term[1]
-    sid = params[:sid]
+    @sid = params[:sid]
 
     entrollment = EnrollmentService.new
 
@@ -18,19 +18,19 @@ class EnrollmentController < ApplicationController
     @days = Array["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]
     
     #timetable
-    @courses = entrollment.courses(semester, year, sid)
+    @courses = entrollment.courses(semester, year, @sid)
     @classes = entrollment.course_class(@courses)
     @range = entrollment.range_time(@courses)
     @course_days = entrollment.course_day(@courses)
 
     #mid
-    @courses_mid = entrollment.midterm_exam(semester, year, sid)
+    @courses_mid = entrollment.midterm_exam(semester, year, @sid)
     @classes_mid = entrollment.course_class(@courses_mid)
     @range_mid = entrollment.range_time(@courses_mid)
     @course_days_mid = entrollment.course_day(@courses_mid)
 
     #final
-    @courses_final = entrollment.final_exam(semester, year, sid)
+    @courses_final = entrollment.final_exam(semester, year, @sid)
     @classes_final = entrollment.course_class(@courses_final)
     @range_final = entrollment.range_time(@courses_final)
     @course_days_final = entrollment.course_day(@courses_final)
