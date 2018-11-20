@@ -1,0 +1,49 @@
+<% height = 0 %>
+<div id="timetable" class="cd-schedule">
+  <div class="timeline">
+      <ul>
+
+        <% times.each_with_index do |time, index| %>
+
+          <% if time >= range[:start_time] && time <= range[:end_time]  %>
+            <li><span><%= time[0,2] %>:<%= time[2,4] %></span></li>
+            
+            <% if time[0,2] != range[:end_time][0,2] %>
+              <li class="<%= range[:end_time] %> ? <%= time %>"><span><%= time[0,2] %>:30</span></li>              
+            <% end %>
+            
+            <% height += 100 %>
+
+          <% end %>
+
+        <% end %>
+
+      </ul>
+  </div>
+
+  <div class="events">
+    <ul>
+      <% class_gray = ['gray', 'gray2'] %>
+      <% index=0 %>
+      <% course_days.each do |key, value| %>
+        <li class="events-group li-width" style="width: <%= 100.00/(course_days.length) %>%">
+          <div class="top-info black"><span><%= value.strftime('%d %B')  %></span></div>
+          <ul class="<%= class_gray[index%2] %> ul-height" style="height: <%= height-50 %>px;">
+            <% courses.each_with_index do |course, index| %>
+
+              <% if value == course[:day] %>
+
+                <li class="single-event <%= classes[course[:no]] %>" data-start="<%= course[:time][:start][0,2]%>:<%= course[:time][:start][2,4] %>" data-end="<%= course[:time][:end][0,2]%>:<%= course[:time][:end][2,4] %>" data-content="timetable4cmu" data-event="event-<%= index %>">
+                  <em class="event-name"><%= course[:course_name] %></em>
+                </li>
+
+              <% end %>
+              
+            <% end %>
+          </ul>
+        </li>
+      <% index+=1 %>      
+      <% end %>
+    </ul>
+  </div>
+</div>

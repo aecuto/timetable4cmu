@@ -1,14 +1,14 @@
 <h1>SHOW</h1>
 
-<%= render 'timetable', courses: @courses %>
+<%= render 'timetable', times: @times, days: @days, classes: @classes, courses: @courses, range: @range, course_days: @course_days %>
 
 <hr>
 
-<%= @mindterm_exam.to_json %>
+<%= render 'exam', times: @times, days: @days, classes: @classes, courses: @courses_mid, range: @range_mid, course_days: @course_days_mid %>
 
 <hr>
 
-<%= @final_exam.to_json %>
+<%= render 'exam', times: @times, days: @days, classes: @classes, courses: @courses_final, range: @range_final, course_days: @course_days_final %>
 
 <hr>
 

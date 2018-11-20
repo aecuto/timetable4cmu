@@ -58,6 +58,8 @@ class EnrollmentService
         exam = get_course(semester, year, exam)
         next if exam[11].css('gray').text.split(' ')[0].to_i == 0
         @exams << {
+          no: d[1].text,
+          course_name: exam[2].text,
           day: exam[11].css('gray').text.to_date.strftime('%m/%d').to_date,
           time: time_object(exam[12].css('gray').text)
         }
@@ -84,11 +86,13 @@ class EnrollmentService
         exam = get_course(semester, year, exam)
         if exam[11].css('p').text.split(' ')[0].to_i != 0
           @exams << {
+            no: d[1].text,
+            course_name: exam[2].text,
             day: exam[11].css('p').text.to_date.strftime('%m/%d').to_date,
             time: time_object(exam[12].css('p').text)
           }
         else
-          reg_exam = regular_exam(semester, year, exam[7], exam[8])
+          reg_exam = regular_exam(d[1], exam[2], semester, year, exam[7], exam[8])
           @exams << reg_exam unless reg_exam.blank?
         end
 
@@ -181,7 +185,7 @@ class EnrollmentService
       return coreses.css('td')
     end
 
-    def regular_exam(semester, year, day, time)
+    def regular_exam(course_no, course_name, semester, year, day, time)
       url_final = "https://www3.reg.cmu.ac.th/regist/public/exam.php?type=FINAL&term="+semester.to_s+year.to_s
       respon = Nokogiri::HTML(open(url_final))
       regulars = respon.css('tr')
@@ -198,6 +202,8 @@ class EnrollmentService
 
         if reg_time==course_time && reg_day==course_day
           return {
+            no: course_no.text,
+            course_name: course_name.text,
             day: "#{reg[4].text} #{reg[3].text}".to_date.strftime('%m/%d').to_date,
             time: time_object(reg[5].text)
           }
