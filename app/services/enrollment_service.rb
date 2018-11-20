@@ -7,8 +7,14 @@ class EnrollmentService
   def courses(semester, year, sid)
 
     url = "https://www3.reg.cmu.ac.th/regist" + semester.to_s+year.to_s + "/public/result.php?id=" + sid.to_s
+    
+    begin
+      open_url = open(url)
+    rescue OpenURI::HTTPError
+      return "error"
+    end
 
-    respon = Nokogiri::HTML(open(url))
+    respon = Nokogiri::HTML(open_url)
     courses = respon.css('.msan8')
     @courses = []
 
@@ -67,7 +73,7 @@ class EnrollmentService
       end
     end
 
-    return @exams.sort_by!{ |e| [ e[:day], e[:time][:start] ] }
+    return @exams.sort_by!{ |e| e[:day] }
 
   end
 
@@ -99,73 +105,7 @@ class EnrollmentService
       end
     end
 
-    return @exams.sort_by!{ |e| [ e[:day], e[:time][:start] ] }
-
-  end
-
-  def course_class(courses)
-
-    course_classes = Hash.new
-    class_index = 1
-
-    courses.each do |course|
-      
-      if course_classes.blank?
-        course_classes[course[:no]] = "course#{class_index}"
-        class_index += 1
-      end
-
-      if course_classes[course[:no]].blank?
-        course_classes[course[:no]] = "course#{class_index}"
-        class_index += 1
-      end
-
-    end
-
-    return course_classes
-
-  end
-
-  def range_time(courses)
-    start_time = "2400"
-    end_time = "0000"
-
-    courses.each do |course|
-
-      if course[:time][:start] < start_time
-        start_time = course[:time][:start]
-      end
-
-      if course[:time][:end] > end_time
-        end_time = course[:time][:end]
-      end
-
-    end
-
-    return {
-      start_time: start_time,
-      end_time: end_time
-    }
-
-  end
-
-  def course_day(courses)
-
-    course_days = Hash.new
-
-    courses.each do |course|
-      
-      if course_days.blank?
-        course_days[course[:day]] = course[:day]
-      end
-
-      if course_days[course[:day]].blank?
-        course_days[course[:day]] = course[:day]
-      end
-
-    end
-
-    return course_days
+    return @exams.sort_by!{ |e| e[:day] }
 
   end
 
