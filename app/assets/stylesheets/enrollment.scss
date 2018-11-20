@@ -15,7 +15,7 @@
 }
 
 .course4{
-  background-color: #644D52 !important
+  background-color: #F25F5C !important
 }
 
 .course5{
@@ -35,7 +35,7 @@
 }
 
 .course9{
-  background-color: #F25F5C !important
+  background-color: #644D52 !important
 }
 
 .course10{
@@ -56,10 +56,40 @@
     background-size: 100% 25px;
 }
 
-.mobile-height{
-  height: 150px !important;
+.fb-like{
+  padding-bottom: 5px;
 }
 
-.mobile-width{
-  width: auto !important;
+.fb_iframe_widget_fluid {
+  display: -webkit-inline-box !important;
+}
+
+input{
+  margin-bottom: 10px !important;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #424242; 
+}
+
+::-webkit-scrollbar-corner { 
+  background:#424242; 
+}
+
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #424242; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: black; 
 }

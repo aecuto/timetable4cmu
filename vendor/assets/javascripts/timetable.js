@@ -48,6 +48,7 @@ jQuery(document).ready(function($){
 			this.element.hasClass('modal-is-open') && this.checkEventModal();
 			$('.li-width').removeClass('mobile-width');
 			$('.ul-height').removeClass('mobile-height');
+			$('.ul-height .single-event').removeClass('card-height');
 		} else if(  mq == 'mobile' && this.element.hasClass('js-full') ) {
 			//in this case you are on a mobile version (first load or resize from desktop)
 			this.element.removeClass('js-full loading');
@@ -56,6 +57,7 @@ jQuery(document).ready(function($){
 			this.element.hasClass('modal-is-open') && this.checkEventModal();
 			$('.li-width').addClass('mobile-width');
 			$('.ul-height').addClass('mobile-height');
+			$('.ul-height .single-event').addClass('card-height');
 		} else if( mq == 'desktop' && this.element.hasClass('modal-is-open')){
 			//on a mobile version with modal open - need to resize/move modal window
 			this.checkEventModal('desktop');

@@ -19,13 +19,4 @@
 //= require jquery.inputmask.min
 //= require timetable
 
-$(document).ready(function(){
-//	$("#myModal").modal({show: true});
-	$("#loading").hide();
-    $("#submit").click(function(){
-        $("#loading").show();
-    });
-});
-
-
 

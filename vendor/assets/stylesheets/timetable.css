@@ -7,10 +7,6 @@ Primary style
   box-sizing: border-box;
 }
 
-body {
-  font-family: "Source Sans Pro", sans-serif;
-}
-
 em {
   padding: 10px;
   text-align: center;
@@ -54,6 +50,18 @@ Main Components
 
 .event-name{
   font-style: normal;
+}
+
+.mobile-height{
+  height: 150px !important;
+}
+
+.mobile-width{
+  width: auto !important;
+}
+
+.card-height{
+  height: 140px !important;
 }
 
 @media only screen and (min-width: 800px) {

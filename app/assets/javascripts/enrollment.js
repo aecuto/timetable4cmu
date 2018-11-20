@@ -8,4 +8,10 @@ $(function(){
 		$('.ul-height').addClass('mobile-height');
   }
 
+  $("#loading").hide();
+  $("#submit").click(function(){
+    $("#loading").show();
+    $("#submit_text").hide();
+  });
+
 });
