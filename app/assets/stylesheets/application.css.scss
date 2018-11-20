@@ -18,40 +18,13 @@
 
 @import "bootstrap";
 
-.navbar-collapse.collapse {
-  display: block!important;
+body{
+  color: white; 
+  font-family: 'Oxygen', sans-serif; 
+  background-color: #303030;
 }
 
-.navbar-nav>li, .navbar-nav {
-  float: left !important;
-}
-
-.navbar-nav.navbar-right:last-child {
-  margin-right: -15px !important;
-}
-
-.navbar-right {
-  float: right!important;
-}
-
-
-/* unvisited link */
-a:link {
-    color: gray;
-}
-
-/* visited link */
-a:visited {
-    color: gray;
-}
-
-/* mouse over link */
-a:hover {
-    color: gray;
-    background:none;
-}
-
-
+//for footer
 * {
   margin: 0;
 }
@@ -71,15 +44,47 @@ html, body {
   height: 20px; 
 }
 
-/* Define the hover highlight color for the table row */
-.table-hover tbody tr:hover td, .table-hover tr:hover {
-  background-color: gray;
-}
-
 #admin_email,#admin_password{
   color: black !important;
 }
 
-.fixed-table-container tbody td .th-inner, .fixed-table-container thead th .th-inner{
-  display: none !important;
-}
+// .navbar-collapse.collapse {
+//   display: block!important;
+// }
+
+// .navbar-nav>li, .navbar-nav {
+//   float: left !important;
+// }
+
+// .navbar-nav.navbar-right:last-child {
+//   margin-right: -15px !important;
+// }
+
+// .navbar-right {
+//   float: right!important;
+// }
+
+
+// a:link {
+//     color: gray;
+// }
+
+// a:visited {
+//     color: gray;
+// }
+
+// a:hover {
+//     color: gray;
+//     background:none;
+// }
+
+/* Define the hover highlight color for the table row */
+// .table-hover tbody tr:hover td, .table-hover tr:hover {
+//   background-color: gray;
+// }
+
+
+// .fixed-table-container tbody td .th-inner, .fixed-table-container thead th .th-inner{
+//   display: none !important;
+// }
+

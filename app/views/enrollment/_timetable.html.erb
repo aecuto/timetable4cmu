@@ -1,5 +1,5 @@
 <% height = 0 %>
-<div class="cd-schedule">
+<div id="timetable" class="cd-schedule">
   <div class="timeline">
       <ul>
 
@@ -23,8 +23,8 @@
 
   <div class="events">
     <ul>
-
-      <% @days.each do |day| %>
+      <% class_gray = ['gray', 'gray2'] %>
+      <% @days.each_with_index do |day, index| %>
 
         <% check_day = 0 %>
         <% @course_days.each do |key, value| %>
@@ -32,9 +32,9 @@
         <% end %>
         <% next if check_day==0 %>
 
-        <li class="events-group">
+        <li class="events-group li-width" style="width: <%= 100.00/(@course_days.length-1) %>%">
           <div class="top-info black"><span><%= day  %></span></div>
-          <ul class="gray" style="height: <%= height-50 %>px">
+          <ul class="<%= class_gray[index%2] %> ul-height" style="height: <%= height-50 %>px;">
             <% @courses.each_with_index do |course, index| %>
 
               <% if day.include?(course[:day]) %>
@@ -52,3 +52,6 @@
     </ul>
   </div>
 </div>
+
+
+<%= courses %>
