@@ -40,7 +40,11 @@
               <% if day.include?(course[:day]) %>
 
                 <li class="single-event <%= classes[course[:no]] %>" data-start="<%= course[:time][:start][0,2]%>:<%= course[:time][:start][2,4] %>" data-end="<%= course[:time][:end][0,2]%>:<%= course[:time][:end][2,4] %>" data-content="timetable4cmu" data-event="event-<%= index %>">
-                  <em class="event-name"><%= course[:name] %></em>
+                  <em class="event-name">
+                  <%= course[:name] %> <br>
+                  <%= course[:lec] %>-<%= course[:lab] %> <i class="fas fa-graduation-cap"></i> <%= course[:no] %> <br>
+                  <i class="fas fa-map-marker-alt"></i> <%= course[:room] %>
+                  </em>
                 </li>
 
               <% end %>
@@ -52,3 +56,5 @@
     </ul>
   </div>
 </div>
+
+<%= courses %>
