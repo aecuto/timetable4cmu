@@ -1,6 +1,6 @@
 <% height = 0 %>
-<div class="cd-schedule">
-  <div class="timeline">
+<div id="<%= id %>" class="cd-schedule">
+  <div class="timeline black">
       <ul>
 
         <% times.each_with_index do |time, index| %>
@@ -46,4 +46,12 @@
       <% end %>
     </ul>
   </div>
+</div>
+
+<div class="row" style="margin-top: 20px;">
+	<div class="col-md-12 text-center">
+		<button id="<%= id %>_download" class="btn btn-outline-light">
+			<i class="fas fa-download"></i> Download
+		</button>
+	</div>
 </div>

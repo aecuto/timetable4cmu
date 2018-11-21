@@ -14,16 +14,42 @@ $(function(){
     $("#submit_text").hide();
   });
 
-  $("#dowloadTimetable").on('click', function () {
-    html2canvas($("#timetable"), 
-    {
-      onrendered: function (canvas) {
-        var a = document.createElement('a');
-            // toDataURL defaults to png, so we need to request a jpeg, then convert for file download.
-            a.href = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
-            a.download = 'timetable(timetable4cmu).png';
-            a.click();
-        }
+  takeSnapShot = function (el) {
+    html2canvas(document.querySelector("#timetable")).then(canvas => {
+      var img = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+      el.href = img;
+      el.download = 'timetable(timetable4cmu).png';
+      el.click();
+    });
+  }
+
+  $("#timetable_download").on('click', function () {
+    html2canvas(document.querySelector("#timetable")).then(canvas => {
+      var img = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+      var el = document.createElement('a');
+      el.href = img;
+      el.download = 'timetable(timetable4cmu).png';
+      el.click();
+    });
+  });
+
+  $("#mid_download").on('click', function () {
+    html2canvas(document.querySelector("#mid")).then(canvas => {
+      var img = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+      var el = document.createElement('a');
+      el.href = img;
+      el.download = 'mid_exam(timetable4cmu).png';
+      el.click();
+    });
+  });
+
+  $("#final_download").on('click', function () {
+    html2canvas(document.querySelector("#final")).then(canvas => {
+      var img = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+      var el = document.createElement('a');
+      el.href = img;
+      el.download = 'final_exam(timetable4cmu).png';
+      el.click();
     });
   });
 

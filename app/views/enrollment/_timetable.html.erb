@@ -1,11 +1,11 @@
 <% height = 0 %>
 <div id="timetable" class="cd-schedule">
-  <div class="timeline">
+  <div class="timeline black">
       <ul>
 
         <% times.each_with_index do |time, index| %>
 
-          <% if time >= range[:start_time] && time <= range[:end_time]  %>
+          <% if time[0,2] >= range[:start_time][0,2] && time[0,2] <= range[:end_time][0,2]  %>
             <li><span><%= time[0,2] %>:<%= time[2,4] %></span></li>
             
             <% if time[0,2] != range[:end_time][0,2] %>
@@ -24,7 +24,8 @@
   <div class="events">
     <ul>
       <% class_gray = ['gray', 'gray2'] %>
-      <% days.each_with_index do |day, index| %>
+      <% gray_index = -1 %>
+      <% days.each do |day| %>
 
         <% check_day = 0 %>
         <% course_days.each do |key, value| %>
@@ -32,9 +33,10 @@
         <% end %>
         <% next if check_day==0 %>
 
+        <% gray_index += 1 %>
         <li class="events-group li-width" style="width: <%= 100.00/(course_days.length) %>%">
           <div class="top-info black"><span><%= day  %></span></div>
-          <ul class="<%= class_gray[index%2] %> ul-height" style="height: <%= height-50 %>px;">
+          <ul class="<%= class_gray[gray_index%2] %> ul-height" style="height: <%= height-50 %>px;">
             <% courses.each_with_index do |course, index| %>
 
               <% if day.include?(course[:day]) %>
@@ -58,11 +60,10 @@
   </div>
 </div>
 
-
 <div class="row" style="margin-top: 20px;">
 	<div class="col-md-12 text-center">
-		<div id="dowloadTimetable" class="btn btn-outline-light">
+		<button id="timetable_download" class="btn btn-outline-light">
 			<i class="fas fa-download"></i> Download
-		</div>
+		</button>
 	</div>
 </div>

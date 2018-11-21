@@ -18,5 +18,5 @@
 //= require inputmask.min
 //= require jquery.inputmask.min
 //= require timetable
-
+//= require html2canvas.min
 
