@@ -4,7 +4,7 @@
     <i class="fas fa-bell"></i> ไม่พบวิชาที่ลงทะเบียน
   </div>
 <% else %>
-  
+
 <% height = 0 %>
 <div id="timetable" class="cd-schedule">
   <div class="timeline black">
@@ -16,7 +16,7 @@
             <li><span><%= time[0,2] %>:<%= time[2,4] %></span></li>
             
             <% if time[0,2] != range[:end_time][0,2] %>
-              <li class="<%= range[:end_time] %> ? <%= time %>"><span><%= time[0,2] %>:30</span></li>              
+              <li><span><%= time[0,2] %>:30</span></li>              
             <% end %>
             
             <% height += 100 %>

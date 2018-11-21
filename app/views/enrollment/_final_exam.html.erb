@@ -1,0 +1,65 @@
+<% if courses.blank? %>
+  <div class="alert alert-light" role="alert">
+    <i class="fas fa-bell"></i> ไม่พบวิชาที่ลงทะเบียน
+  </div>
+<% else %>
+
+<% height = 0 %>
+<div id="final" class="cd-schedule">
+  <div class="timeline black">
+      <ul>
+
+        <% times.each_with_index do |time, index| %>
+
+          <% if time >= range[:start_time] && time <= range[:end_time]  %>
+            <li><span><%= time[0,2] %>:<%= time[2,4] %></span></li>
+            
+            <% if time[0,2] != range[:end_time][0,2] %>
+              <li><span><%= time[0,2] %>:30</span></li>              
+            <% end %>
+            
+            <% height += 100 %>
+
+          <% end %>
+
+        <% end %>
+
+      </ul>
+  </div>
+
+  <div class="events">
+    <ul>
+      <% class_gray = ['gray', 'gray2'] %>
+      <% index=0 %>
+      <% course_days.each do |key, value| %>
+        <li class="events-group li-width" style="width: <%= 100.00/(course_days.length) %>%">
+          <div class="top-info black"><span><%= value.strftime('%d %B')  %></span></div>
+          <ul class="<%= class_gray[index%2] %> ul-height" style="height: <%= height-50 %>px;">
+            <% courses.each_with_index do |course, index| %>
+
+              <% if value == course[:final_exam][:day] %>
+
+                <li class="single-event <%= classes[course[:no]] %>" data-start="<%= course[:final_exam][:time][:start][0,2]%>:<%= course[:final_exam][:time][:start][2,4] %>" data-end="<%= course[:final_exam][:time][:end][0,2]%>:<%= course[:final_exam][:time][:end][2,4] %>" data-content="timetable4cmu" data-event="event-<%= index %>">
+                  <em class="event-name"><%= course[:name] %></em>
+                </li>
+
+              <% end %>
+              
+            <% end %>
+          </ul>
+        </li>
+      <% index+=1 %>      
+      <% end %>
+    </ul>
+  </div>
+</div>
+
+<div class="row" style="margin-top: 20px;">
+	<div class="col-md-12 text-center">
+		<button id="final_download" class="btn btn-outline-light">
+			<i class="fas fa-download"></i> Download
+		</button>
+	</div>
+</div>
+
+<% end %>

@@ -5,7 +5,7 @@
 <% else %>
 
 <% height = 0 %>
-<div id="<%= id %>" class="cd-schedule">
+<div id="mid" class="cd-schedule">
   <div class="timeline black">
       <ul>
 
@@ -15,7 +15,7 @@
             <li><span><%= time[0,2] %>:<%= time[2,4] %></span></li>
             
             <% if time[0,2] != range[:end_time][0,2] %>
-              <li class="<%= range[:end_time] %> ? <%= time %>"><span><%= time[0,2] %>:30</span></li>              
+              <li><span><%= time[0,2] %>:30</span></li>              
             <% end %>
             
             <% height += 100 %>
@@ -37,10 +37,10 @@
           <ul class="<%= class_gray[index%2] %> ul-height" style="height: <%= height-50 %>px;">
             <% courses.each_with_index do |course, index| %>
 
-              <% if value == course[:day] %>
+              <% if value == course[:mid_exam][:day] %>
 
-                <li class="single-event <%= classes[course[:no]] %>" data-start="<%= course[:time][:start][0,2]%>:<%= course[:time][:start][2,4] %>" data-end="<%= course[:time][:end][0,2]%>:<%= course[:time][:end][2,4] %>" data-content="timetable4cmu" data-event="event-<%= index %>">
-                  <em class="event-name"><%= course[:course_name] %></em>
+                <li class="single-event <%= classes[course[:no]] %>" data-start="<%= course[:mid_exam][:time][:start][0,2]%>:<%= course[:mid_exam][:time][:start][2,4] %>" data-end="<%= course[:mid_exam][:time][:end][0,2]%>:<%= course[:mid_exam][:time][:end][2,4] %>" data-content="timetable4cmu" data-event="event-<%= index %>">
+                  <em class="event-name"><%= course[:name] %></em>
                 </li>
 
               <% end %>
@@ -56,7 +56,7 @@
 
 <div class="row" style="margin-top: 20px;">
 	<div class="col-md-12 text-center">
-		<button id="<%= id %>_download" class="btn btn-outline-light">
+		<button id="mid_download" class="btn btn-outline-light">
 			<i class="fas fa-download"></i> Download
 		</button>
 	</div>

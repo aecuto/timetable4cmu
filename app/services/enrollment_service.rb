@@ -38,7 +38,9 @@ class EnrollmentService
             day: day,
             time: check_red_time(day, course),
             room: check_red_room(day, course),
-            type: type
+            type: type,
+            mid_exam: midterm_exam(course),
+            final_exam: final_exam(semester, year, course)
           }
         end
         
@@ -49,64 +51,27 @@ class EnrollmentService
 
   end
 
-  def midterm_exam(semester, year, sid)
-
-    url = "https://www3.reg.cmu.ac.th/regist" + semester.to_s+year.to_s + "/public/result.php?id=" + sid.to_s
-
-    respon = Nokogiri::HTML(open(url))
-    exams = respon.css('.msan8')
-    @exams = []
-
-    exams.each do |exam|
-      d = exam.css('td')
-      if is_number?(d[0].text)
-
-        exam = get_course(semester, year, exam)
-        next if exam[11].css('gray').text.split(' ')[0].to_i == 0
-        @exams << {
-          no: d[1].text,
-          course_name: exam[2].text,
-          day: exam[11].css('gray').text.to_date.strftime('%m/%d').to_date,
-          time: time_object(exam[12].css('gray').text)
-        }
-
-      end
+  def midterm_exam(course)
+    if course[11].css('gray').present?
+      return {
+        day: course[11].css('gray').text.to_date.strftime('%m/%d').to_date,
+        time: time_object(course[12].css('gray').text)
+      }
     end
-
-    return @exams.sort_by!{ |e| e[:day] }
-
+    return {}
   end
 
-  def final_exam(semester, year, sid)
-
-    url = "https://www3.reg.cmu.ac.th/regist" + semester.to_s+year.to_s + "/public/result.php?id=" + sid.to_s
-
-    respon = Nokogiri::HTML(open(url))
-    exams = respon.css('.msan8')
-    @exams = []
-
-    exams.each do |exam|
-      d = exam.css('td')
-      if is_number?(d[0].text)
-
-        exam = get_course(semester, year, exam)
-        if exam[11].css('p').text.split(' ')[0].to_i != 0
-          @exams << {
-            no: d[1].text,
-            course_name: exam[2].text,
-            day: exam[11].css('p').text.to_date.strftime('%m/%d').to_date,
-            time: time_object(exam[12].css('p').text)
-          }
-        else
-          reg_exam = regular_exam(d[1], exam[2], semester, year, exam[7], exam[8])
-          @exams << reg_exam unless reg_exam.blank?
-        end
-
-      end
+  def final_exam(semester, year, course)
+    if course[11].css('p').text == "REGULAR"
+      return regular_exam(semester, year, course[7], course[8])
+    elsif course[11].css('p').present?
+      return {
+        day: course[11].css('p').text.to_date.strftime('%m/%d').to_date,
+        time: time_object(course[12].css('p').text)
+      }
     end
 
-    return @exams.sort_by!{ |e| e[:day] }
-
+    return {}
   end
 
   private
@@ -125,7 +90,7 @@ class EnrollmentService
       return coreses.css('td')
     end
 
-    def regular_exam(course_no, course_name, semester, year, day, time)
+    def regular_exam(semester, year, day, time)
       url_final = "https://www3.reg.cmu.ac.th/regist/public/exam.php?type=FINAL&term="+semester.to_s+year.to_s
       respon = Nokogiri::HTML(open(url_final))
       regulars = respon.css('tr')
@@ -142,15 +107,13 @@ class EnrollmentService
 
         if reg_time==course_time && reg_day==course_day
           return {
-            no: course_no.text,
-            course_name: course_name.text,
             day: "#{reg[4].text} #{reg[3].text}".to_date.strftime('%m/%d').to_date,
             time: time_object(reg[5].text)
           }
         end
       end
 
-      return []
+      return {}
 
     end
 

@@ -15,13 +15,13 @@
 
 <h1> <i class="fas fa-leaf"></i> Midterm Exam</h1> 
 
-<%= render 'exam', id: 'mid', times: @times, days: @days, classes: @classes, courses: @courses_mid, range: @range_mid, course_days: @course_days_mid %>
+<%= render 'mid_exam', id: 'mid', times: @times, days: @days, classes: @classes, courses: @courses, range: @range_mid, course_days: @mid_days %>
 
 <hr>
 
 <h1> <i class="fas fa-fire"></i> Final Exam</h1> 
 
-<%= render 'exam', id: 'final', times: @times, days: @days, classes: @classes, courses: @courses_final, range: @range_final, course_days: @course_days_final %>
+<%= render 'final_exam', id: 'final', times: @times, days: @days, classes: @classes, courses: @courses, range: @range_final, course_days: @final_days %>
 
 <hr>
 

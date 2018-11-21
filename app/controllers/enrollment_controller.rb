@@ -30,20 +30,13 @@ class EnrollmentController < ApplicationController
 
     @classes = course_class(@courses)
     @range = range_time(@courses)
-    @course_days = course_day(@courses)
+    @course_days = course_days(@courses)
 
-    #mid
-    @courses_mid = entrollment.midterm_exam(semester, year, @sid)
-    @classes_mid = course_class(@courses_mid)
-    @range_mid = range_time(@courses_mid)
-    @course_days_mid = course_day(@courses_mid)
+    @mid_days = exam_days(@courses, "mid")
+    @final_days = exam_days(@courses, "final")
 
-    #final
-    @courses_final = entrollment.final_exam(semester, year, @sid)
-    @classes_final = course_class(@courses_final)
-    @range_final = range_time(@courses_final)
-    @course_days_final = course_day(@courses_final)
-
+    @range_mid = range_time_exam(@courses, "mid")
+    @range_final = range_time_exam(@courses, "final")
   end
 
 
@@ -53,7 +46,7 @@ class EnrollmentController < ApplicationController
       return true if sid.include?("_") || term.include?("_")
     end
 
-    def course_day(courses)
+    def course_days(courses)
 
       course_days = {}
 
@@ -114,6 +107,62 @@ class EnrollmentController < ApplicationController
   
         if course[:time][:end] > end_time
           end_time = course[:time][:end]
+        end
+  
+      end
+  
+      return {
+        start_time: start_time,
+        end_time: end_time
+      }
+  
+    end
+
+    def exam_days(courses, part)
+
+      course_days = {}
+
+      courses.each do |course|
+
+        day = course[:mid_exam][:day] if part == "mid"
+        day = course[:final_exam][:day] if part == "final"
+
+        next if day.nil?
+
+        day = "Mo" if day == "M"
+        day = "We" if day == "W"
+        day = "Fr" if day == "F"
+
+        if course_days.blank?
+          course_days[day] = day
+        end
+        
+        if course_days[day].blank?
+          course_days[day] = day
+        end
+
+      end
+
+      return course_days.sort
+  
+    end
+
+    def range_time_exam(courses, part)
+      start_time = "2400"
+      end_time = "0000"
+  
+      courses.each do |course|
+
+        time = course[:mid_exam][:time] if part == "mid"
+        time = course[:final_exam][:time] if part == "final"
+        next if time.nil?
+  
+        if time[:start] < start_time
+          start_time = time[:start]
+        end
+  
+        if time[:end] > end_time
+          end_time = time[:end]
         end
   
       end
