@@ -26,6 +26,7 @@ class EnrollmentService
         type = "A" if type.length > 1
 
         course = get_course(semester, year, course)
+        next if course[7].nil?
         next if course[7].text=="TBA"
         days = course[7].text.delete('-').split(/(?=[A-Z])/)
 
