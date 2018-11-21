@@ -51,18 +51,6 @@
           <i class="far fa-newspaper"></i> Blog
           </a>
         </li>
-        <% if session[:sid] != nil %>
-        <li class="nav-item">
-          <a href="#" class="nav-link">
-          <i class="fas fa-user-tie"></i> Welcome <%= session[:sid] %>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="/logout" class="nav-link" id="logout" data-turbolinks="false" >
-            <i class="fas fa-sign-out-alt"></i> Logout
-          </a>
-        </li>
-        <% end %>
       </ul>
   </nav>
 
