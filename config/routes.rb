@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
 
   root 'enrollment#index'
-  get 'enrollment/show', to: redirect('/')
-  post 'enrollment/show'
+  get 'enrollment', to: redirect('/')
+  post "enrollment" => 'enrollment#show'
 
 end

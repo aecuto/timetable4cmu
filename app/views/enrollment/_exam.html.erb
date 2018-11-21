@@ -1,3 +1,9 @@
+<% if courses.blank? %>
+  <div class="alert alert-light" role="alert">
+    <i class="fas fa-bell"></i> ไม่พบวิชาที่ลงทะเบียน
+  </div>
+<% else %>
+
 <% height = 0 %>
 <div id="<%= id %>" class="cd-schedule">
   <div class="timeline black">
@@ -55,3 +61,5 @@
 		</button>
 	</div>
 </div>
+
+<% end %>
