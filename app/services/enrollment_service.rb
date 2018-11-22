@@ -48,7 +48,7 @@ class EnrollmentService
       end
     end
 
-    return @courses
+    return @courses.sort_by{|c| c[:time][:start]}
 
   end
 

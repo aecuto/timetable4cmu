@@ -64,6 +64,10 @@ Main Components
   height: 150px !important;
 }
 
+.mobile-position{
+  padding: 0px
+}
+
 @media only screen and (min-width: 800px) {
   .cd-schedule {
     width: 90%;

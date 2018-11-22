@@ -16,7 +16,7 @@
 
 	<div class="col-sm-4" >
 		<%= label_tag 'Student Id' %>
-		<%= telephone_field_tag 'sid', nil, class: "form-control", placeholder: "ex. 5705106XX" %>
+		<%= telephone_field_tag 'sid', nil, class: "form-control", placeholder: "ex. 5705106XX", tabindex: 1 %>
 	</div>
 
 	<div class="col-sm-4" >
@@ -24,7 +24,7 @@
 		<button type="button" class="btn btn-link" data-toggle="modal" data-target="#exampleModal">
 			<i class="fas fa-question-circle"></i>
 		</button>
-		<%= telephone_field_tag 'term', nil, class: "form-control", placeholder: "ex. 1/5X" %>
+		<%= telephone_field_tag 'term', nil, class: "form-control", placeholder: "ex. 1/5X", tabindex: 2 %>
 	</div>
 
 	<div class="col-sm-4" style="padding-top: 32px;">

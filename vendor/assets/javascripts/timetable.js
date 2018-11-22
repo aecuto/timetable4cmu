@@ -49,6 +49,7 @@ jQuery(document).ready(function($){
 			$('.li-width').removeClass('mobile-width');
 			$('.ul-height').removeClass('mobile-height');
 			$('.ul-height .single-event').removeClass('card-height');
+			$('.events ul').removeClass('mobile-position');
 		} else if(  mq == 'mobile' && this.element.hasClass('js-full') ) {
 			//in this case you are on a mobile version (first load or resize from desktop)
 			this.element.removeClass('js-full loading');
@@ -58,6 +59,7 @@ jQuery(document).ready(function($){
 			$('.li-width').addClass('mobile-width');
 			$('.ul-height').addClass('mobile-height');
 			$('.ul-height .single-event').addClass('card-height');
+			$('.events ul').addClass('mobile-position');
 		} else if( mq == 'desktop' && this.element.hasClass('modal-is-open')){
 			//on a mobile version with modal open - need to resize/move modal window
 			this.checkEventModal('desktop');
@@ -69,6 +71,12 @@ jQuery(document).ready(function($){
 
 	SchedulePlan.prototype.initEvents = function() {
 		var self = this;
+
+		if(!$(".cd-schedule").hasClass('js-full')){
+			$('.li-width').addClass('mobile-width');
+			$('.ul-height').addClass('mobile-height');
+			$('.events ul').addClass('mobile-position');
+		}
 
 		this.singleEvents.each(function(){
 			//create the .event-date element for each event
