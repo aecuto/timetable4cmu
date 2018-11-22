@@ -8,21 +8,6 @@ $(function(){
 		$('.ul-height').addClass('mobile-height');
   }
 
-  $("#loading").hide();
-  $("#submit").click(function(){
-    $("#loading").show();
-    $("#submit_text").hide();
-  });
-
-  takeSnapShot = function (el) {
-    html2canvas(document.querySelector("#timetable")).then(canvas => {
-      var img = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
-      el.href = img;
-      el.download = 'timetable(timetable4cmu).png';
-      el.click();
-    });
-  }
-
   $("#timetable_download").on('click', function () {
     html2canvas(document.querySelector("#timetable")).then(canvas => {
       var img = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");

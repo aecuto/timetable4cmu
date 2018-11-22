@@ -83,7 +83,6 @@ input{
   background:#424242; 
 }
 
-
 /* Handle */
 ::-webkit-scrollbar-thumb {
   background: #424242; 
@@ -92,4 +91,18 @@ input{
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: black; 
+}
+
+h3 a{
+  color: white;
+}
+
+button.btn-link{
+  padding: 0;
+  padding-bottom: 3px;
+  color: white;
+}
+
+.btn-link:hover{
+  color: white !important;
 }
