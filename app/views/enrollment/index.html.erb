@@ -28,7 +28,10 @@
 	</div>
 
 	<div class="col-sm-4" style="padding-top: 30px;">
-		<%= button_tag "Submit", class: "btn btn-outline-light btn-block", data: { disable_with: '<i class="fas fa-circle-notch fa-spin fa-1x fa-fw"></i> Loading...' } %>
+		<%= submit_tag "Submit", id: 'submit', class: "btn btn-outline-light btn-block" %>
+		<%= button_tag id: 'loading', class: "btn btn-outline-light btn-block", disabled: true do %>
+			<i class="fas fa-circle-notch fa-spin fa-1x fa-fw"></i> Loading...
+		<% end %>
 	</div>
 
 </div>

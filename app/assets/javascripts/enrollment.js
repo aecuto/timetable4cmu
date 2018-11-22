@@ -38,4 +38,10 @@ $(function(){
     });
   });
 
+  $("#loading").hide();
+  $("#submit").click(function(){
+    $(this).hide();
+    $("#loading").show();
+  });
+
 });
