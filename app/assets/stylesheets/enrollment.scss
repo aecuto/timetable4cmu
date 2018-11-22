@@ -99,10 +99,14 @@ h3 a{
 
 button.btn-link{
   padding: 0;
-  padding-bottom: 3px;
   color: white;
 }
 
 .btn-link:hover{
   color: white !important;
+}
+
+#loading.btn-block{
+  display: none;
+  margin-top: 0 !important;
 }
