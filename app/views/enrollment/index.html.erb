@@ -20,12 +20,15 @@
 	</div>
 
 	<div class="col-sm-4" >
-		<%= label_tag 'Term' %> <i class="fas fa-question-circle" data-toggle="modal" data-target="#exampleModal"></i>
+		<%= label_tag 'Term' %>
+		<button type="button" class="btn btn-link" >
+			<i class="fas fa-question-circle"></i>
+		</button>
 		<%= telephone_field_tag 'term', nil, class: "form-control", placeholder: "ex. 1/5X" %>
 	</div>
 
 	<div class="col-sm-4" style="padding-top: 30px;">
-		<%= button_tag "Submit", class: "btn btn-outline-light btn-block", data: { disable_with: '<i class="fas fa-circle-notch fa-spin fa-1x fa-fw"></i>' } %>
+		<%= button_tag "Submit", class: "btn btn-outline-light btn-block", data: { disable_with: '<i class="fas fa-circle-notch fa-spin fa-1x fa-fw"></i> Loading...' } %>
 	</div>
 
 </div>
