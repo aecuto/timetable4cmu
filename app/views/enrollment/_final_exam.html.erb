@@ -34,8 +34,9 @@
       <% sort = course_days.sort_by{ |k, v| v } %>
       <% length = course_days.group_by{|k, v|v}.count %>
       <% sort.each do |key, value| %>
+      <% next if course_days[key].nil? %>
 
-        <li class="events-group li-width" style="width: <%= 100.00/(course_days.length) %>%">
+        <li class="events-group li-width" style="width: <%= 100.00/length %>%">
           <div class="top-info black"><span><%= value.strftime('%d %B')  %></span></div>
           <ul class="<%= class_gray[index%2] %> ul-height" style="height: <%= height-50 %>px;">
             <% courses.each_with_index do |course, index| %>

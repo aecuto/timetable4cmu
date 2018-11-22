@@ -63,7 +63,12 @@ class EnrollmentController < ApplicationController
         end
         
         if course_days[day].blank?
-          course_days[day] = day
+          if day == "T"
+           course_days["Tu"] = day
+           course_days["Th"] = day
+          else
+            course_days[day] = day
+          end
         end
 
       end
