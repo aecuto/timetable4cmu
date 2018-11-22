@@ -21,7 +21,7 @@
 
 	<div class="col-sm-4" >
 		<%= label_tag 'Term' %>
-		<button type="button" class="btn btn-link" >
+		<button type="button" class="btn btn-link" data-toggle="modal" data-target="#exampleModal">
 			<i class="fas fa-question-circle"></i>
 		</button>
 		<%= telephone_field_tag 'term', nil, class: "form-control", placeholder: "ex. 1/5X" %>
@@ -70,7 +70,8 @@
       </div>
       <div class="modal-body" style="color: black;">
         <p>1/57 = เทอม 1 ปีการศึกษา 2557 </p>
-				<p>3/61 = เทอม Summer ปีการศึกษา 2561</p>
+        <p>2/59 = เทอม 2 ปีการศึกษา 2559 </p>
+				<p>3/61 = Summer ปีการศึกษา 2561</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
