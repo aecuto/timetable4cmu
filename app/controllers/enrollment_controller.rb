@@ -134,16 +134,16 @@ class EnrollmentController < ApplicationController
         day = "Fr" if day == "F"
 
         if course_days.blank?
-          course_days[day] = day
+          course_days[course[:no]] = day
         end
         
         if course_days[day].blank?
-          course_days[day] = day
+          course_days[course[:no]] = day
         end
 
       end
 
-      return course_days.sort
+      return course_days
   
     end
 

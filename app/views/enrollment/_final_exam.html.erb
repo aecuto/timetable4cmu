@@ -31,18 +31,19 @@
     <ul>
       <% class_gray = ['gray', 'gray2'] %>
       <% index=0 %>
-      <% course_days.each do |key, value| %>
+      <% sort = course_days.sort_by{ |k, v| v } %>
+      <% sort.each do |key, value| %>
         <li class="events-group li-width" style="width: <%= 100.00/(course_days.length) %>%">
           <div class="top-info black"><span><%= value.strftime('%d %B')  %></span></div>
           <ul class="<%= class_gray[index%2] %> ul-height" style="height: <%= height-50 %>px;">
             <% courses.each_with_index do |course, index| %>
 
+              <% next if course_days[key].nil? %>
               <% if value == course[:final_exam][:day] %>
-
+                <% course_days[key] = nil %>
                 <li class="single-event <%= classes[course[:no]] %>" data-start="<%= course[:final_exam][:time][:start][0,2]%>:<%= course[:final_exam][:time][:start][2,4] %>" data-end="<%= course[:final_exam][:time][:end][0,2]%>:<%= course[:final_exam][:time][:end][2,4] %>" data-content="timetable4cmu" data-event="event-<%= index %>">
                   <em class="event-name"><%= course[:name] %></em>
                 </li>
-
               <% end %>
               
             <% end %>
