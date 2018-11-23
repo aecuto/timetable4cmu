@@ -11,7 +11,7 @@
 
         <% times.each_with_index do |time, index| %>
 
-          <% if time >= range[:start_time] && time <= range[:end_time]  %>
+          <% if time[0,2] >= range[:start_time][0,2] && time[0,2] <= range[:end_time][0,2]  %>
             <li><span><%= time[0,2] %>:<%= time[2,4] %></span></li>
             
             <% if time[0,2] != range[:end_time][0,2] %>

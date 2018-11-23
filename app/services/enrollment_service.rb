@@ -17,7 +17,6 @@ class EnrollmentService
     respon = Nokogiri::HTML(open_url)
     courses = respon.css('.msan8')
     @courses = []
-
     courses.each do |course|
       d = course.css('td')
       if is_number?(d[0].text)
@@ -29,16 +28,15 @@ class EnrollmentService
         next if course[7].nil?
         next if course[7].text=="TBA"
         days = course[7].text.delete('-').split(/(?=[A-Z])/)
-
-        days.each do |day|
+        days.each_with_index do |day, index|
           @courses << {
             no: d[1].text,
             name: course[2].text,
             lec: course[3].text,
             lab: course[4].text,
             day: day,
-            time: check_red_time(day, course),
-            room: check_red_room(day, course),
+            time: check_red_time(day, course, index),
+            room: check_red_room(day, course, index),
             type: type,
             mid_exam: midterm_exam(course),
             final_exam: final_exam(semester, year, course)
@@ -126,9 +124,9 @@ class EnrollmentService
       }
     end
 
-    def check_red_time(day, course)
+    def check_red_time(day, course, index)
       if course[7].css('red').present?
-        if course[7].css('red').text == day
+        if index == 0
           return time_object(course[8].css('red').text)
         else
           return time_object(course[8].css('> text()').text)
@@ -137,9 +135,9 @@ class EnrollmentService
       return time_object(course[8].text)
     end
 
-    def check_red_room(day, course)
+    def check_red_room(day, course, index)
       if course[7].css('red').present?
-        if course[7].css('red').text == day
+        if index == 0
           return course[9].css('red').text.delete('-')
         else
           return course[9].css('> text()').text.delete('-')
