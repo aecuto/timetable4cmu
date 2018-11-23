@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
+//= require popper
 //= require bootstrap-sprockets
 //= require inputmask.min
 //= require jquery.inputmask.min

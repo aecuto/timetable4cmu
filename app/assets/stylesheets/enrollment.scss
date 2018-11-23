@@ -110,3 +110,21 @@ button.btn-link{
   display: none;
   margin-top: 0 !important;
 }
+
+.max-1-line{
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+}
+
+.max-2-line{
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+}
+
+.small-name{
+  font-size: 0.8rem;
+}

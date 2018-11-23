@@ -49,20 +49,20 @@
               <% if day.include?(course[:day]) %>
 
                 <li class="single-event <%= classes[course[:no]] %>" data-start="<%= course[:time][:start][0,2]%>:<%= course[:time][:start][2,4] %>" data-end="<%= course[:time][:end][0,2]%>:<%= course[:time][:end][2,4] %>" data-content="timetable4cmu" data-event="event-<%= index %>">
-                  <em class="event-name">
-                  <span><%= course[:name] %></span> <br>
-                  <span><%= course[:lec] %>-<%= course[:lab] %> <i class="fas fa-graduation-cap"></i> <%= course[:no] %></span>
+                  <em class="event-name"  data-toggle="tooltip" data-placement="top" title="<%= course[:name] %>">
+                    <span class="<%= course[:time][:end].to_i - course[:time][:start].to_i == 100 ? "max-1-line" : "max-2-line" %>" style="-webkit-box-orient: vertical;"><%= course[:name] %></span>
+                    <span style="font-size: 0.8rem;"><%= course[:lec] %>-<%= course[:lab] %> <i class="fas fa-graduation-cap"></i> <%= course[:no] %></span>
 
-                  <% if course[:room].present? %>                  
-                  <br>
-                  <span><i class="fas fa-map-marker-alt"></i> <%= course[:room] %></span>
-                  <% end %>
-                  <% if course[:type] == "A" %>
+                    <% if course[:room].present? %>                  
                     <br>
-                    <span>
-                      <kbd style="color: #ff4f4f;"><i class="fas fa-plus-square"></i> ADD</kbd>
-                    </span>
-                  <% end %>
+                    <span><i class="fas fa-map-marker-alt"></i> <%= course[:room] %></span>
+                    <% end %>
+                    <% if course[:type] == "A" %>
+                      <br>
+                      <span>
+                        <kbd style="color: #F9B248;"><i class="fas fa-plus"></i>ADD</kbd>
+                      </span>
+                    <% end %>
                   </em>
             
                 </li>

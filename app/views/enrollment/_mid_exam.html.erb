@@ -46,7 +46,10 @@
               <% if value == course[:mid_exam][:day] %>
                 <% course_days[course[:no]] = nil %>
                 <li class="single-event <%= classes[course[:no]] %>" data-start="<%= course[:mid_exam][:time][:start][0,2]%>:<%= course[:mid_exam][:time][:start][2,4] %>" data-end="<%= course[:mid_exam][:time][:end][0,2]%>:<%= course[:mid_exam][:time][:end][2,4] %>" data-content="timetable4cmu" data-event="event-<%= index %>">
-                  <em class="event-name"><%= course[:name] %></em>
+                  <em class="event-name">
+                    <span><%= course[:no] %></span> <br>
+                    <span><%= course[:name] %></span>
+                  </em>
                 </li>
               <% end %>
               

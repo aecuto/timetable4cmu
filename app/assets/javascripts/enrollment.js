@@ -39,4 +39,6 @@ $(function(){
     $("#loading").show();
   });
 
+  $('[data-toggle="tooltip"]').tooltip();
+
 });
