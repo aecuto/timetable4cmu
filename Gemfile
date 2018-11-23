@@ -5,6 +5,9 @@ gem "bootstrap_form", ">= 4.0.0.alpha1"
 gem 'devise'
 gem 'rails_admin', '~> 1.3'
 gem 'pry'
+gem 'grape'
+gem 'grape-entity', '~> 0.5.0'
+gem 'grape_on_rails_routes', '~> 0.3.2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '5.0.2'

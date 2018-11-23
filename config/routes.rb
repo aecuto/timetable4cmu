@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  mount Api::Base => '/'
+
   resources :bloggers
   devise_for :admins
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
