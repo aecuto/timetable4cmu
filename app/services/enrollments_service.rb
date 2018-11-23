@@ -6,6 +6,8 @@ class EnrollmentsService
   
   def courses(semester, year, sid)
 
+    return "error" if year.to_i < 58
+
     url = "https://www3.reg.cmu.ac.th/regist" + semester.to_s+year.to_s + "/public/result.php?id=" + sid.to_s
     
     begin
@@ -45,7 +47,7 @@ class EnrollmentsService
         
       end
     end
-
+    
     return @courses.sort_by{|c| c[:time][:start]}
 
   end
