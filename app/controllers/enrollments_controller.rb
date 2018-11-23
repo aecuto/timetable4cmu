@@ -1,4 +1,4 @@
-class EnrollmentController < ApplicationController
+class EnrollmentsController < ApplicationController
 
   def index
   end
@@ -19,7 +19,7 @@ class EnrollmentController < ApplicationController
     @days = Array["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]
     
     #timetable
-    entrollment = EnrollmentService.new
+    entrollment = EnrollmentsService.new
     @courses = entrollment.courses(semester, year, @sid)
 
     if @courses == "error"

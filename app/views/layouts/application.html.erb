@@ -42,17 +42,26 @@
 
 <body>
 
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-      <a class="navbar-brand" href="/" data-turbolinks="false"><i class="far fa-calendar-alt"></i>  Timetable for CMU</a>
-
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item">
-          <a href="/bloggers" class="nav-link" data-turbolinks="false">
-          <i class="far fa-newspaper"></i> Blog
-          </a>
-        </li>
-      </ul>
-  </nav>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+  <a class="navbar-brand" href="/" data-turbolinks="false"><i class="far fa-calendar-alt"></i>  Timetable for CMU</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <a href="<%= bloggers_url %>" class="nav-link" data-turbolinks="false">
+        <i class="far fa-newspaper"></i> Blog
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="<%= developers_url %>" class="nav-link" data-turbolinks="false">
+        <i class="far fa-newspaper"></i> API for Developers
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
 
 <br><br><br>
 

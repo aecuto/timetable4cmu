@@ -13,7 +13,7 @@ module Api
           requires :sid, type: Integer, desc: 'Student ID.'
         end
         post do
-          entrollment = EnrollmentService.new
+          entrollment = EnrollmentsService.new
           @courses = entrollment.courses(params[:semester], params[:year], params[:sid])
           
           return "Term not Found" if @courses == "error"
