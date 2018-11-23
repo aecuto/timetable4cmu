@@ -54,8 +54,13 @@ class EnrollmentsService
 
   def midterm_exam(course)
     if course[11].css('gray').present?
+      begin
+        d = course[11].css('gray').text.to_date.strftime('%m/%d').to_date
+      rescue ArgumentError  
+        d = course[11].css('gray').text.to_date
+      end
       return {
-        day: course[11].css('gray').text.to_date.strftime('%m/%d').to_date,
+        day: d,
         time: time_object(course[12].css('gray').text)
       }
     end
@@ -66,8 +71,13 @@ class EnrollmentsService
     if course[11].css('p').text == "REGULAR"
       return regular_exam(semester, year, course[7], course[8])
     elsif course[11].css('p').present?
+      begin
+        d = course[11].css('p').text.to_date.strftime('%m/%d').to_date
+      rescue ArgumentError  
+        d = course[11].css('p').text.to_date
+      end
       return {
-        day: course[11].css('p').text.to_date.strftime('%m/%d').to_date,
+        day: d,
         time: time_object(course[12].css('p').text)
       }
     end
