@@ -11,8 +11,8 @@ class EnrollmentsController < ApplicationController
     end
 
     term = params[:term].split('/')
-    semester = term[0]
-    year = term[1]
+    @semester = term[0]
+    @year = term[1]
     @sid = params[:sid]
 
 
@@ -21,7 +21,7 @@ class EnrollmentsController < ApplicationController
     
     #timetable
     entrollment = EnrollmentsService.new
-    @courses = entrollment.courses(semester, year, @sid)
+    @courses = entrollment.courses(@semester, @year, @sid)
 
     if @courses == "error"
       redirect_to root_url, :notice => "Fail Login, Term not found!"

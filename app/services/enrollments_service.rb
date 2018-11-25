@@ -53,7 +53,7 @@ class EnrollmentsService
   end
 
   def midterm_exam(course)
-    if course[11].css('gray').present?
+    if course[11].css('gray').text.present?
       begin
         d = course[11].css('gray').text.to_date.strftime('%m/%d').to_date
       rescue ArgumentError  
@@ -70,7 +70,7 @@ class EnrollmentsService
   def final_exam(semester, year, course)
     if course[11].css('p').text == "REGULAR"
       return regular_exam(semester, year, course[7], course[8])
-    elsif course[11].css('p').present?
+    elsif course[11].css('p').text.present?
       begin
         d = course[11].css('p').text.to_date.strftime('%m/%d').to_date
       rescue ArgumentError  
@@ -81,7 +81,6 @@ class EnrollmentsService
         time: time_object(course[12].css('p').text)
       }
     end
-
     return {}
   end
 
