@@ -1,5 +1,9 @@
 
 
+<div class="text-center"><h4>Student ID (CMU) : <%= @sid %></h4></div>
+
+<hr>
+
 <h1> <i class="fas fa-calendar-alt"></i> Timetable</h1> 
 
 
@@ -28,7 +32,7 @@
 	<thead>
 		<tr>
 
-			<th bgcolor="<%= @color_tab %>" colspan="2" class="text-center"><%= session[:sid] %> (<%= session[:semester] %>/<%= session[:year] %>)</th>
+			<th bgcolor="<%= @color_tab %>" colspan="2" class="text-center"><%= @sid %> (<%= @semester %>/<%= @year %>)</th>
 			<% while index_time<end_index_time %>
 			<th bgcolor="<%= @color_tab %>" colspan="2" class="text-center" style="font-size: 13px"><%= @time[index_time] %> - <%= @time[index_time+1] %> </th>
 			<% index_time+=1 %>
@@ -220,7 +224,7 @@ $("#dowloadTimetable").on('click', function () {
 	<div class="table-responsive">
 			<table class="table" id="<%= icon[k] %>Table" style="table-layout: fixed;">
 				<thead>
-					<th bgcolor="<%= @color_tab %>" class="text-center" style="vertical-align: middle;">DAY (<%= session[:semester] %>/<%= session[:year] %>)</th>
+					<th bgcolor="<%= @color_tab %>" class="text-center" style="vertical-align: middle;">DAY (<%= @semester %>/<%= @year %>)</th>
 					<th bgcolor="<%= @color_tab %>" class="text-center" style="vertical-align: middle;">08:00-11:00</th>
 					<th bgcolor="<%= @color_tab %>" class="text-center" style="vertical-align: middle;">12:00-15:00</th>
 					<th bgcolor="<%= @color_tab %>" class="text-center" style="vertical-align: middle;">15:30-18:30</th>

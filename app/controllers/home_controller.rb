@@ -19,20 +19,16 @@ class HomeController < ApplicationController
     end
   end
 
-  def logout
-    reset_session
-    redirect_to "/login"
-  end
-
   def index
     if session[:semester] == nil
       redirect_to "/login"
     end
 
     if session[:semester] != nil
-    semester=session[:semester]
-    year=session[:year]
-    sid=session[:sid]
+    @semester=session[:semester]
+    @year=session[:year]
+    @sid=session[:sid]
+    reset_session
 
     # value for html
     @time = Array["0600","0700","0800","0900","1000","1100","1200","1300","1400","1500","1600","1700","1800","1900","2000","2100","2200","2300","2400"]
@@ -44,15 +40,15 @@ class HomeController < ApplicationController
     @color_blank = "#424242"
 
     #index for find room
-    if year.to_i<58
+    if @year.to_i<58
       index=2
     else
       index=0
     end
 
 
-    uri = URI.parse("https://www3.reg.cmu.ac.th/regist" + semester.to_s+year.to_s + "/public/search.php?act=search")
-    url = "https://www3.reg.cmu.ac.th/regist" + semester.to_s+year.to_s + "/public/result.php?id=" + sid.to_s
+    uri = URI.parse("https://www3.reg.cmu.ac.th/regist" + @semester.to_s+@year.to_s + "/public/search.php?act=search")
+    url = "https://www3.reg.cmu.ac.th/regist" + @semester.to_s+@year.to_s + "/public/result.php?id=" + @sid.to_s
 
 
     infor = Nokogiri::HTML(open(url))
@@ -60,7 +56,7 @@ class HomeController < ApplicationController
     @timetables = Array.new
 
     #EXAM
-    url_final = "https://www3.reg.cmu.ac.th/regist/public/exam.php?type=FINAL&term="+semester.to_s+year.to_s
+    url_final = "https://www3.reg.cmu.ac.th/regist/public/exam.php?type=FINAL&term="+@semester.to_s+@year.to_s
 
     #regular data
     regular = Nokogiri::HTML(open(url_final))
@@ -445,15 +441,15 @@ class HomeController < ApplicationController
     sid=session[:sid]
 
     #index for find room
-    if year.to_i<58
+    if @year.to_i<58
       index=2
     else
       index=0
     end
 
 
-    uri = URI.parse("https://www3.reg.cmu.ac.th/regist" + semester.to_s+year.to_s + "/public/search.php?act=search")
-    url = "https://www3.reg.cmu.ac.th/regist" + semester.to_s+year.to_s + "/public/result.php?id=" + sid.to_s
+    uri = URI.parse("https://www3.reg.cmu.ac.th/regist" + @semester.to_s+@year.to_s + "/public/search.php?act=search")
+    url = "https://www3.reg.cmu.ac.th/regist" + @semester.to_s+@year.to_s + "/public/result.php?id=" + @sid.to_s
 
 
     infor = Nokogiri::HTML(open(url))
