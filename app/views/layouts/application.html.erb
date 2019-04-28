@@ -47,9 +47,10 @@
 
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-          <a href="/bloggers" class="nav-link" data-turbolinks="false">
-          <i class="far fa-newspaper"></i> API
+          <a href="<%= developers_url %>" class="nav-link" data-turbolinks="false">
+            <kbd><i class="fas fa-code"></i></kbd> API for Developers
           </a>
+        </li>
         </li>
         <% if session[:sid] != nil %>
         <li class="nav-item">
