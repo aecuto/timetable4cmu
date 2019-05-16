@@ -7,7 +7,7 @@
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
   
-  <link rel="icon" href="https://cdn2.iconfinder.com/data/icons/svg-business-icons/512/Date_and_time-512.png">
+  <link rel="icon" href="https://cdn1.iconfinder.com/data/icons/big-business/512/Calendar_Clock-512.png">
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -49,6 +49,11 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <a href="https://timetable4cmu2.herokuapp.com" target="_blank" class="nav-link" data-turbolinks="false">
+          <kbd><i class="fas fa-table"></i></kbd> ตารางแนวนอน
+        </a>
+      </li>
       <li class="nav-item">
         <a href="<%= developers_url %>" class="nav-link" data-turbolinks="false">
           <kbd><i class="fas fa-code"></i></kbd> API for Developers
