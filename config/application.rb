@@ -1,6 +1,15 @@
 require File.expand_path('../boot', __FILE__)
 
-require 'rails/all'
+# require 'rails/all'
+require "active_model/railtie" 
+# And now the rest
+require "action_controller/railtie"
+require "action_mailer/railtie"
+require "action_view/railtie"
+require "active_job/railtie" # Only for Rails >= 4.2
+require "action_cable/engine" # Only for Rails >= 5.0
+require "sprockets/railtie"
+require "rails/test_unit/railtie"
 
 
 
@@ -23,7 +32,7 @@ module Timtable4CMU
     # config.i18n.default_locale = :de
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
-    config.active_record.raise_in_transactional_callbacks = true
+    # config.active_record.raise_in_transactional_callbacks = true
 
     #config.paths.add File.join('app', 'api'), glob: File.join('**', '*.rb')
     #config.autoload_paths += Dir[Rails.root.join('app', 'api', '*')]
