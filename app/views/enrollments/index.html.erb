@@ -8,11 +8,17 @@
 	</div>
 <% end %>
 
+<div class="alert alert-dark alert-dismissible fade show" role="alert">
+	<strong><i class="fas fa-bell"></i></strong>  ระบบตารางเรียนไม่สามารถใช้งานได้แล้วนะครับ ขอบคุณทุกๆคนที่เข้ามาใช้งานครับ
+</div>
+
 <h1>Login</h1>
+
 
 <%= form_tag(enrollments_path, class: "form-group") do %>
 
 <div class="row">
+
 
 	<div class="col-sm-4" >
 		<%= label_tag 'Student Id' %>
@@ -28,7 +34,7 @@
 	</div>
 
 	<div class="col-sm-4" style="padding-top: 32px;">
-		<%= submit_tag "Submit", id: 'submit', class: "btn btn-outline-light btn-block" %>
+		<%= submit_tag "Submit", id: 'submit', class: "btn btn-outline-light btn-block", disabled: true %>
 		<%= button_tag id: 'loading', class: "btn btn-outline-light btn-block", disabled: true do %>
 			<i class="fas fa-circle-notch fa-spin fa-1x fa-fw"></i> Loading...
 		<% end %>
