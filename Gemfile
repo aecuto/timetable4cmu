@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 gem 'bootstrap', '~> 4.1.3'
 gem "bootstrap_form", ">= 4.0.0.alpha1"
 gem 'devise'
-gem 'rails_admin', '~> 1.3'
+gem 'rails_admin', '~> 1.4'
 gem 'pry'
 gem 'grape'
 gem 'grape-entity', '~> 0.5.0'
